@@ -27,6 +27,7 @@ export const login = ({ credential, password }) => async dispatch => {
     const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
     dispatch(setUserPOJO(fedback_user));
   }
+  return res;
 }
 
 export const logout = () => async dispatch => {
@@ -36,6 +37,7 @@ export const logout = () => async dispatch => {
   if(res.ok){
     dispatch(removeUserPOJO());
   }
+  return res;
 }
 
 export const restoreUser = () => async dispatch => {
@@ -44,7 +46,20 @@ export const restoreUser = () => async dispatch => {
     const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
     dispatch(setUserPOJO(fedback_user));
   }
+  return res;
 };
+
+export const signup = ({ username, email, password }) => async dispatch => {
+  const res = await fetch('/api/users', {
+    method: 'POST',
+    body: JSON.stringify({ username, email, password})
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if(res.ok){
+    const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
+    dispatch(setUserPOJO(fedback_user));
+  }
+  return res;
+}
 
 const initialState = {
   user: null
