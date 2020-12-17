@@ -3,6 +3,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
+import fetch from './csrf';
+
 const rootReducer = combineReducers({
 
 });
