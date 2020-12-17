@@ -1,7 +1,7 @@
 'use strict';
 const bcrypt = require('bcryptjs');
 
-const { ValidatorsImpl } = require("express-validator/src/chain");
+const { Validator } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
