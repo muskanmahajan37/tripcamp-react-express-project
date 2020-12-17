@@ -2,48 +2,65 @@
 
 import fetch from './csrf';
 
-const SET_SESSION_USER = 'session/SET_SESSION_USER';
-const REMOVE_SESSION_USER = 'session/REMOVE_SESSION_USER';
+const SET_USER = 'session/SET_USER';
+const REMOVE_USER = 'session/REMOVE_USER';
+const RESTORE_USER = 'session/RESTORE_USER';
 
-const addSessionUser = (user) => ({
-  type: SET_SESSION_USER,
+const setUserPOJO = (user) => ({
+  type: SET_USER,
   user
 });
-const removeSessionUser = () =>({
-  type: REMOVE_SESSION_USER
+const removeUserPOJO = () =>({
+  type: REMOVE_USER
 });
 
-export const loginUser = (providedUser) => async dispatch => {
+// const restoreUserPOJO = () => ({
+//   type: RESTORE_USER
+// });
+
+export const login = ({ credential, password }) => async dispatch => {
   const res = await fetch('/api/session', {
     method: 'POST',
-    body: JSON.stringify({ credential: (providedUser.email? providedUser.email: providedUser.username), password: providedUser.password })
+    body: JSON.stringify({ credential, password})
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if(res.ok){
-    const fedback_user = res.data; //we need this user back from backend, NOT the provided
-    console.log('res.data', res.data);
-    dispatch(addSessionUser(fedback_user));
+    const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
+    dispatch(setUserPOJO(fedback_user));
   }
 }
 
-export const logoutUser = () => async dispatch => {
+export const logout = () => async dispatch => {
   const res = await fetch('/api/session', {
     method: 'DELETE',
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if(res.ok){
-    dispatch(removeSessionUser());
+    dispatch(removeUserPOJO());
   }
 }
+
+export const restoreUser = () => async dispatch => {
+  const res = await fetch('/api/session'); //This fetch is a modified fetch, which already returns data after res.json()
+  if(res.ok){
+    const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
+    dispatch(setUserPOJO(fedback_user));
+  }
+};
 
 const initialState = {
   user: null
 };
 
 const sessionReducer = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
-    case SET_SESSION_USER:
-      return { user: action.user };
-    case REMOVE_SESSION_USER:
-      return initialState;
+    case SET_USER:
+      newState = Object.assign({}, state);
+      newState.user = action.user;
+      return newState;
+    case REMOVE_USER:
+      newState = Object.assign({}, state);
+      newState.user = null;
+      return newState;
     default:
       return state;
   }
