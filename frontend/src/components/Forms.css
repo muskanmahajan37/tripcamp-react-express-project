@@ -16,14 +16,14 @@
   background-color: #4CAF50;
   border: 0px solid green;
   color: white;
-  padding: 10px 10px;
+  padding: 5px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-  width: 100px;
+  width: fit-content;
   border-radius: 10px;
 }
 

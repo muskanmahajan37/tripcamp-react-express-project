@@ -16,7 +16,7 @@ export default function ProfileButton({ user }) {
 
   function DropdownMenu() {
     return (
-      <div className="dropdown-menu hidden" ref={dropdownMenuRef}>
+      <div className=" dropdown-menu" ref={dropdownMenuRef}>
         <div className="dropdown-menu-item">{user.username}</div>
         <hr className="hr" />
         <div className="dropdown-menu-item">{user.email}</div>
@@ -33,10 +33,10 @@ export default function ProfileButton({ user }) {
     );
   }
   function dropdownShowHide() {
-    if (showMenu) {
-      dropdownMenuRef.current.classList.remove("hidden");
-      dropdownMenuRef.current.classList.add("shown")
-    }
+    // if (showMenu) {
+    //   dropdownMenuRef.current.classList.remove("hidden");
+    //   dropdownMenuRef.current.classList.add("shown")
+    // }
     // else {
     //   dropdownMenuRef.current.classList.remove("shown");
     //   dropdownMenuRef.current.classList.add("hidden")
@@ -44,17 +44,29 @@ export default function ProfileButton({ user }) {
   }
 
   useEffect(() => {
+    if (!showMenu) return;
     dropdownShowHide();
+    const closeMenu = (e) => {
+      if (!e.target.className.includes("dropdown-menu"))
+        setShowMenu(false);
+    };
+    document.addEventListener('click', closeMenu);
+    // document.addEventListener('mouseover', closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
   }, [showMenu])
 
   return (
-    <span
-      className="fas fa-atom"
-      onClick={() => {
-        setShowMenu(!showMenu);
-      }}
+    <button
+      className="fas fa-atom icon-span dropdown-menu-parent"
+      // onClick={() => { setShowMenu(!showMenu); }}
+      // onMouseOver={() => { setShowMenu(true); }}
+      // onMouseOut={() => { setShowMenu(false); }}
+      // onMouseLeave={() =>  setTimeout(() => setShowMenu(false), 1000) }
     >
-      <DropdownMenu />
-    </span>
+      {
+        // showMenu &&
+        <DropdownMenu />
+      }
+    </button>
   );
 }
