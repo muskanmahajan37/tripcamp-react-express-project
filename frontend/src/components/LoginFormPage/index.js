@@ -1,8 +1,8 @@
 // frontend/src/components/LoginFormPage/index.js
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 
@@ -29,16 +29,16 @@ function LoginFormPage() {
       });
   };
   return (
-    <form 
+    <form
       className='form-container'
-      onSubmit={handleSubmit} 
+      onSubmit={handleSubmit}
     >
       <ul className='error-messages'>
         {errors.map((error, index) => <li key={index}>{error}</li>)}
       </ul>
       <label>
         Username or Email
-        <input 
+        <input
           type='text'
           value={credential}
           onChange={e => setCredential(e.target.value)}
@@ -47,14 +47,14 @@ function LoginFormPage() {
       </label>
       <label>
         Password
-        <input 
+        <input
           type='password'
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
         />
       </label>
-      <button 
+      <button
         className='button'
         type='submit'
       >
@@ -64,4 +64,83 @@ function LoginFormPage() {
   );
 }
 
+export function LoginFormModal() {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const [credential, setCredential] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const loginModalRef = useRef(null);
+  const history = useHistory();
+
+  if (sessionUser) {
+    return <Redirect to='/' />;
+  }
+
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setErrors([]);
+
+    return dispatch(sessionActions.login({ credential, password }))
+      .then(res => {
+        if (loginModalRef.current)
+          loginModalRef.current.style.display = "none";
+      })
+      .catch(res => {
+        if (res.data && res.data.errors) setErrors(res.data.errors);
+      });
+  };
+
+  const handelCancelClick = e => {
+    // e.preventDefault();
+    console.log(loginModalRef.current);
+    if (loginModalRef.current)
+      loginModalRef.current.style.display = "none";
+    history.push('/');
+    // return <Redirect to='/' />;
+  }
+
+  return (
+    <div className="modal" ref={loginModalRef}>
+      <form
+        className='form-container modal-content'
+        onSubmit={handleSubmit}
+      >
+        <ul className='error-messages'>
+          {errors.map((error, index) => <li key={index}>{error}</li>)}
+        </ul>
+        <label>
+          Username or Email
+        <input
+            type='text'
+            value={credential}
+            onChange={e => setCredential(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password
+        <input
+            type='password'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <div className="buttons-div">
+          <button
+            className='button'
+            type='submit'
+          >Log in</button>
+          <button
+            className='button button-Reset'
+            onClick={handelCancelClick}
+          > Cancel </button>
+        </div>
+      </form>
+    </div>
+  );
+}
 export default LoginFormPage;

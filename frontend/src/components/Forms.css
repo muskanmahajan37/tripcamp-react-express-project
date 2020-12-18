@@ -53,3 +53,8 @@
 .error-messages{
   color: red;
 }
+
+.buttons-div{
+  display: flex;
+  justify-content: space-evenly;
+}
