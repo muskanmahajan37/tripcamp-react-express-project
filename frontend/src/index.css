@@ -1,10 +1,10 @@
 /* TODO Add site wide styles */
 nav a {
-  margin: 0 20px;
-  padding: 10px;
+  margin: 0 10px;
+  padding: 5px;
   color: black;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 3px solid gray;
   text-decoration: none;
 }
@@ -28,7 +28,8 @@ nav a.active {
   border: 1px solid black;
   border-radius: 0px 0px 10px 10px;
   width: fit-content;
-  transform: translate(100%, 20%);
+  transform: translate(-50%, 15px);
+  position: fixed;
 }
 .shown{
   display: flex;
@@ -36,6 +37,12 @@ nav a.active {
 .dropdown-menu-item{
   font-size: large;
   padding: 0px 10px;
+}
+
+.dropdown-menu-item:hover{
+  font-size: large;
+  padding: 0px 10px;
+  color: lightblue;
 }
 .hr{
   width: 100%;
