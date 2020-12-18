@@ -51,7 +51,7 @@ nav {
   width: 30px;
   height: 30px;
   /* transform: translate(0, 5px); */
-  padding: 10px 10px 10px 10px;
+  padding: 10px 30px 10px 10px;
   margin: 0px 0px;
   background-color: Transparent;
   /* background-repeat:no-repeat; */
@@ -84,8 +84,8 @@ nav {
   position: absolute;
   /* border: 1px solid black; */
   border-radius: 0px 0px 5px 5px;  
-  top: 100%;
-  left: -100px;
+  /* top: 100%; */
+  right: 0%;
   width: fit-content;
   transform: translateY(-2em);
   z-index: -1;
