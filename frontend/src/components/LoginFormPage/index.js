@@ -108,27 +108,32 @@ export function LoginFormModal() {
         className='form-container modal-content'
         onSubmit={handleSubmit}
       >
+        <h3>Login Form</h3>
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
-        <label>
-          Username or Email
-        <input
-            type='text'
-            value={credential}
-            onChange={e => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-        <input
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </label>
+        <div className="inputs-div">
+          <div className="input-div">
+            <label>Username or Email</label>
+            <input
+              className='input'
+              type='text'
+              value={credential}
+              onChange={e => setCredential(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Password</label>
+            <input
+              className='input'
+              type='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </div>
+        </div>
         <div className="buttons-div">
           <button
             className='button'

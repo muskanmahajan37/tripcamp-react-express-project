@@ -8,7 +8,7 @@ function Navigation() {
 
   return (
     <nav>
-      <NavLink to="/ ">Home</NavLink>
+      <NavLink to={'/'}>Home</NavLink>
       { sessionUser ?
         <ProfileButton user={sessionUser}/>
         :

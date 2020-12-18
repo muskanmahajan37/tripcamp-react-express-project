@@ -108,7 +108,7 @@ nav {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 5; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 10px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -125,12 +125,17 @@ nav {
   padding: 28px;
   border: 1px solid rgb(220 220 220);
   box-shadow: 0 7px 13px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
+  border-radius: 10px;
   width: 400px;
   margin-left: 35vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.modal-content h3 {
+  font-size: x-large;
+  padding: 0px;
 }
 
 #modal-form {

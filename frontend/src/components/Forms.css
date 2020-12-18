@@ -57,4 +57,18 @@
 .buttons-div{
   display: flex;
   justify-content: space-evenly;
+  padding: 20px 10px 0px;
+}
+.inputs-div{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+.input-div{
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0px;
+}
+.input{
+  width: 60%;
 }

@@ -110,7 +110,7 @@ export function SignupFormModal() {
     return dispatch(sessionActions.signup({ username, email, password }))
       .then(res => {
         if (signupModalRef.current)
-        signupModalRef.current.style.display = "none";
+          signupModalRef.current.style.display = "none";
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -128,54 +128,61 @@ export function SignupFormModal() {
         className='modal-content'
         onSubmit={handleSubmit}
       >
+        <h3>Sign up as a new user</h3>
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
-        <label>
-          Username
-        <input
-            type='text'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email
-        <input
-            type='email'
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-        <input
-            type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password
-        <input
-            type='password'
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <div className="buttons-div">
-          <button
-            className='button'
-            type='submit'
-          >Sign up</button>
-          <button
-            className='button button-Reset'
-            onClick={handelCancelClick}
-          > Cancel </button>
+        <div className="inputs-div">
+          <div className="input-div">
+            <label>Username</label>
+            <input
+              className="input"
+              type='text'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Email</label>
+            <input
+              className="input"
+              type='email'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Password</label>
+            <input
+              className="input"
+              type='password'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Confirm Password</label>
+            <input
+              className="input"
+              type='password'
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="buttons-div">
+            <button
+              className='button'
+              type='submit'
+            >Sign up</button>
+            <button
+              className='button button-Reset'
+              onClick={handelCancelClick}
+            > Cancel </button>
+          </div>
         </div>
       </form>
     </div>
