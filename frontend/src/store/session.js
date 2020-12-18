@@ -4,7 +4,7 @@ import fetch from './csrf';
 
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
-const RESTORE_USER = 'session/RESTORE_USER';
+// const RESTORE_USER = 'session/RESTORE_USER';
 
 const setUserPOJO = (user) => ({
   type: SET_USER,
