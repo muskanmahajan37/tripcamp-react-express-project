@@ -1,6 +1,6 @@
 
 export default function ProfileButton(){
   return (
-    <i class="fas fa-atom"></i>
+    <span className="fas fa-atom"></span>
   );
 }
