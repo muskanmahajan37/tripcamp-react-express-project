@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import ProfileButton from './ProfileButton';
 import NotificationBell from './NotificationBell';
+import GithubLink from './GithubLink';
 
 function Navigation() {
   const sessionUser = useSelector(state => state.session.user);
@@ -19,6 +20,7 @@ function Navigation() {
         <>
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/signup">Signup</NavLink>
+          <GithubLink />
         </>
       }
     </nav>

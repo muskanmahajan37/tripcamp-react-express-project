@@ -1,12 +1,14 @@
 /* TODO Add site wide styles */
 nav a {
-  margin: 0 10px;
+  margin: 0 5px;
   padding: 5px;
   color: black;
-  background-color: white;
-  border-radius: 8px;
-  border: 3px solid gray;
+  /* background-color: white; */
+  /* border-radius: 8px;
+  border: 3px solid gray; */
   text-decoration: none;
+  /* font-weight: bold; */
+  /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
 }
 
 nav a.active {
@@ -15,13 +17,15 @@ nav a.active {
 }
 
 nav {
-  background-color: lightblue;
+  /* background-color: lightblue; */
+  background-image: linear-gradient(to bottom right, white, lightblue);
   height: fit-content;
   padding: 0px;
   margin: 0px 20px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
 }
 
 .hidden-element{

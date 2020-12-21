@@ -1,7 +1,7 @@
 import React,{ useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-export default function NotificationBell({ user }) {
+export default function GithubLink({ user }) {
   const dispatch = useDispatch();
 
   const dropdownMenuRef = useRef(null);
@@ -9,9 +9,13 @@ export default function NotificationBell({ user }) {
   function DropdownMenu() {
     return (
       <div className=" dropdown-menu" ref={dropdownMenuRef}>
-        <div className="dropdown-menu-item">{user.username}</div>
+        <div className="dropdown-menu-item">
+          <a className="github-a" href='https://github.com/suasllc'>Tony Ngo</a>
+          </div>
         <hr className="hr" />
-        <div className="dropdown-menu-item">{user.email}</div>
+        <div className="dropdown-menu-item">
+          <a className="github-a" href='https://github.com/suasllc/fullstack-authenticate-me'>Github Repo</a>
+        </div>
       </div>
     );
   }
@@ -20,15 +24,11 @@ export default function NotificationBell({ user }) {
       <span
         className="dropdown-menu-parent"
       >
-        <button className="fa fa-bell icon-span" />
+        <button className="fab fa-github icon-span" />
         {
           <DropdownMenu />
         }
       </span>
-      <span 
-        id="notification-number"
-        className='notification-badge'
-      >9</span>
     </>
   );
 }
