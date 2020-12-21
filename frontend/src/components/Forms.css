@@ -1,5 +1,4 @@
-
-.form-container{
+.form-container {
   display: flex;
   justify-content: start;
   flex-direction: column;
@@ -50,25 +49,202 @@
   background-color: #555555;
 }
 
-.error-messages{
+.error-messages {
   color: red;
 }
 
-.buttons-div{
+.buttons-div {
   display: flex;
   justify-content: space-evenly;
   padding: 20px 10px 0px;
 }
-.inputs-div{
+
+.inputs-div {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
 }
-.input-div{
+
+.input-div {
   display: flex;
   justify-content: space-between;
   padding: 3px 0px;
 }
-.input{
+
+.input {
   width: 60%;
+}
+
+.dropdown-menu-item {
+  font-size: large;
+  padding: 0px 10px;
+}
+
+.dropdown-menu-item:hover {
+  font-size: large;
+  padding: 0px 10px;
+  color: lightblue;
+}
+
+.hr {
+  width: 98%;
+}
+
+.icon-span {
+  width: 30px;
+  height: 30px;
+  /* transform: translate(0, 5px); */
+  padding: 10px 30px 10px 10px;
+  margin: 0px 0px;
+  background-color: Transparent;
+  /* background-repeat:no-repeat; */
+  border: none;
+  /* cursor:pointer;
+  overflow: hidden;
+  outline:none;   */
+}
+
+/* .icon-span:hover .dropdown-menu{
+  display: flex;
+} */
+
+.dropdown-menu-parent {
+  position: relative;
+}
+
+/* .dropdown-menu{
+  display: none;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+  border: 1px solid black;
+  border: none;
+  border-radius: 0px 0px 10px 10px;
+  width: fit-content;
+  transform: translate(-80%, 10px);
+  position: fixed;
+} */
+
+.dropdown-menu {
+  visibility: hidden;
+  /* hides dropdown-menu */
+  opacity: 0;
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 5px 5px 5px 5px;
+  /* top: 100%; */
+  right: 0%;
+  width: fit-content;
+  transform: translateY(-2em);
+  z-index: -1;
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* https://stackoverflow.com/questions/17107123/add-tip-to-twitter-bootstraps-dropdown-menu */
+.dropdown-menu:before {
+  position: absolute;
+  top: -10px;
+  right: 14px;
+  display: inline-block;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #ccc;
+  border-left: 10px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+  content: '';
+  z-index: 1;
+}
+
+.dropdown-menu:after {
+  position: absolute;
+  top: -9px;
+  right: 15px;
+  display: inline-block;
+  border-right: 9px solid transparent;
+  border-bottom: 9px solid #ffffff;
+  border-left: 9px solid transparent;
+  content: '';
+  z-index: 1;
+}
+
+.dropdown-menu-parent:focus .dropdown-menu, .dropdown-menu-parent:focus-within .dropdown-menu, .dropdown-menu-parent:hover .dropdown-menu {
+  visibility: visible;
+  /* shows dropdown-menu */
+  opacity: 1;
+  z-index: 1;
+  transform: translateY(3px);
+  transition-delay: 0s, 0s, 0.5s;
+  /* this removes the transition delay so the menu will be visible while the other styles transition */
+}
+
+/* The Modal (background) */
+
+.modal {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 5;
+  /* Sit on top */
+  padding-top: 10px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(255, 255, 255, 0.6);
+  /* Black w/ opacity */
+}
+
+/* Modal Content */
+
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 25vh;
+  padding: 28px;
+  border: 1px solid rgb(220 220 220);
+  box-shadow: 0 7px 13px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 400px;
+  margin-left: 35vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-content h3 {
+  font-size: x-large;
+  padding: 0px;
+}
+
+#modal-form {
+  margin-top: -5px;
+  display: flex;
+  flex-direction: column;
+}
+
+#inputName {
+  align-self: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 2px;
+}
+
+#inputName:hover {
+  border: 1px solid rgb(190, 190, 190);
+}
+
+#inputName:focus {
+  outline: none;
+  border: 1px solid rgb(50, 149, 255);
+  border-radius: 2px;
 }
