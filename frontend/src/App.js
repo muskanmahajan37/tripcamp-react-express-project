@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
 import Navigation from './components/Navigation';
+import Home from './components/Home';
 
 import * as sessionActions from "./store/session";
 
@@ -21,6 +22,7 @@ function App() {
   return isLoaded && (
     <div>
       <Navigation />
+      <Home />
       <Switch>
         <Route exact path='/'>
           {/* {
