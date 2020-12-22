@@ -93,8 +93,8 @@
 }
 
 .icon-span {
-  padding: 0px 0px 0px 0px;
-  margin: 0px 5px 0px 0px;
+  padding: 0px 5px 0px 5px;
+  margin: 0px 0px 0px 0px;
   background-color: Transparent;
   border: none;
   font-size: 22px;
@@ -104,7 +104,6 @@
   color: rgb(38, 120, 201);
   transition-duration: 0.3s;
 }
-
 
 /* .icon-span:hover .dropdown-menu{
   display: flex;
@@ -125,12 +124,22 @@
   min-width: 100px;
   transform: translateY(-2em);
   z-index: -1;
-  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.1s;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.dropdown-menu-parent:focus .dropdown-menu, .dropdown-menu-parent:focus-within .dropdown-menu, .dropdown-menu-parent:hover .dropdown-menu {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+  transform: translateY(10px);
+  transition-delay: 0s, 0s, 0.5s;
+  /* this removes the transition delay so the menu will be visible while the other styles transition */
+}
+
 /* https://stackoverflow.com/questions/17107123/add-tip-to-twitter-bootstraps-dropdown-menu */
+
 .dropdown-menu:before {
   position: absolute;
   top: -10px;
@@ -156,15 +165,6 @@
   z-index: 1;
 }
 
-.dropdown-menu-parent:focus .dropdown-menu, .dropdown-menu-parent:focus-within .dropdown-menu, .dropdown-menu-parent:hover .dropdown-menu {
-  visibility: visible;
-  opacity: 1;
-  z-index: 1;
-  transform: translateY(3px);
-  transition-delay: 0s, 0s, 0.5s;
-  /* this removes the transition delay so the menu will be visible while the other styles transition */
-}
-
 .notification-badge {
   position: relative;
   top: -10px;
@@ -176,6 +176,7 @@
   color: white;
   font-size: small;
 }
+
 /* The Modal (background) */
 
 .modal {
@@ -206,7 +207,7 @@
 .modal-content {
   background-color: #fefefe;
   margin-top: 25vh;
-  padding: 28px;
+  padding: 15px;
   border: 1px solid rgb(220 220 220);
   box-shadow: 0 7px 13px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -261,4 +262,9 @@
 .github-a.active {
   color: white;
   background-color: black;
+}
+
+h3 {
+  padding: 5px;
+  margin: 5px;
 }

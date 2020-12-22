@@ -9,7 +9,7 @@ function Navigation() {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <nav>
+    <nav className="main-navbar">
       <NavLink to={'/'}>Home</NavLink>
       { sessionUser ?
         <>

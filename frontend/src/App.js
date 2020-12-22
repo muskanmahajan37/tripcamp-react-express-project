@@ -6,6 +6,7 @@ import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
+import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
 
@@ -20,17 +21,11 @@ function App() {
   }, [dispatch]);
 
   return isLoaded && (
-    <div>
+    <div className='mainbody'>
       <Navigation />
       <Home />
       <Switch>
         <Route exact path='/'>
-          {/* {
-            sessionUser ?
-              <></>
-              :
-              <Redirect to='/login' />
-          } */}
         </Route>
         <Route path='/login'>
           <LoginFormModal />
@@ -39,6 +34,7 @@ function App() {
           <SignupFormModal />
         </Route>
       </Switch>
+      <Footer />
     </div>
   );
 }

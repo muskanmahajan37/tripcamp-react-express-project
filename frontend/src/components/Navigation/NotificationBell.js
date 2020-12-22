@@ -20,7 +20,10 @@ export default function NotificationBell({ user }) {
       <span
         className="dropdown-menu-parent"
       >
-        <button className="fa fa-bell icon-span" />
+        <button 
+          className="fa fa-bell icon-span" 
+          style={{marginLeft: '15px'}}
+        />
         {
           <DropdownMenu />
         }

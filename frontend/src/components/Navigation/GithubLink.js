@@ -19,10 +19,12 @@ export default function GithubLink({ user }) {
       </div>
     );
   }
+
   return (
     <>
       <span
         className="dropdown-menu-parent"
+        style={{marginRight: '20px'}}
       >
         <button className="fab fa-github icon-span" />
         {
