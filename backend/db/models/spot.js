@@ -11,16 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     gpsLocation: {
-      type: DataTypes.GEOMETRY('POINT'),
+      type: DataTypes.ARRAY(DataTypes.DOUBLE),
       allowNull: false
     },
     defaultPictureUrl: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.ARRAY(DataTypes.STRING(255)),
       allowNull: true,
-    },
-    altitude: {
-      type: DataTypes.FLOAT,
-      allowNull: true
     },
     streetAddress: {
       type: DataTypes.STRING(255),
@@ -43,8 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
   }, {});
-  Spot.associate = function(models) {
+  Spot.associate = function (models) {
     // associations can be defined here
+    Spot.hasMany(models.Review, { foreignKey: 'spotId' });
+    Spot.hasMany(models.Booking, { foreignKey: 'spotId' });
+    Spot.belongsToMany(models.User, { through: 'Ownership', otherKey: 'userId', foreignKey: 'spotId' });
+    Spot.belongsToMany(models.Category, { through: 'CategorySpot', otherKey: 'categoryId', foreignKey: 'spotId' });
   };
   return Spot;
 };

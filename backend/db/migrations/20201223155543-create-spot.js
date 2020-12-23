@@ -18,16 +18,12 @@ module.exports = {
         allowNull: false
       },
       gpsLocation: {
-        type: Sequelize.GEOMETRY('POINT'),
+        type: Sequelize.ARRAY(Sequelize.DOUBLE),
         allowNull: false
       },
-      defaultPictureUrl: {
-        type: Sequelize.STRING(255),
+      mediaUrls: {
+        type: Sequelize.ARRAY(Sequelize.STRING(255)),
         allowNull: true,
-      },
-      altitude: {
-        type: Sequelize.FLOAT,
-        allowNull: true
       },
       streetAddress: {
         type: Sequelize.STRING(255),

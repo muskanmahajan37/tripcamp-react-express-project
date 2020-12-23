@@ -1,16 +1,41 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Booking = sequelize.define('Booking', {
-    userId: DataTypes.INTEGER,
-    spotId: DataTypes.INTEGER,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    guests: DataTypes.INTEGER,
-    status: DataTypes.INTEGER,
-    specialRequest: DataTypes.TEXT
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: "Users" }
+    },
+    spotId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: "Spots" }
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    guests: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    specialRequest: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
   }, {});
-  Booking.associate = function(models) {
+  Booking.associate = function (models) {
     // associations can be defined here
+    Booking.belongsTo(models.User, { foreignKey: 'userId' });
+    Booking.belongsTo(models.Spot, { foreignKey: 'spotId' });
   };
   return Booking;
 };
