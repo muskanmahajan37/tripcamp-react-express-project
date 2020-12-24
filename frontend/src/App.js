@@ -9,12 +9,17 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
+import * as spotActions from './store/spot';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   console.log(sessionUser);
+
+  useEffect(() => {
+    dispatch(spotActions.getOneSpot(3));
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));

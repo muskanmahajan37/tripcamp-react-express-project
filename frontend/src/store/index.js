@@ -5,9 +5,11 @@ import thunk from 'redux-thunk';
 
 // import fetch from './csrf';
 import sessionReducer from './session';
+import spotReducer from './spot';
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  spots: spotReducer
 });
 
 let enhancer;
