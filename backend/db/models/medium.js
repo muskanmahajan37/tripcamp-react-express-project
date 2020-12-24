@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Medium = sequelize.define('Medium', {
     url: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     name: {
       type: DataTypes.STRING(100),

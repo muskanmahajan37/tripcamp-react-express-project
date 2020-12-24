@@ -13,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.INTEGER,
       allowNull: true
-    }
+    },
+    mediaUrlIds: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: true
+    },    
   }, {});
   Amenity.associate = function (models) {
     // associations can be defined here

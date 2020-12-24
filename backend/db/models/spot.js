@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
+    units: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
     gpsLocation: {
       type: DataTypes.ARRAY(DataTypes.DOUBLE),
       allowNull: false
@@ -38,6 +43,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(100),
       allowNull: true
     },
+    perNightRate: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
+    accommodationType: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    website: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    }      
   }, {});
   Spot.associate = function (models) {
     // associations can be defined here

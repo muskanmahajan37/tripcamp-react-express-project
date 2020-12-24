@@ -30,13 +30,24 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      upvotes: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      mediaUrlIds: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now'),
       }
     });
   },
