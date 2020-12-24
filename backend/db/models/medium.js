@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Medium.associate = function(models) {
     // associations can be defined here
+    //TODO: how to add associations in case of ARRAY type?
   };
   return Medium;
 };

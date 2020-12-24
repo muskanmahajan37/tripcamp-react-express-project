@@ -45,6 +45,9 @@ module.exports = (sequelize, DataTypes) => {
   );
   Relationship.associate = function (models) {
     // associations can be defined here
+    //TODO check if these associations are correct when everything is implemented
+    Relationship.belongsTo(models.User, { as: 'user1', foreignKey: 'user1Id' });
+    Relationship.belongsTo(models.User, { as: 'user2', foreignKey: 'user2Id' });
   };
   return Relationship;
 };

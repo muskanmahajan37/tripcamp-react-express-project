@@ -53,6 +53,14 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Review, { foreignKey: 'userId' });
     User.hasMany(models.Booking, { foreignKey: 'userId' });
     User.belongsToMany(models.Spot, { through: 'Ownership', otherKey: 'spotId', foreignKey: 'userId'});
+    User.hasMany(models.Message, { as: 'sender', foreignKey: 'senderId' });
+    User.hasMany(models.Message, { as: 'recipient', foreignKey: 'recipientId' });
+    
+    //TODO check if these associations are correct when everything is implemented
+    User.hasMany(models.Relationship, { as: 'user1', foreignKey: 'user1Id' });
+    User.hasMany(models.Relationship, { as: 'user2', foreignKey: 'user2Id' });
+
+    User.hasOne(models.UserProfile, { foreignKey: 'userId' });
   };
   User.prototype.toSafeObject = function () { // remember, this cannot be an arrow function
     const { id, username, email } = this; // context will be the User instance
