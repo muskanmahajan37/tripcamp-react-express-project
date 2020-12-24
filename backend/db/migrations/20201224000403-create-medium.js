@@ -1,34 +1,28 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Reviews', {
+    return queryInterface.createTable('Media', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "Users", key: 'id' }
-      },
-      spotId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "Spots", key: 'id' }
-      },
-      title: {
+      url: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      body: {
-        type: Sequelize.TEXT,
-        allowNull: false
+      name: {
+        type: Sequelize.STRING(100),
+        allowNull: true
       },
-      rating: {
+      type: {
+        type: Sequelize.STRING(25),
+        allowNull: true
+      },
+      source: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +35,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Reviews');
+    return queryInterface.dropTable('Media');
   }
 };

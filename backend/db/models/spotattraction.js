@@ -1,23 +1,19 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Ownership = sequelize.define('Ownership', {
-    userId: {
+  const SpotAttraction = sequelize.define('SpotAttraction', {
+    attractionId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: { model: 'Users', key: 'id'}
+      references: { model: 'Attractions', key: 'id'}
     },
     spotId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: { model: 'Spots', key: 'id'}
-    },
-    status: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
+    }
   }, {});
-  Ownership.associate = function(models) {
+  SpotAttraction.associate = function(models) {
     // associations can be defined here
   };
-  return Ownership;
+  return SpotAttraction;
 };

@@ -1,34 +1,22 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Reviews', {
+    return queryInterface.createTable('SpotAmenities', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: "Users", key: 'id' }
-      },
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "Spots", key: 'id' }
+        references: { model: 'Spots', key: 'id' }
       },
-      title: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      body: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      rating: {
+      amenityId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'Amenities', key: 'id' }
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +29,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Reviews');
+    return queryInterface.dropTable('SpotAmenities');
   }
 };

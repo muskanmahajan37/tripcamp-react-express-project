@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.DOUBLE),
       allowNull: false
     },
-    defaultPictureUrl: {
-      type: DataTypes.ARRAY(DataTypes.STRING(255)),
+    mediaUrlIds: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
     streetAddress: {
@@ -45,6 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     Spot.hasMany(models.Booking, { foreignKey: 'spotId' });
     Spot.belongsToMany(models.User, { through: 'Ownership', otherKey: 'userId', foreignKey: 'spotId' });
     Spot.belongsToMany(models.Category, { through: 'CategorySpot', otherKey: 'categoryId', foreignKey: 'spotId' });
+    Spot.belongsToMany(models.Amenity, { through: 'SpotAmenity', otherKey: 'amenityId', foreignKey: 'spotId' });
+    Spot.belongsToMany(models.Attraction, { through: 'SpotAttraction', otherKey: 'attractionId', foreignKey: 'spotId' });
   };
   return Spot;
 };

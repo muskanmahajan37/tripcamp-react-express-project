@@ -1,42 +1,30 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Bookings', {
+    return queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      senderId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "Users", key: 'id' }
+        references: { model: 'Users', key: 'id' }
       },
-      spotId: {
+      recipientId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: "Spots", key: 'id' }
+        references: { model: 'Users', key: 'id' }
       },
-      startDate: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      endDate: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      guests: {
-        type: Sequelize.INTEGER,
+      body: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
       status: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      specialRequest: {
-        type: Sequelize.TEXT,
-        allowNull: true
       },
       createdAt: {
         allowNull: false,
@@ -49,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Bookings');
+    return queryInterface.dropTable('Messages');
   }
 };

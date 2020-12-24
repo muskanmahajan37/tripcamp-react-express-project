@@ -10,11 +10,13 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'Spots', key: 'id'}
       },
       categoryId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'Categories', key: 'id'}
       },
       createdAt: {
         allowNull: false,

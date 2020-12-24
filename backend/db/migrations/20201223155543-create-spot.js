@@ -21,8 +21,8 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.DOUBLE),
         allowNull: false
       },
-      mediaUrls: {
-        type: Sequelize.ARRAY(Sequelize.STRING(255)),
+      mediaUrlIds: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: true,
       },
       streetAddress: {

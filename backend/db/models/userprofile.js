@@ -5,9 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    mediaUrls: {
-      type: DataTypes.ARRAY(DataTypes.STRING(255)),
-      allowNull: true
+    mediaUrlIds: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: true,
+      // references: { model: 'Media', key: 'id'}
     },
     streetAddress: {
       type: DataTypes.STRING(255),

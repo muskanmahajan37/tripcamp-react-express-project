@@ -10,11 +10,13 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'Users', key: 'id'}
       },
-      mediaUrls: {
-        type: Sequelize.ARRAY(Sequelize.STRING(255)),
-        allowNull: true
+      mediaUrlIds: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+        allowNull: true,
+        // references: { model: 'Media', key: 'id'}
       },
       streetAddress: {
         type: Sequelize.STRING(255),
