@@ -56,14 +56,32 @@ module.exports = {
         source: 0
       },
       {
-        url: '/resources/images/spots/Mountain-in-the-clouds-in-Ta-Xua-@hataos_.jpg',
+        url: 'https://vietnamdiscovery.com/wp-content/uploads/2019/10/Mountain-in-the-clouds-in-Ta-Xua-@hataos_.jpg',
         name: 'Mountain-in-the-clouds-in-Ta-Xua-@hataos_.jpg',
         type: 'image/jpg',
         source: 0
       },
+      // {
+      //   url: '/resources/images/spots/taxua-shutterstock_1346698394_small.jpg',
+      //   name: 'taxua-shutterstock_1346698394_small.jpg',
+      //   type: 'image/jpg',
+      //   source: 0
+      // },
       {
-        url: '/resources/images/spots/taxua-shutterstock_1346698394_small.jpg',
-        name: 'taxua-shutterstock_1346698394_small.jpg',
+        url: 'https://www.vietnambooking.com/wp-content/uploads/2020/07/ta-xua-san-may-7.jpg',
+        name: 'ta-xua-san-may-7.jpg',
+        type: 'image/jpg',
+        source: 0
+      },
+      {
+        url: 'https://youtu.be/jMt0eKnMoI0',
+        name: 'San Bien May Ta Xua Son La Bang Flycam - Nem TV',
+        type: 'video/YouTube',
+        source: 0
+      },
+      {
+        url: 'https://www.vietnambooking.com/wp-content/uploads/2020/07/ta-xua-san-may-9.jpg',
+        name: 'ta-xua-san-may-9.jpg',
         type: 'image/jpg',
         source: 0
       },

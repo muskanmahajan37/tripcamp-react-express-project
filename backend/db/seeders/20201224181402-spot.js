@@ -60,7 +60,7 @@ module.exports = {
                       as well as enjoying the sunshine underneath a clear blue sky. You can find the best camping spot in Ta Xua Nature Reserve on the peak of \
                       the mountain by trekking up to the 2.200 meters base camp",
         units: 5,
-        gpsLocation: [42.10445476325384, -79.55525254232849],
+        gpsLocation: [21.309035101078653, 104.46487376026307],
         mediaUrlIds: [8, 9, 10, 11],
         streetAddress: "about 220 km from Hanoi",
         city: 'Bac Yen',
@@ -81,5 +81,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
+   return queryInterface.bulkDelete('Spots', null, {});
   }
 };
