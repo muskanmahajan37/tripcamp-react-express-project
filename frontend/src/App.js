@@ -18,7 +18,7 @@ function App() {
   console.log(sessionUser);
 
   useEffect(() => {
-    dispatch(spotActions.getOneSpot(3));
+    dispatch(spotActions.getAllSpots());
   }, [dispatch]);
 
   useEffect(() => {
