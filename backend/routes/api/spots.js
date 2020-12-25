@@ -18,6 +18,7 @@ router.get('/',
       const urls = [];
       for (let i = 0; i < spots[k].mediaUrlIds.length; i++) {
         const medium = await Medium.findByPk(spots[k].mediaUrlIds[i]);
+        if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
         urls.push(medium.url);
       }      
       spots[k].dataValues.urls = urls;
@@ -33,6 +34,7 @@ router.get('/:id',
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {
       const medium = await Medium.findByPk(spot.mediaUrlIds[i]);
+      if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
       urls.push(medium.url);
     }
     spot.dataValues.urls = urls;
