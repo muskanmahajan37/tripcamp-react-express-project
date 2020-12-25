@@ -1,6 +1,6 @@
 import MapComponent, { MapWithMarkerClusterer } from '../GoogleMaps';
 
-import Spot from '../Spot';
+import Spot, { AllSpots } from '../Spot';
 
 
 export default function Home() {
@@ -8,7 +8,8 @@ export default function Home() {
     <div className="main-home-view" >
       {/* <MapComponent /> */}
       {/* <MapWithMarkerClusterer /> */}
-      <Spot />
+      {/* <Spot /> */}
+      <AllSpots />
     </div>
   );
 }

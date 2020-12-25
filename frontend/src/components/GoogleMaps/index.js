@@ -72,6 +72,7 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
 }
 
 export const MapWithMarkerClusterer = ({ center = defaultCenter, zoom = 7, locations = defaultLocations }) => {
+  console.log("MapWithMarkerClusterer", center, zoom, locations);
   return (
     <LoadScript
       googleMapsApiKey="AIzaSyAkH92G4PO4QrcdQ1GjsX5ThHe7tWNyQog"
