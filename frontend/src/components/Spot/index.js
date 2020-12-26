@@ -17,13 +17,13 @@ export function AllSpots() {
   let locations = [];
 
   useEffect(() => {
-    if(spots){
+    if (spots) {
       spots.map(spot => {
-        locations.push({lat: spot.gpsLocation[0], lng: spot.gpsLocation[1]});
+        locations.push({ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] });
       });
       console.log("locationsfdfsdfsdfsdfsdfs", locations);
     }
-  },[spots.length]);
+  }, [spots.length]);
 
   return (
     <div className='spots-and-maps'>
@@ -46,9 +46,11 @@ export function AllSpots() {
           </div>
         )}
       </div>
-      {
-        locations.length && <MapWithMarkerClusterer center={locations[0]} zoom={5} locations={locations}/>
-      }
+      <div className='home-side-map'>
+        {
+          locations && <MapWithMarkerClusterer center={locations[0]} zoom={5} locations={locations} />
+        }
+      </div>
     </div>
   );
 }

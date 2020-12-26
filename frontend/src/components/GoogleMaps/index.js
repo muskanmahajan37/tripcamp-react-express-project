@@ -2,8 +2,9 @@ import React from 'react'
 import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '100%',
+  height: '1000px',
+  marginRigh: "0px"
 };
 //38.4835° N, 78.8497° W
 const defaultCenter = {
