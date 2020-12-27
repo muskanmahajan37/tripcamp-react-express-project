@@ -80,6 +80,7 @@
   padding: 0px 5px;
   margin: 0px 5px;
   width: 110%;
+  color: black;
 }
 
 .dropdown-menu-item:hover {
@@ -198,7 +199,7 @@
   /* Enable scroll if needed */
   background-color: rgb(0, 0, 0);
   /* Fallback color */
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(100, 100, 100, 0.7);
   /* Black w/ opacity */
 }
 

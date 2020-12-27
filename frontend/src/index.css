@@ -24,7 +24,7 @@ nav {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
+  z-index: 2;
 }
 
 .hidden-element{
@@ -40,7 +40,8 @@ nav {
 
 .main-home-view{
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  align-items: stretch;
   flex-direction: column;
   /* min-height: 90vh; */
   /* z-index: -1; */
@@ -74,6 +75,6 @@ nav {
   position: fixed;
   bottom: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 2;
   padding: 8px;
 }

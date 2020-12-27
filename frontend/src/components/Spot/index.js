@@ -45,6 +45,40 @@ export function AllSpots() {
             </div>
           </div>
         )}
+                {spots && spots.map(spot =>
+          <div key={spot.name} >
+            <h6>{spot.name}</h6>
+            <div className='spot-media-display'>
+              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
+                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
+                :
+                <></>
+              }
+            </div>
+            <div>
+              <p className='spot-description'>
+                {spot.description}
+              </p>
+            </div>
+          </div>
+        )}
+                {spots && spots.map(spot =>
+          <div key={spot.name} >
+            <h6>{spot.name}</h6>
+            <div className='spot-media-display'>
+              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
+                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
+                :
+                <></>
+              }
+            </div>
+            <div>
+              <p className='spot-description'>
+                {spot.description}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
       <div className='home-side-map'>
         {

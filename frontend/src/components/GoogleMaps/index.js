@@ -1,10 +1,9 @@
-import React from 'react'
-import { GoogleMap, LoadScript, Marker, MarkerClusterer } from '@react-google-maps/api';
+import React, { useState } from 'react'
+import { GoogleMap, LoadScript, Marker, MarkerClusterer, InfoWindow } from '@react-google-maps/api';
 
 const containerStyle = {
-  width: '100%',
+  width: '400px',
   height: '1000px',
-  marginRigh: "0px"
 };
 //38.4835° N, 78.8497° W
 const defaultCenter = {
@@ -73,7 +72,11 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
 }
 
 export const MapWithMarkerClusterer = ({ center = defaultCenter, zoom = 7, locations = defaultLocations }) => {
-  console.log("MapWithMarkerClusterer", center, zoom, locations);
+  const [selected, setSelected] = useState({});
+
+  const onSelect = location => {
+    setSelected({ location });
+  }
   return (
     <LoadScript
       googleMapsApiKey="AIzaSyAkH92G4PO4QrcdQ1GjsX5ThHe7tWNyQog"
@@ -87,10 +90,23 @@ export const MapWithMarkerClusterer = ({ center = defaultCenter, zoom = 7, locat
                 position={location}
                 clusterer={clusterer}
                 label={labels[i % labels.length]}
+                onClick={() => onSelect(location)}
               />
             ))
           }
         </MarkerClusterer>
+        {
+            selected.location &&
+            (
+              <InfoWindow
+                position={selected.location}
+                clickable={true}
+                onCloseClick={() => setSelected({})}
+              >
+                <p>{"Name"}</p>
+              </InfoWindow>
+            )
+          }        
       </GoogleMap>
     </LoadScript>
   )

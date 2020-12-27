@@ -24,7 +24,7 @@
   background-color: white;
    /* #2196F3; */
   padding: 10px;
-  width: 80%;
+  /* width: 60%; */
 }
 
 .spots-home-display-grid > div {
@@ -48,9 +48,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: start;
 }
 .home-side-map{
   height: 100%;
-  width: 20%;
-  margin-top: auto;
+  /* width: 10%; */
+  position: fixed;
+  right: 0;
+  margin-top: 10px;
+  padding-right: 0px;
+  margin-right: 0px;
+  z-index: 0;
 }
