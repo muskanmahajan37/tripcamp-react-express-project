@@ -1,6 +1,7 @@
 import MapComponent, { MapWithMarkerClusterer } from '../GoogleMaps';
 
 import Spot, { AllSpots } from '../Spot';
+import UploadForm from '../UploadForm';
 
 
 export default function Home() {
@@ -9,7 +10,8 @@ export default function Home() {
       {/* <MapComponent /> */}
       {/* <MapWithMarkerClusterer /> */}
       {/* <Spot /> */}
-      <AllSpots />
+      {/* <AllSpots /> */}
+      <UploadForm />
     </div>
   );
 }
