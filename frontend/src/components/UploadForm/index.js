@@ -15,7 +15,7 @@ export default function UploadForm() {
   })
 
   async function getSignedRequest(file) {
-    const res = await fetch(`/api/media/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+    const res = await fetch(`/api/media/sign-s3?file-name=resources/images/useruploads/${file.name}&file-type=${file.type}`);
     console.log("upload from res", res);
     console.log('s3', res.data.signedRequest, res.data.url);
     if (res.status === 200) {
@@ -44,15 +44,10 @@ export default function UploadForm() {
   }
   return (
     <div>
-      <input type="file" id="file-input" />
-      <p id="status">Please select a file</p>
-      {/* <img id="preview" src="/images/default.png" /> */}
-
       <form type='submit'>
-        {/* <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png" /> */}
-        <input type="text" name="username" placeholder="Username" /><br />
-        <input type="text" name="full-name" placeholder="Full name" /><br /><br />
-        <button >Upload</button>
+        <input type="file" id="file-input" />
+        <p id="status">Please select a file</p>
+        <button onClick={e => e.preventDefault()}>Upload</button>
       </form>
     </div>
   );

@@ -27,7 +27,6 @@ router.get('/sign-s3', asyncHandler(async (req, res) => {
     ACL: 'public-read'
   };
   
-  console.log("fsdfksdfhksdfhksdkf\n\n\n\n\n\n\n\n\n\n");
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
       console.log(err);
@@ -37,9 +36,6 @@ router.get('/sign-s3', asyncHandler(async (req, res) => {
       signedRequest: data,
       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
-    console.log("fsdfksdfhksdfhksdkf\n\n\n\n\n\n\n\n\n\n",returnData);
-    // res.write(JSON.stringify(returnData));
-    // res.end();
     res.json(returnData)
   });
 }));
