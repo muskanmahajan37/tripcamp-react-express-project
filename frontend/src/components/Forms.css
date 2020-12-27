@@ -25,6 +25,11 @@
   width: fit-content;
   border-radius: 10px;
 }
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}
 
 .button-Send {
   background-color: #008CBA;
@@ -47,6 +52,11 @@
 
 .button-Next {
   background-color: #555555;
+}
+
+.button-selectFile {
+  background-color: #97ffe7;
+  color: black;
 }
 
 .error-messages {
@@ -203,6 +213,11 @@
   /* Black w/ opacity */
 }
 
+.modal-center-contents{
+  align-items: center;
+  justify-content: center;
+}
+
 /* Modal Content */
 
 .modal-content {
@@ -268,4 +283,9 @@
 h3 {
   padding: 5px;
   margin: 5px;
+}
+
+.preview-image{
+  max-width: 200px;
+  max-height: auto;
 }

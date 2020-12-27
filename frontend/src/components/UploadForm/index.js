@@ -1,53 +1,95 @@
-import { useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import fetch from '../../store/csrf';
 
 export default function UploadForm() {
-  useEffect(() => {
-    document.getElementById("file-input").onchange = () => {
-      const files = document.getElementById('file-input').files;
-      const file = files[0];
-      if (file == null) {
-        return alert('No file selected.');
-      }
-      getSignedRequest(file);
-    };
-  })
+  const [enableUpload, setEnableUpload] = useState(false);
+  const [fileToUpload, setFileToUpload] = useState(null);
+  const uploadModalRef = useRef(null);
+  const previewImgRef = useRef(null);
+
 
   async function getSignedRequest(file) {
     const res = await fetch(`/api/media/sign-s3?file-name=resources/images/useruploads/${file.name}&file-type=${file.type}`);
-    console.log("upload from res", res);
-    console.log('s3', res.data.signedRequest, res.data.url);
     if (res.status === 200) {
       uploadFile(file, res.data.signedRequest, res.data.url);
+      setFileToUpload(null);
+      setEnableUpload(false);
     }
     else {
+      //TODO: disable this alert and annouce something more userfriendly
       alert('Could not get signed URL.', res.error);
     }
   }
 
-  function uploadFile(file, signedRequest, url) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', signedRequest);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          // document.getElementById('preview').src = url;
-          // document.getElementById('avatar-url').value = url;
-        }
-        else {
-          alert('Could not upload file.');
-        }
-      }
-    };
-    xhr.send(file);
+  async function uploadFile(file, signedRequest, url) {
+    const res = await window.fetch(signedRequest, {
+      method: 'PUT',
+      body: file
+    });
+    if (res.status === 200) {
+      //TODO: add to database and do some React/Redux rendering using the return url
+    }
+    else {
+      alert('Could not upload file.');
+    }
+  }
+  function onFileInputChange(e) {
+    const files = e.target.files;
+    const file = files[0];
+    if (file == null) {
+      return alert('No file selected.');
+    }
+    setEnableUpload(true);
+    setFileToUpload(file);
+
+    // https://stackoverflow.com/questions/4459379/preview-an-image-before-it-is-uploaded
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e) {
+      previewImgRef.current && previewImgRef.current.setAttribute('src', e.target.result); 
+    }
+  }
+
+  function onUploadButtonClicked(e) {
+    e.preventDefault();
+    getSignedRequest(fileToUpload);
+  }
+  // useEffect(() => {
+  //   console.log("fileToUpload", fileToUpload);
+  //   if (fileToUpload) {
+  //     const tmppath = fileToUpload.webkitRelativePath;
+  //     console.log('full path fileToUpload', tmppath);
+  //   }
+  // });
+  const handelCancelClick = e => {
+    // console.log(uploadModalRef.current);
+    if (uploadModalRef.current)
+      uploadModalRef.current.style.display = "none";
   }
   return (
-    <div>
-      <form type='submit'>
-        <input type="file" id="file-input" />
-        <p id="status">Please select a file</p>
-        <button onClick={e => e.preventDefault()}>Upload</button>
+    <div className="modal modal-center-contents" ref={uploadModalRef}>
+      <form type='submit' className='form-container modal-content'>
+        <p id="status">{fileToUpload ? "File ready to upload" : "Please select a file"}</p>
+        <label class="button button-selectFile">
+          <i className="fa fa-image"></i> {(fileToUpload && fileToUpload.name) || "Choose File To Upload"}
+          <input type="file" style={{ display: "none" }} name="image" id="file-input" onChange={onFileInputChange} files={fileToUpload} />
+        </label>
+        {
+          fileToUpload && <img className='preview-image' alt="File to upload" ref={previewImgRef}/>
+        }
+        <div className="buttons-div">
+          <button
+            className='button button-Send'
+            type='submit'
+            disabled={!enableUpload}
+            onClick={onUploadButtonClicked}
+          >Upload</button>
+          <button
+            className='button button-Reset'
+            onClick={handelCancelClick}
+          > Cancel </button>
+        </div>
       </form>
     </div>
   );
