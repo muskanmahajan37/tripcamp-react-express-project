@@ -297,3 +297,14 @@ h3 {
   max-height: auto;
   padding: 10px;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

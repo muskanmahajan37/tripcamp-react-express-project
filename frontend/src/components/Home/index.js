@@ -10,8 +10,8 @@ export default function Home() {
       {/* <MapComponent /> */}
       {/* <MapWithMarkerClusterer /> */}
       {/* <Spot /> */}
-      {/* <AllSpots /> */}
-      <UploadForm />
+      <AllSpots />
+      {/* <UploadForm /> */}
     </div>
   );
 }

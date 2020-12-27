@@ -38,42 +38,14 @@ export function AllSpots() {
                 <></>
               }
             </div>
-            <div>
-              <p className='spot-description'>
-                {spot.description}
+            <div style={{marginTop: '10px'}}>
+              <p className='spot-address'>
+                {spot.streetAddress}
               </p>
-            </div>
-          </div>
-        )}
-                {spots && spots.map(spot =>
-          <div key={spot.name} >
-            <h6>{spot.name}</h6>
-            <div className='spot-media-display'>
-              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
-                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
-                :
-                <></>
-              }
-            </div>
-            <div>
-              <p className='spot-description'>
-                {spot.description}
-              </p>
-            </div>
-          </div>
-        )}
-                {spots && spots.map(spot =>
-          <div key={spot.name} >
-            <h6>{spot.name}</h6>
-            <div className='spot-media-display'>
-              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
-                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
-                :
-                <></>
-              }
-            </div>
-            <div>
-              <p className='spot-description'>
+              <p className='spot-address'>
+               {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
+              </p>              
+              <p className='spot-description hide-scollbar'>
                 {spot.description}
               </p>
             </div>
