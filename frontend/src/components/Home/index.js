@@ -8,15 +8,17 @@ import Banner from './Banner';
 
 export default function Home() {
   return (
-    <div className="main-home-view" >
-      {/* <MapComponent /> */}
-      {/* <MapWithMarkerClusterer /> */}
-      {/* <Spot /> */}
+    <div className="main-home-view">
       <Banner />
-      <AllSpots />
-      {/* <Link path='upload' > */}
+      <div className="main-home-view-spots" >
+        {/* <MapComponent /> */}
+        {/* <MapWithMarkerClusterer /> */}
+        {/* <Spot /> */}
+        <AllSpots />
+        {/* <Link path='upload' > */}
         {/* <UploadForm link="official"/> */}
-      {/* </Link> */}
+        {/* </Link> */}
+      </div>
     </div>
   );
 }

@@ -316,8 +316,8 @@ h3 {
 .slides {
   display: none;
   width: 100%;
-  object-fit: none; /* Do not scale the image */
-  object-position: center; /* Center the image within the element */
+  /* object-fit: fill; */
+  /* object-position: center; */
 }
 .slides-display{
   display: block;
@@ -330,7 +330,8 @@ h3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 1200px;
+  max-width: 90%;
   height: 500px;
   overflow: hidden;
+  margin: 40px;
 }

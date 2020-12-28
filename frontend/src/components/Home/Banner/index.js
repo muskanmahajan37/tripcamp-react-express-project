@@ -26,7 +26,9 @@ export default function Banner() {
     <div className='home-banner-div'>
       <img className="slides" src="https://tripcamp.s3.amazonaws.com/resources/images/official/tripcamp-home1.jpg" />
       <img className="slides" src="https://tripcamp.s3.amazonaws.com/resources/images/official/tripcamp-home2.jpg" />
+      <img className="slides" src="https://tripcamp.s3.amazonaws.com/resources/images/official/tripcamp-home5.jpg" />
       <img className="slides" src="https://tripcamp.s3.amazonaws.com/resources/images/official/tripcamp-home4.jpg" />
+      <img className="slides" src="https://tripcamp.s3.amazonaws.com/resources/images/official/tripcamp-home6.jpg" />
     </div>
   );
 }

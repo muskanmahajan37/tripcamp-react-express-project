@@ -40,12 +40,22 @@ nav {
 
 .main-home-view{
   display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* min-height: 90vh; */
+  /* z-index: -1; */
+  width: 100%;
+}
+.main-home-view-spots{
+  display: flex;
   /* align-items: center; */
   align-items: stretch;
   flex-direction: column;
   /* min-height: 90vh; */
   /* z-index: -1; */
   width: 100%;
+  padding-left: 100px;
+  /* padding-right: 100px; */
 }
 .mainbody{
   display: flex;
