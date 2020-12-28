@@ -74,6 +74,7 @@ export function LoginFormModal() {
   const loginModalRef = useRef(null);
   const history = useHistory();
 
+  console.log("login", history);
   if (sessionUser) {
     return <Redirect to='/' />;
   }
@@ -87,6 +88,7 @@ export function LoginFormModal() {
       .then(res => {
         if (loginModalRef.current)
           loginModalRef.current.style.display = "none";
+        // history.go(2);
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);

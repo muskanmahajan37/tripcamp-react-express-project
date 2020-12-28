@@ -38,17 +38,16 @@ export const getAllBookings = () => async dispatch => {
   }
   return res;
 }
-export const createOneBooking = ({ spotId, booking }) => async dispatch => {
+export const createOneBooking = ({ booking }) => async dispatch => {
   const res = await fetch(`/api/bookings`, {
     method: 'POST',
-    body: {
-      spotId,
-      booking
-    }
+    body: JSON.stringify(booking)
   }); //This fetch is a modified fetch, which already returns data after res.json()
+  console.log("createOneBooking res", res);
   if (res.ok) {
-    const fedback_booking = res.data.booking;
-    dispatch(setBookingPOJO(fedback_booking));
+    console.log("res", res);
+    // const fedback_booking = res.data.booking;
+    // dispatch(setBookingPOJO(fedback_booking));
   }
   return res;
 }

@@ -22,10 +22,10 @@ export default function BookingFormModal() {
   const history = useHistory();
   const params = useParams();
 
-  console.log('sessionUser', sessionUser);
   if (!sessionUser) {
     if (bookingModalRef.current)
-      bookingModalRef.current.style.display = "none";
+    bookingModalRef.current.style.display = "none";
+    console.log('booking', history);
     return <Redirect to='/login' />;
   }
 
@@ -35,7 +35,7 @@ export default function BookingFormModal() {
   //TODO: make this useEffect work so it won't reload spot data everytime user types a key
   // useEffect(() => {
   if (params && spots) spot = spots.find(spot => spot.id === Number(params.spotId));
-  console.log("spot", spot, params);
+  // console.log("spot", spot, params);
   spotInfo = spot && <>
     <p>Spot:</p>
     <p>{spot.name}</p>
@@ -48,7 +48,6 @@ export default function BookingFormModal() {
     setErrors([]);
 
     return dispatch(bookingActions.createOneBooking({
-      spotId: spot.id,
       booking: {
         userId: sessionUser.id,
         spotId: spot.id,
