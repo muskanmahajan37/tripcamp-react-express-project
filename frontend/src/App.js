@@ -40,7 +40,7 @@ function App() {
         <Route path='/signup'>
           <SignupFormModal />
         </Route>
-        <Route path='/bookings'>
+        <Route path='/bookings/spots/:spotId'>
           <BookingFormModal />
         </Route>
       </Switch>

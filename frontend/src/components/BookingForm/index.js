@@ -1,6 +1,6 @@
 // frontend/src/components/BookingForm/index.js
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 
@@ -12,17 +12,22 @@ export default function BookingFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots);
-  const [credential, setCredential] = useState('');
-  const [password, setPassword] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [numberOfGuests, setNumberOfGuests] = useState(0);
+  const [specialRequest, setSpecialRequest] = useState("");
   const [errors, setErrors] = useState([]);
   const bookingModalRef = useRef(null);
   const history = useHistory();
+  const params = useParams();
 
   let spot;
 
-  const params = useParams();
-  console.log('params', params);
-
+  //TODO: make this useEffect work so it won't reload spot data everytime user types a key
+  // useEffect(() => {
+    if(params && spots) spot = spots.find(spot => spot.id === Number(params.spotId));  
+    console.log("spot", spot, params);  
+  // }, [params, spots]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -59,7 +64,7 @@ export default function BookingFormModal() {
             spot && <>
               <p>Spot:</p>
               <p>{spot.name}</p>
-              <p>{spot.address}</p>
+              <p>{spot.streetAddress}</p>
             </>
           }
         </div>
@@ -72,8 +77,8 @@ export default function BookingFormModal() {
             <input
               className='input'
               type='date'
-              value={credential}
-              onChange={e => setCredential(e.target.value)}
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
               required
             />
           </div>
@@ -82,8 +87,8 @@ export default function BookingFormModal() {
             <input
               className='input'
               type='date'
-              value={credential}
-              onChange={e => setCredential(e.target.value)}
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
               required
             />
           </div>
@@ -92,18 +97,19 @@ export default function BookingFormModal() {
             <input
               className='input'
               type='number'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              value={numberOfGuests}
+              min={0}
+              onChange={e => setNumberOfGuests(e.target.value)}
               required
             />
           </div>
           <div className="input-div">
             <label>Special Request</label>
-            <input
+            <textarea
               className='input'
               type='text'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              value={specialRequest}
+              onChange={e => setSpecialRequest(e.target.value)}
               required
             />
           </div>

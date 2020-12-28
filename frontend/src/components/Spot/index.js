@@ -25,7 +25,6 @@ export function AllSpots() {
       spots.map(spot => {
         locations.push({ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] });
       });
-      console.log("locationsfdfsdfsdfsdfsdfs", locations);
     }
   }, [spots.length]);
 
