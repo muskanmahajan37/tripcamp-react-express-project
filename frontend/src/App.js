@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
+import BookingFormModal from './components/BookingForm';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spot';
+import * as bookingActions from './store/booking';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -37,6 +39,9 @@ function App() {
         </Route>
         <Route path='/signup'>
           <SignupFormModal />
+        </Route>
+        <Route path='/bookings'>
+          <BookingFormModal />
         </Route>
       </Switch>
       <Footer />

@@ -6,10 +6,14 @@ import thunk from 'redux-thunk';
 // import fetch from './csrf';
 import sessionReducer from './session';
 import spotReducer from './spot';
+import bookingReducer from './booking';
+import reviewReducer from './review';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  spots: spotReducer
+  spots: spotReducer,
+  bookings: bookingReducer,
+  reviews: reviewReducer
 });
 
 let enhancer;

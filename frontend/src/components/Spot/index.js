@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 // import ReactPlayer from 'react-player/youtube'
 
 import { MapWithMarkerClusterer } from '../GoogleMaps';
@@ -15,6 +15,7 @@ import './Spot.css';
 
 export function AllSpots() {
   const spots = useSelector(state => state.spots);
+  const history = useHistory();
   let locations = [];
 
   useEffect(() => {
@@ -25,6 +26,10 @@ export function AllSpots() {
       console.log("locationsfdfsdfsdfsdfsdfs", locations);
     }
   }, [spots.length]);
+
+  function handleBookNowClick(e){
+    history.push('/bookings');
+  }
 
   return (
     <div className='spots-and-maps'>
@@ -38,16 +43,25 @@ export function AllSpots() {
                 :
                 <></>
               }
-              <Rating rated={2.8} userChangeable={true} />
+              <div className="start-rating-on-top-of-image">
+                <Rating rated={2.8} userChangeable={true} />
+              </div>
             </div>
             <div style={{ marginTop: '10px' }}>
-              <p className='spot-address'>
-                {spot.streetAddress}
-              </p>
-              <p className='spot-address'>
-                {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
-              </p>
-              <button>Book Now</button>
+              <div className="buttons-and-address">
+                <div className="book-and-more-div">
+                  <button onClick={handleBookNowClick}>Book Now</button>
+                  <button>More</button>
+                </div>
+                <div className='spot-address'>
+                  <p >
+                    {spot.streetAddress}
+                  </p>
+                  <p >
+                    {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
+                  </p>
+                </div>
+              </div>
               <p className='spot-description hide-scollbar'>
                 {spot.description}
               </p>

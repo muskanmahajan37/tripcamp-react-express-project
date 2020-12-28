@@ -7,7 +7,7 @@ export default function Rating({ rated = 0, userChangeable = false }) {
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
 
-  if (!userChangeable) {
+  if (userChangeable) {
     const ratatedWholeNumber = Math.floor(rated);
     const ratedDecimal = rated - ratatedWholeNumber;
     return (
@@ -25,6 +25,7 @@ export default function Rating({ rated = 0, userChangeable = false }) {
             />
           })
         }
+        <span className="star-set-font-size">{rated}</span>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 .player-wrapper {
   position: relative;
-  padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */;
+  padding-top: 56.25%/* Player ratio: 100 / (1280 / 720) */
+  ;
 }
 
 .react-player {
@@ -9,55 +10,93 @@
   left: 0;
 }
 
-.spot-media-display{
+.spot-media-display {
   display: block;
+  position: relative;
   width: 90%;
 }
-.media-display{
+
+.media-display {
   width: 400px;
   height: 300px;
 }
-.spots-home-display-grid{
+
+.buttons-and-address {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.book-and-more-div {
+  display: flex;
+  flex-direction: column;
+}
+.book-and-more-div button {
+  margin: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #017767;
+  color: white;
+  border: none;
+}
+
+.start-rating-on-top-of-image {
+  position: absolute;
+  bottom: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
+
+.spots-home-display-grid {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-gap: 5%;
   background-color: white;
-   /* #2196F3; */
+  /* #2196F3; */
   padding: 10px;
   /* width: 60%; */
 }
 
-.spots-home-display-grid > div {
+.spots-home-display-grid>div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 20px 0;
   font-size: 30px;
 }
 
-.spot-default-image{
+.spot-default-image {
   width: 300px;
   height: 250px;
   margin-top: 0px;
 }
-.spot-description{
+
+.spot-description {
   font-size: 16px;
   width: 300px;
   height: 200px;
   overflow-y: scroll;
 }
-.spot-address{
-  font-size: 18px;
-  width: 300px;
-  margin: 0px;
-  padding: 0px;
+
+.spot-address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 10px 0px;
 }
-.spots-and-maps{
+.spot-address p {
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.spots-and-maps {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: start;
 }
-.home-side-map{
+
+.home-side-map {
   height: 100%;
   /* width: 10%; */
   position: sticky;
@@ -68,4 +107,3 @@
   margin-right: 0px;
   z-index: 0;
 }
-

@@ -21,7 +21,7 @@
 
 .button {
   background-color: #4CAF50;
-  border: 0px solid green;
+  border: none;
   color: white;
   padding: 5px 20px;
   text-align: center;
