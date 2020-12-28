@@ -316,21 +316,16 @@ h3 {
 .slides {
   display: none;
   width: 100%;
-  /* object-fit: fill; */
-  /* object-position: center; */
-}
-.slides-display{
-  display: block;
-  width: 100%;
-  object-position: center;
   object-fit: fill;
+  object-position: center;
 }
+
 .home-banner-div{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 90%;
+  max-width: 70%;
   height: 500px;
   overflow: hidden;
   margin: 40px;

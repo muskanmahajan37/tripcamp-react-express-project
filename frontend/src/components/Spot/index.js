@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import ReactPlayer from 'react-player/youtube'
 
 import { MapWithMarkerClusterer } from '../GoogleMaps';
+import Rating from '../Rating';
 
 // import * as spotActions from '../../store/spot';
 
@@ -37,14 +38,16 @@ export function AllSpots() {
                 :
                 <></>
               }
+              <Rating rated={2.8} userChangeable={true} />
             </div>
-            <div style={{marginTop: '10px'}}>
+            <div style={{ marginTop: '10px' }}>
               <p className='spot-address'>
                 {spot.streetAddress}
               </p>
               <p className='spot-address'>
-               {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
-              </p>              
+                {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
+              </p>
+              <button>Book Now</button>
               <p className='spot-description hide-scollbar'>
                 {spot.description}
               </p>
@@ -61,36 +64,13 @@ export function AllSpots() {
                 <></>
               }
             </div>
-            <div style={{marginTop: '10px'}}>
+            <div style={{ marginTop: '10px' }}>
               <p className='spot-address'>
                 {spot.streetAddress}
               </p>
               <p className='spot-address'>
-               {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
-              </p>              
-              <p className='spot-description hide-scollbar'>
-                {spot.description}
+                {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
               </p>
-            </div>
-          </div>
-        )}
-        {spots && spots.map(spot =>
-          <div key={spot.name} >
-            <h6>{spot.name}</h6>
-            <div className='spot-media-display'>
-              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
-                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
-                :
-                <></>
-              }
-            </div>
-            <div style={{marginTop: '10px'}}>
-              <p className='spot-address'>
-                {spot.streetAddress}
-              </p>
-              <p className='spot-address'>
-               {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
-              </p>              
               <p className='spot-description hide-scollbar'>
                 {spot.description}
               </p>

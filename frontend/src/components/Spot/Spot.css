@@ -10,7 +10,7 @@
 }
 
 .spot-media-display{
-  display: flex;
+  display: block;
   width: 90%;
 }
 .media-display{
@@ -68,3 +68,4 @@
   margin-right: 0px;
   z-index: 0;
 }
+
