@@ -3,10 +3,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { nanoid } from 'nanoid';
 // import ReactPlayer from 'react-player/youtube'
 
 import { MapWithMarkerClusterer } from '../GoogleMaps';
 import Rating from '../Rating';
+import BookingFormModal from '../BookingForm';
 
 // import * as spotActions from '../../store/spot';
 
@@ -27,8 +29,12 @@ export function AllSpots() {
     }
   }, [spots.length]);
 
-  function handleBookNowClick(e){
-    history.push('/bookings');
+  function handleBookNowClick(e) {
+    history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
+    // return <BookingFormModal spot={spot}/>
+  }
+  function handleMoreClick(e) {
+    alert("Sorry, this function is still being worked on. Please check back later. Thanks!");
   }
 
   return (
@@ -50,8 +56,8 @@ export function AllSpots() {
             <div style={{ marginTop: '10px' }}>
               <div className="buttons-and-address">
                 <div className="book-and-more-div">
-                  <button onClick={handleBookNowClick}>Book Now</button>
-                  <button>More</button>
+                  <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                  <button onClick={handleMoreClick}>More</button>
                 </div>
                 <div className='spot-address'>
                   <p >

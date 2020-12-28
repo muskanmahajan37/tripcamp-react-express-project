@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 
@@ -11,11 +11,18 @@ import '../Forms.css';
 export default function BookingFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const spots = useSelector(state => state.spots);
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
   const bookingModalRef = useRef(null);
   const history = useHistory();
+
+  let spot;
+
+  const params = useParams();
+  console.log('params', params);
+
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -47,25 +54,54 @@ export default function BookingFormModal() {
         onSubmit={handleSubmit}
       >
         <h3>Booking Form</h3>
+        <div>
+          {
+            spot && <>
+              <p>Spot:</p>
+              <p>{spot.name}</p>
+              <p>{spot.address}</p>
+            </>
+          }
+        </div>
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">
-            <label>Username or Email</label>
+            <label>Start Date</label>
             <input
               className='input'
-              type='text'
+              type='date'
               value={credential}
               onChange={e => setCredential(e.target.value)}
               required
             />
           </div>
           <div className="input-div">
-            <label>Password</label>
+            <label>End Date</label>
             <input
               className='input'
-              type='password'
+              type='date'
+              value={credential}
+              onChange={e => setCredential(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Number of Guests</label>
+            <input
+              className='input'
+              type='number'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Special Request</label>
+            <input
+              className='input'
+              type='text'
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
@@ -76,7 +112,7 @@ export default function BookingFormModal() {
           <button
             className='button'
             type='submit'
-          >Log in</button>
+          >Submit</button>
           <button
             className='button button-Reset'
             onClick={handelCancelClick}
