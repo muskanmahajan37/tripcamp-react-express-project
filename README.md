@@ -11,13 +11,17 @@ To a technical person, this is a full-stack application that serves and presents
     1. Node.JS, Express
     2. PostgreSQL, Sequelize
     3. React/Redux/JSX (Javascript Extension)
-
-## Database Schema
-![Database Schema](https://tripcamp.s3.amazonaws.com/resources/images/database_schema.png)
-
-
+    
 ## List of MVPs
   1. Spots
   2. Bookings
   3. Spots search (by location & availability) & Google Maps on search
   4. Reviews
+  5. Bonus: Messaging
+  6. Bonus: user/host profiles
+
+## Database Schema
+![Database Schema](https://tripcamp.s3.amazonaws.com/resources/images/database_schema.png)
+
+## Project WIKI
+  More details on [Project wiki](https://github.com/suasllc/tripcamp-react-express-project/wiki)
