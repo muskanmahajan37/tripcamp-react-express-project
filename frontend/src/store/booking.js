@@ -38,6 +38,20 @@ export const getAllBookings = () => async dispatch => {
   }
   return res;
 }
+export const createOneBooking = ({ spotId, booking }) => async dispatch => {
+  const res = await fetch(`/api/bookings`, {
+    method: 'POST',
+    body: {
+      spotId,
+      booking
+    }
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_booking = res.data.booking;
+    dispatch(setBookingPOJO(fedback_booking));
+  }
+  return res;
+}
 
 const initialState = [];
 

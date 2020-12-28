@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
+import * as bookingActions from '../../store/booking';
 
 import '../Forms.css';
 
@@ -25,22 +26,32 @@ export default function BookingFormModal() {
 
   //TODO: make this useEffect work so it won't reload spot data everytime user types a key
   // useEffect(() => {
-    if(params && spots) spot = spots.find(spot => spot.id === Number(params.spotId));  
-    console.log("spot", spot, params);  
+  if (params && spots) spot = spots.find(spot => spot.id === Number(params.spotId));
+  console.log("spot", spot, params);
   // }, [params, spots]);
 
   const handleSubmit = e => {
     e.preventDefault();
     setErrors([]);
 
-    // return dispatch(sessionActions.booking({ credential, password }))
-    //   .then(res => {
-    //     if (bookingModalRef.current)
-    //       bookingModalRef.current.style.display = "none";
-    //   })
-    //   .catch(res => {
-    //     if (res.data && res.data.errors) setErrors(res.data.errors);
-    //   });
+    return dispatch(bookingActions.createOneBooking({
+      spotId: spot.id,
+      booking: {
+        userId: sessionUser.id,
+        spotId: spot.id,
+        startDate,
+        endDate,
+        guests: numberOfGuests,
+        specialRequest
+      }
+    }))
+      .then(res => {
+        if (bookingModalRef.current)
+          bookingModalRef.current.style.display = "none";
+      })
+      .catch(res => {
+        if (res.data && res.data.errors) setErrors(res.data.errors);
+      });
   };
 
   const handelCancelClick = e => {
