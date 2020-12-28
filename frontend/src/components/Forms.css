@@ -299,12 +299,38 @@ h3 {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
+
 .hide-scollbar::-webkit-scrollbar {
   display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+
 .hide-scollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.slides {
+  display: none;
+  width: 100%;
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+}
+.slides-display{
+  display: block;
+  width: 100%;
+  object-position: center;
+  object-fit: fill;
+}
+.home-banner-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  height: 500px;
+  overflow: hidden;
 }

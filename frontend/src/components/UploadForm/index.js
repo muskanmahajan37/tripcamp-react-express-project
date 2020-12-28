@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import fetch from '../../store/csrf';
 
-export default function UploadForm() {
+export default function UploadForm({ link = "useruploads"}) {
   const [enableUpload, setEnableUpload] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("Please select a file");
@@ -12,7 +12,7 @@ export default function UploadForm() {
   const history = useHistory();
 
   async function getSignedRequest(file) {
-    const res = await fetch(`/api/media/sign-s3?file-name=resources/images/useruploads/${file.name}&file-type=${file.type}`);
+    const res = await fetch(`/api/media/sign-s3?file-name=resources/images/${link}/${file.name}&file-type=${file.type}`);
     if (res.status === 200) {
       uploadFile(file, res.data.signedRequest, res.data.url);
       setFileToUpload(null);

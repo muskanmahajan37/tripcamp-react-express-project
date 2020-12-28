@@ -1,7 +1,9 @@
 import MapComponent, { MapWithMarkerClusterer } from '../GoogleMaps';
+import { Link } from 'react-router-dom';
 
 import Spot, { AllSpots } from '../Spot';
 import UploadForm from '../UploadForm';
+import Banner from './Banner';
 
 
 export default function Home() {
@@ -10,8 +12,11 @@ export default function Home() {
       {/* <MapComponent /> */}
       {/* <MapWithMarkerClusterer /> */}
       {/* <Spot /> */}
+      <Banner />
       <AllSpots />
-      {/* <UploadForm /> */}
+      {/* <Link path='upload' > */}
+        {/* <UploadForm link="official"/> */}
+      {/* </Link> */}
     </div>
   );
 }
