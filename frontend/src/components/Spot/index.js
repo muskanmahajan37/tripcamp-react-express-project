@@ -146,6 +146,7 @@ export function SpotFormModal() {
 
     return dispatch(spotActions.createOneSpot({
       spot: {
+        userId: sessionUser.id,
         name,
         description,
         units,
@@ -190,7 +191,7 @@ export function SpotFormModal() {
 
   return (
     <div className="modal" ref={spotModalRef}
-      // onClick={e => { e.preventDefault(); if (showUploadForm) setShowUploadForm(false) }}
+    // onClick={e => { e.preventDefault(); if (showUploadForm) setShowUploadForm(false) }}
     >
       <form
         className='form-container modal-content-spot-creation'
@@ -243,6 +244,7 @@ export function SpotFormModal() {
                 type='number'
                 min={-90}
                 max={90}
+                step={1e-8}
                 value={latitude}
                 onChange={e => {
                   if (e.target.value < -90) e.target.value = -90;
@@ -256,6 +258,7 @@ export function SpotFormModal() {
                 type='number'
                 min={-180}
                 max={180}
+                step={1e-8}
                 value={longitude}
                 onChange={e => {
                   if (e.target.value < -180) e.target.value = -180;

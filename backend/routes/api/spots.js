@@ -42,4 +42,24 @@ router.get('/:id',
   })
 );
 
+router.post('/',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const spotDataObj = req.body.spot;
+    console.log('spotDataObj', spotDataObj);
+    if (req.user.id !== spotDataObj.userId) {
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    delete spotDataObj.userId;
+    // spotDataObj.status = 0;
+    //TODO: implement backend spot validation before attempting to create a row in database
+    try{
+      const spot = await Spot.create(spotDataObj);
+      res.json({ spot: spotDataObj });
+    } catch (error) {
+      return res.status(401).json({ error });
+    }
+  })
+);
+
 module.exports = router;
