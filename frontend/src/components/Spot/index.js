@@ -297,7 +297,7 @@ export function SpotFormModal() {
               onChange={e => setWebsite(e.target.value)}
             />
           </div>
-          <UploadForm />
+          <UploadForm divClass="" redirectHome={false}/>
         </div>
         <div className="buttons-div">
           <button

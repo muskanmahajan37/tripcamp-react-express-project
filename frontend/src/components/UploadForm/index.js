@@ -3,7 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 import fetch from '../../store/csrf';
 
-export default function UploadForm({ link = "useruploads"}) {
+export default function UploadForm({
+  link = "useruploads", divClass = "modal",
+  formClass = 'form-container modal-content modal-content-center-items',
+  redirectHome = true
+}) {
   const [enableUpload, setEnableUpload] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("Please select a file");
@@ -70,14 +74,15 @@ export default function UploadForm({ link = "useruploads"}) {
     e.preventDefault();
     if (uploadModalRef.current)
       uploadModalRef.current.style.display = "none";
-    history.push('/');
+    if (redirectHome)
+      history.push('/');
   }
   return (
-    <div className="modal" ref={uploadModalRef}>
-      <form type='submit' className='form-container modal-content modal-content-center-items'>
+    <div className={divClass} ref={uploadModalRef}>
+      <form type='submit' className={formClass}>
         <h3>Upload Form</h3>
         {
-          uploadStatus && <p style={{color: 'green'}}>{uploadStatus}</p>
+          uploadStatus && <p style={{ color: 'green' }}>{uploadStatus}</p>
         }
         <label class="button button-selectFile">
           <i className="fa fa-image"></i> {(fileToUpload && fileToUpload.name) || "Choose File To Upload"}

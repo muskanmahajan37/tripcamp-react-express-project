@@ -143,6 +143,7 @@ export default function ReviewFormModal({divClass = "modal", formContentClass = 
               type='text'
               value={body}
               onChange={e => setBody(e.target.value)}
+              rows={8}
               required
             />
           </div>
