@@ -226,7 +226,7 @@ button:disabled, button[disabled] {
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
-  z-index: 6;
+  z-index: 4;
   /* Sit on top */
   padding-top: 10px;
   /* Location of the box */

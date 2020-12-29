@@ -7,7 +7,8 @@ export default function UploadForm({
   link = "useruploads", divClass = "modal",
   formClass = 'form-container modal-content modal-content-center-items',
   redirectHome = true,
-  displayed = 'block'
+  displayed = 'block',
+  multiple = false
 }) {
   const [enableUpload, setEnableUpload] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
@@ -64,13 +65,7 @@ export default function UploadForm({
     e.preventDefault();
     getSignedRequest(fileToUpload);
   }
-  // useEffect(() => {
-  //   console.log("fileToUpload", fileToUpload);
-  //   if (fileToUpload) {
-  //     const tmppath = fileToUpload.webkitRelativePath;
-  //     console.log('full path fileToUpload', tmppath);
-  //   }
-  // });
+
   const handleCancelClick = e => {
     e.preventDefault();
     if (uploadModalRef.current)

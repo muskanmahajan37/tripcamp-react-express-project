@@ -11,7 +11,7 @@ import Rating from '../Rating';
 import BookingFormModal from '../BookingForm';
 import UploadForm from '../UploadForm';
 
-// import * as spotActions from '../../store/spot';
+import * as spotActions from '../../store/spot';
 
 import '../Forms.css';
 import './Spot.css';
@@ -112,9 +112,9 @@ export function AllSpots() {
 export function SpotFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const spots = useSelector(state => state.spots);
+  // const spots = useSelector(state => state.spots);
   const [name, setName] = useState("");
-  const [discription, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const [units, setUnits] = useState(1);
   const [latitude, setLatitude] = useState(undefined);
   const [longitude, setLongitude] = useState(undefined);
@@ -144,24 +144,31 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    // return dispatch(spotActions.createOneBooking({
-    //   spot: {
-    //     userId: sessionUser.id,
-    //     spotId: spot.id,
-    //     name,
-    //     discription,
-    //     guests: units,
-    //     gpsLocation
-    //   }
-    // }))
-    //   .then(res => {
-    //     if (spotModalRef.current)
-    //       spotModalRef.current.style.display = "none";
-    //     history.push('/');
-    //   })
-    //   .catch(res => {
-    //     if (res.data && res.data.errors) setErrors(res.data.errors);
-    //   });
+    return dispatch(spotActions.createOneSpot({
+      spot: {
+        name,
+        description,
+        units,
+        gpsLocation: [latitude, longitude],
+        mediaUrlIds: [],
+        streetAddress,
+        city,
+        stateProvice,
+        zipCode,
+        country,
+        perNightRate,
+        accommodationType,
+        website
+      }
+    }))
+      .then(res => {
+        if (spotModalRef.current)
+          spotModalRef.current.style.display = "none";
+        history.push('/');
+      })
+      .catch(res => {
+        if (res.data && res.data.errors) setErrors(res.data.errors);
+      });
   };
 
   const handleCancelClick = e => {
@@ -182,7 +189,9 @@ export function SpotFormModal() {
   };
 
   return (
-    <div className="modal" ref={spotModalRef} onClick={e=>{e.preventDefault();if(showUploadForm) setShowUploadForm(false)}}>
+    <div className="modal" ref={spotModalRef}
+      // onClick={e => { e.preventDefault(); if (showUploadForm) setShowUploadForm(false) }}
+    >
       <form
         className='form-container modal-content-spot-creation'
         onSubmit={handleSubmit}
@@ -209,8 +218,8 @@ export function SpotFormModal() {
             <textarea
               className='input'
               type='text'
-              value={discription}
-              onChange={e => setDiscription(e.target.value)}
+              value={description}
+              onChange={e => setDescription(e.target.value)}
               rows={10}
               required
             />
@@ -265,6 +274,7 @@ export function SpotFormModal() {
               value={fullAddress}
               onChange={e => { setFullAddress(e.target.value); parseAddress(e.target.value) }}
               required
+              rows={3}
               placeholder="Street address first line,&#10;City, State/Provice, Zipcode&#10;Country"
             />
           </div>
@@ -301,10 +311,10 @@ export function SpotFormModal() {
           <div className="input-div">
             <button
               className='button button-small button-Send'
-              onClick={e=>{e.preventDefault(); setShowUploadForm(!showUploadForm)}}
+              onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
             >Upload Pic/Vid</button>
             {
-              showUploadForm && <UploadForm divClass="side-modal" redirectHome={false} displayed="block"/>
+              showUploadForm && <UploadForm divClass="side-modal" redirectHome={false} displayed="block" />
             }
           </div>
         </div>

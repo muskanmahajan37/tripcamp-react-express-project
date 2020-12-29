@@ -40,6 +40,19 @@ export const getAllSpots = () => async dispatch => {
   return res;
 }
 
+export const createOneSpot = ({ spot }) => async dispatch => {
+  const res = await fetch(`/api/spots`, {
+    method: 'POST',
+    body: JSON.stringify({ spot })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_spot = res.data.spot;
+    dispatch(setSpotPOJO(fedback_spot));
+  }
+  return res;
+}
+
+
 const initialState = [];
 
 const spotReducer = (state = initialState, action) => {
