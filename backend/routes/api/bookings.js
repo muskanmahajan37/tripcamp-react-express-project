@@ -14,10 +14,10 @@ router.get('/', asyncHandler(async (reg, res) => {
 }));
 
 router.post('/',
-  // requireAuth,
+  requireAuth,
   asyncHandler(async (req, res) => {
     console.log(req.body);
-    res.json({ booking: {} });
+    res.json({ booking: req.body });
   })
 );
 
