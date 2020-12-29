@@ -10,6 +10,7 @@ import * as reviewActions from '../../store/review';
 import Rating from '../Rating';
 
 import '../Forms.css';
+import { nanoid } from 'nanoid';
 
 export default function ReviewFormModal() {
   const dispatch = useDispatch();
@@ -18,11 +19,17 @@ export default function ReviewFormModal() {
   const ratings = useSelector(state => state.ratings);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [rating, setRating] = useState(null);
   const [errors, setErrors] = useState([]);
   const reviewModalRef = useRef(null);
   const history = useHistory();
   const params = useParams();
+  const [trialRating, setTrialRating] = useState(null);
+  const [rating, setRating] = useState(null);  
+
+  // useEffect(() => {
+  //   setRating(ratings[ratings.length - 1]);
+  //   console.log('useEffect', rating);
+  // }, [ratings[ratings.length - 1]]);
 
   if (!sessionUser) {
     if (reviewModalRef.current)
@@ -48,6 +55,11 @@ export default function ReviewFormModal() {
   const handleSubmit = e => {
     e.preventDefault();
     setErrors([]);
+
+    // console.log('ratings', ratings);
+    // setRating(ratings[ratings.length-1]);    
+    if (!rating)
+      return setErrors(["Select a rating"]);
 
     return dispatch(reviewActions.createOneReview({
       review: {
@@ -75,11 +87,33 @@ export default function ReviewFormModal() {
     history.push('/');
   }
 
+  // const handleFormClick = e => {
+  //   if (e.target.id[1] === '-')
+  //     setRating(ratings[ratings.length - 1])
+  //   console.log('handleFormClick ratings', ratings);
+  // };
+
+  let arrayOf5 = new Array(5).fill(1);
+
+  function onMouseOver(e) {
+    const id = e.target.id.split("-")[0];
+    setTrialRating(Number(id));
+  }
+  function onMouseLeave() {
+    setTrialRating(rating);
+  }
+  function onStarClicked(e) {
+    const ratingNumber = Number(e.target.id.split("-")[0]);
+    setRating(ratingNumber);
+    setTrialRating(ratingNumber)
+  }
+
   return (
     <div className="modal" ref={reviewModalRef}>
       <form
         className='form-container modal-content'
         onSubmit={handleSubmit}
+        // onClick={handleFormClick}
       >
         <h3>Review Form</h3>
         <div>
@@ -113,7 +147,18 @@ export default function ReviewFormModal() {
           </div>
           <div className="input-div">
             <label>Rating</label>
-            <Rating userChangeable={true} />
+            <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+              <span id={0 + "-" + nanoid()} onClick={onStarClicked} className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)" }}> </span>
+              {arrayOf5.map((el, i) => <span
+                className={i < trialRating ? "fa fa-star checked star-set-font-size" : "far fa-star star-set-font-size"}
+                key={nanoid()}
+                id={(i + 1) + "-" + nanoid()}
+                onClick={onStarClicked}
+              />
+              )}
+              <span className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)" }}>{ }</span>
+            </div>
+            {/* <Rating userChangeable={true} id={"rating" + nanoid()} /> */}
             {/* <input
               className='input-number'
               type='number'

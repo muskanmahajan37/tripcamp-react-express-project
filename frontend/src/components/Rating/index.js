@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 
 import { setRatingPOJO } from '../../store/rating';
@@ -11,6 +11,7 @@ export default function Rating({ rated = 0, userChangeable = false }) {
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
   const dispatch = useDispatch();
+  const ratings = useSelector(state => state.ratings);
 
   if (!userChangeable) {
     const ratatedWholeNumber = Math.floor(rated);

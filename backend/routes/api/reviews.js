@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Review } = require('../../db/models');
 
 const router = express.Router();
 
@@ -17,7 +17,9 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res) => {
     const reviewDataObj = req.body.review;
+    console.log('reviewDataObj', reviewDataObj);
     if (req.user.id !== reviewDataObj.userId) {
+      console.log(req.user.id, reviewDataObj.userId, "Unauthorized user");
       return res.status(401).json({ error: "Unauthorized user" });
     }
     reviewDataObj.type = 0;
