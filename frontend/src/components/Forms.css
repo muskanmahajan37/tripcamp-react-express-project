@@ -226,7 +226,7 @@ button:disabled, button[disabled] {
   /* Hidden by default */
   position: fixed;
   /* Stay in place */
-  z-index: 5;
+  z-index: 6;
   /* Sit on top */
   padding-top: 10px;
   /* Location of the box */
@@ -244,6 +244,29 @@ button:disabled, button[disabled] {
   /* Black w/ opacity */
 }
 
+.side-modal {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 5;
+  /* Sit on top */
+  padding-top: 10px;
+  /* Location of the box */
+  left: 450px;
+  top: 0;
+  width: fit-content;
+  /* Full width */
+  height: fit-content;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  /* background-color: rgb(0, 0, 0); */
+  /* Fallback color */
+  /* background-color: rgba(100, 100, 100, 0.7); */
+  /* Black w/ opacity */
+}
+
 /* Modal Content */
 
 .modal-content {
@@ -253,12 +276,30 @@ button:disabled, button[disabled] {
   border: 1px solid rgb(220 220 220);
   box-shadow: 0 7px 13px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  width: 400px;
+  width: fit-content;
+  min-width: 400px;
   margin-left: 35vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
+.modal-content-spot-creation {
+  background-color: #fefefe;
+  margin-top: 15vh;
+  padding: 15px;
+  border: 1px solid rgb(220 220 220);
+  box-shadow: 0 7px 13px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 50vw;
+  min-width: 400px;
+  max-width: 600px;
+  margin-left: 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 .modal-content-center-items {
   align-items: center;

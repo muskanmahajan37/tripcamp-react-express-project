@@ -6,7 +6,8 @@ import fetch from '../../store/csrf';
 export default function UploadForm({
   link = "useruploads", divClass = "modal",
   formClass = 'form-container modal-content modal-content-center-items',
-  redirectHome = true
+  redirectHome = true,
+  displayed = 'block'
 }) {
   const [enableUpload, setEnableUpload] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
@@ -78,7 +79,7 @@ export default function UploadForm({
       history.push('/');
   }
   return (
-    <div className={divClass} ref={uploadModalRef}>
+    <div className={divClass} ref={uploadModalRef} style={{display: displayed}}>
       <form type='submit' className={formClass}>
         <h3>Upload Form</h3>
         {

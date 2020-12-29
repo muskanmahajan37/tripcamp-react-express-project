@@ -127,6 +127,7 @@ export function SpotFormModal() {
   const [perNightRate, setPerNightRate] = useState(undefined);
   const [accommodationType, setAccommodationType] = useState(undefined);
   const [website, setWebsite] = useState("");
+  const [showUploadForm, setShowUploadForm] = useState(false);
   const [errors, setErrors] = useState([]);
   const spotModalRef = useRef(undefined);
   const history = useHistory();
@@ -181,9 +182,9 @@ export function SpotFormModal() {
   };
 
   return (
-    <div className="modal" ref={spotModalRef}>
+    <div className="modal" ref={spotModalRef} onClick={e=>{e.preventDefault();if(showUploadForm) setShowUploadForm(false)}}>
       <form
-        className='form-container modal-content'
+        className='form-container modal-content-spot-creation'
         onSubmit={handleSubmit}
       >
         <h3>Create Your Spot</h3>
@@ -297,7 +298,15 @@ export function SpotFormModal() {
               onChange={e => setWebsite(e.target.value)}
             />
           </div>
-          <UploadForm divClass="" redirectHome={false}/>
+          <div className="input-div">
+            <button
+              className='button button-small button-Send'
+              onClick={e=>{e.preventDefault(); setShowUploadForm(!showUploadForm)}}
+            >Upload Pic/Vid</button>
+            {
+              showUploadForm && <UploadForm divClass="side-modal" redirectHome={false} displayed="block"/>
+            }
+          </div>
         </div>
         <div className="buttons-div">
           <button
