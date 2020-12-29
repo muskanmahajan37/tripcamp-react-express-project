@@ -12,7 +12,7 @@ import Rating from '../Rating';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function ReviewFormModal() {
+export default function ReviewFormModal({divClass = "modal", formContentClass = 'form-container modal-content'}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots);
@@ -24,7 +24,7 @@ export default function ReviewFormModal() {
   const history = useHistory();
   const params = useParams();
   const [trialRating, setTrialRating] = useState(null);
-  const [rating, setRating] = useState(null);  
+  const [rating, setRating] = useState(null);
 
   // useEffect(() => {
   //   setRating(ratings[ratings.length - 1]);
@@ -109,11 +109,11 @@ export default function ReviewFormModal() {
   }
 
   return (
-    <div className="modal" ref={reviewModalRef}>
+    <div className={divClass} ref={reviewModalRef}>
       <form
-        className='form-container modal-content'
+        className={formContentClass}
         onSubmit={handleSubmit}
-        // onClick={handleFormClick}
+      // onClick={handleFormClick}
       >
         <h3>Review Form</h3>
         <div>
@@ -133,6 +133,7 @@ export default function ReviewFormModal() {
               value={title}
               onChange={e => setTitle(e.target.value)}
               required
+              autoFocus={true}
             />
           </div>
           <div className="input-div">
@@ -159,16 +160,7 @@ export default function ReviewFormModal() {
               <span className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)" }}>{ }</span>
             </div>
             {/* <Rating userChangeable={true} id={"rating" + nanoid()} /> */}
-            {/* <input
-              className='input-number'
-              type='number'
-              value={rating}
-              min={1}
-              onChange={e => setRating(e.target.value)}
-              required
-            /> */}
           </div>
-
         </div>
         <div className="buttons-div">
           <button

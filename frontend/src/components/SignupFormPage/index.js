@@ -148,6 +148,7 @@ export function SignupFormModal() {
               value={username}
               onChange={e => setUsername(e.target.value)}
               required
+              autoFocus={true}
             />
           </div>
           <div className="input-div">

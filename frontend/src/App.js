@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
+import { SpotFormModal } from './components/Spot';
 import BookingFormModal from './components/BookingForm';
 import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
@@ -40,6 +41,9 @@ function App() {
         </Route>
         <Route path='/signup'>
           <SignupFormModal />
+        </Route>
+        <Route path='/spots'>
+          <SpotFormModal />
         </Route>
         <Route path='/bookings/spots/:spotId'>
           <BookingFormModal />

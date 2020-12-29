@@ -139,6 +139,7 @@ button:disabled, button[disabled] {
   background-color: Transparent;
   border: none;
   font-size: 22px;
+  color: #008CBA;
 }
 
 .fa-bell:hover, .fa-atom:hover {
@@ -162,7 +163,7 @@ button:disabled, button[disabled] {
   border-radius: 5px 5px 5px 5px;
   right: 0%;
   width: fit-content;
-  min-width: 100px;
+  min-width: 150px;
   transform: translateY(-2em);
   z-index: -1;
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.1s;

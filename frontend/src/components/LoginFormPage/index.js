@@ -139,6 +139,7 @@ export function LoginFormModal() {
               value={credential}
               onChange={e => setCredential(e.target.value)}
               required
+              autoFocus={true}
             />
           </div>
           <div className="input-div">

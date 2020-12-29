@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 
 export default function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const dropdownMenuRef = useRef(null);
 
@@ -13,13 +15,27 @@ export default function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
   };
+  const createSpot = e => {
+    e.preventDefault();
+    // dropdownMenuRef.current.style = "visibility: hidden;";
+    history.push('/spots');
+  }
 
   function DropdownMenu() {
     return (
-      <div className=" dropdown-menu" ref={dropdownMenuRef}>
+      <div className="dropdown-menu" ref={dropdownMenuRef}>
         <div className="dropdown-menu-item">{user.username}</div>
         <hr className="hr" />
         <div className="dropdown-menu-item">{user.email}</div>
+        <hr className="hr" />
+        <div className="dropdown-menu-item">
+          <button
+            className="button button-Send"
+            onClick={createSpot}
+          >
+            Create Spot
+          </button>
+        </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
           <button
@@ -59,15 +75,15 @@ export default function ProfileButton({ user }) {
     <>
       <span
         className="dropdown-menu-parent"
-        style={{marginRight: '20px'}}
+        style={{ marginRight: '20px' }}
       // onClick={() => { setShowMenu(!showMenu); }}
       // onMouseOver={() => { setShowMenu(true); }}
       // onMouseOut={() => { setShowMenu(false); }}
       // onMouseLeave={() =>  setTimeout(() => setShowMenu(false), 1000) }
       >
-        <button 
+        <button
           className="fas fa-atom icon-span"
-          style={{marginRight: '20px'}}
+          style={{ marginRight: '20px' }}
         />
         {
           // showMenu &&
