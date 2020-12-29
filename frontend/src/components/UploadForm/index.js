@@ -52,6 +52,7 @@ export default function UploadForm({
         }))
         .then(res => {
           //do nothing for now
+          // the medium/file got back is already in the Redux store
         })
         .catch(res => {
           // if (res.data && res.data.errors) setErrors(res.data.errors);

@@ -76,29 +76,6 @@ export function AllSpots() {
             </div>
           </div>
         )}
-        {spots && spots.map(spot =>
-          <div key={nanoid()} >
-            <h6>{spot.name}</h6>
-            <div className='spot-media-display'>
-              {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
-                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
-                :
-                <></>
-              }
-            </div>
-            <div style={{ marginTop: '10px' }}>
-              <p className='spot-address'>
-                {spot.streetAddress}
-              </p>
-              <p className='spot-address'>
-                {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
-              </p>
-              <p className='spot-description hide-scollbar'>
-                {spot.description}
-              </p>
-            </div>
-          </div>
-        )}
       </div>
       <div className='home-side-map'>
         {
@@ -113,6 +90,7 @@ export function SpotFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   // const spots = useSelector(state => state.spots);
+  const media = useSelector(state => state.media);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [units, setUnits] = useState(1);
@@ -132,6 +110,10 @@ export function SpotFormModal() {
   const spotModalRef = useRef(undefined);
   const history = useHistory();
 
+  useEffect(() => {
+    console.log("35 media", media);
+  }, [media])
+
   if (!sessionUser) {
     if (spotModalRef.current)
       spotModalRef.current.style.display = "none";
@@ -144,6 +126,8 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
+    console.log("handleSubmit media", media, " id", media&&media[media.length-1].id);
+
     return dispatch(spotActions.createOneSpot({
       spot: {
         userId: sessionUser.id,
@@ -151,7 +135,7 @@ export function SpotFormModal() {
         description,
         units,
         gpsLocation: [latitude, longitude],
-        mediaUrlIds: [],
+        mediaUrlIds: [media[media.length-1].id],
         streetAddress,
         city,
         stateProvice,
