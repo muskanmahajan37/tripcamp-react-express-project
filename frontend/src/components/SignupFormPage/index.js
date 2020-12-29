@@ -117,12 +117,14 @@ export function SignupFormModal() {
       });
   };
   const handleCancelClick = e => {
+    e.preventDefault();
     if (signupModalRef.current)
       signupModalRef.current.style.display = "none";
     history.push('/');
   }
 
   const handleLoginClick = e => {
+    e.preventDefault();
     if (signupModalRef.current)
       signupModalRef.current.style.display = "none";
     history.push('/login');

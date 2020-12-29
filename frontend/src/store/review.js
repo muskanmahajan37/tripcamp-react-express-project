@@ -40,6 +40,18 @@ export const getAllReviews = () => async dispatch => {
   return res;
 }
 
+export const createOneReview = ({ review }) => async dispatch => {
+  const res = await fetch(`/api/reviews`, {
+    method: 'POST',
+    body: JSON.stringify({ review })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_review = res.data.review;
+    dispatch(setReviewPOJO(fedback_review));
+  }
+  return res;
+}
+
 const initialState = [];
 
 const reviewReducer = (state = initialState, action) => {

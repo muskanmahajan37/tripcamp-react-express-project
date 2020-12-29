@@ -67,12 +67,11 @@ export default function BookingFormModal() {
       });
   };
 
-  const handelCancelClick = e => {
-    // e.preventDefault();
+  const handleCancelClick = e => {
+    e.preventDefault();
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
     history.push('/');
-    // return <Redirect to='/' />;
   }
 
   return (
@@ -140,7 +139,7 @@ export default function BookingFormModal() {
           >Submit</button>
           <button
             className='button button-Reset'
-            onClick={handelCancelClick}
+            onClick={handleCancelClick}
           > Cancel </button>
         </div>
       </form>

@@ -7,7 +7,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import * as reviewActions from '../../store/review';
 
-import Rating from '../Rating'; 
+import Rating from '../Rating';
 
 import '../Forms.css';
 
@@ -48,31 +48,30 @@ export default function ReviewFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    // return dispatch(reviewActions.createOneReview({
-    //   review: {
-    //     userId: sessionUser.id,
-    //     spotId: spot.id,
-    //     title,
-    //     body,
-    //     rating,
-    //   }
-    // }))
-    //   .then(res => {
-    //     if (reviewModalRef.current)
-    //       reviewModalRef.current.style.display = "none";
-    //     history.push('/');
-    //   })
-    //   .catch(res => {
-    //     if (res.data && res.data.errors) setErrors(res.data.errors);
-    //   });
+    return dispatch(reviewActions.createOneReview({
+      review: {
+        userId: sessionUser.id,
+        spotId: spot.id,
+        title,
+        body,
+        rating,
+      }
+    }))
+      .then(res => {
+        if (reviewModalRef.current)
+          reviewModalRef.current.style.display = "none";
+        history.push('/');
+      })
+      .catch(res => {
+        if (res.data && res.data.errors) setErrors(res.data.errors);
+      });
   };
 
-  const handelCancelClick = e => {
-    // e.preventDefault();
+  const handleCancelClick = e => {
+    e.preventDefault();
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
     history.push('/');
-    // return <Redirect to='/' />;
   }
 
   return (
@@ -132,7 +131,7 @@ export default function ReviewFormModal() {
           >Submit</button>
           <button
             className='button button-Reset'
-            onClick={handelCancelClick}
+            onClick={handleCancelClick}
           > Cancel </button>
         </div>
       </form>

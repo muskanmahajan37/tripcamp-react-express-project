@@ -66,8 +66,8 @@ export default function UploadForm({ link = "useruploads"}) {
   //     console.log('full path fileToUpload', tmppath);
   //   }
   // });
-  const handelCancelClick = e => {
-    // console.log(uploadModalRef.current);
+  const handleCancelClick = e => {
+    e.preventDefault();
     if (uploadModalRef.current)
       uploadModalRef.current.style.display = "none";
     history.push('/');
@@ -95,7 +95,7 @@ export default function UploadForm({ link = "useruploads"}) {
           >Upload</button>
           <button
             className='button button-Reset'
-            onClick={handelCancelClick}
+            onClick={handleCancelClick}
           > Cancel </button>
         </div>
       </form>
