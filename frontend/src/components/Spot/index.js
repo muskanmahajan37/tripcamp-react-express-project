@@ -79,7 +79,11 @@ export function AllSpots() {
       </div>
       <div className='home-side-map'>
         {
-          locations && <MapWithMarkerClusterer center={locations[0]} zoom={5} locations={locations} />
+          spots && <MapWithMarkerClusterer 
+            center={locations[0]}
+            zoom={5} 
+            locations={locations}
+            spots={spots} />
         }
       </div>
     </div>

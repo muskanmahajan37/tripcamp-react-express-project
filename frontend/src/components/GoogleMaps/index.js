@@ -71,11 +71,17 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
   )
 }
 
-export const MapWithMarkerClusterer = ({ center = defaultCenter, zoom = 7, locations = defaultLocations }) => {
+export const MapWithMarkerClusterer = ({
+  center = defaultCenter,
+  zoom = 7,
+  locations = defaultLocations,
+  spots = []
+}) => {
   const [selected, setSelected] = useState({});
+  console.log('spots', spots);
 
-  const onSelect = location => {
-    setSelected({ location });
+  const onSelect = spot => {
+    setSelected({ spot });
   }
   return (
     <LoadScript
@@ -84,29 +90,33 @@ export const MapWithMarkerClusterer = ({ center = defaultCenter, zoom = 7, locat
       <GoogleMap id='marker-example' mapContainerStyle={containerStyle} zoom={zoom} center={center}>
         <MarkerClusterer options={options}>
           {(clusterer) =>
-            locations.map((location, i) => (
+            spots.map((spot, i) => (
               <Marker
-                key={createKey(location)}
-                position={location}
+                key={createKey(spot.gpsLocation)}
+                position={{lat: spot.gpsLocation[0], lng: spot.gpsLocation[1]}}
                 clusterer={clusterer}
                 label={labels[i % labels.length]}
-                onClick={() => onSelect(location)}
+                onClick={() => onSelect(spot)}
               />
             ))
           }
         </MarkerClusterer>
         {
-            selected.location &&
-            (
-              <InfoWindow
-                position={selected.location}
-                clickable={true}
-                onCloseClick={() => setSelected({})}
-              >
-                <p>{"Name"}</p>
-              </InfoWindow>
-            )
-          }        
+          selected.spot &&
+          (
+            <InfoWindow
+              position={{lat: selected.spot.gpsLocation[0], lng: selected.spot.gpsLocation[1] }}
+              clickable={true}
+              onCloseClick={() => setSelected({})}
+            >
+              <div>
+                {
+                  <p>{selected.spot.name}</p>
+                }
+              </div>
+            </InfoWindow>
+          )
+        }
       </GoogleMap>
     </LoadScript>
   )
