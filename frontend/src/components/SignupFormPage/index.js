@@ -117,7 +117,6 @@ export function SignupFormModal() {
       });
   };
   const handelCancelClick = e => {
-    console.log(signupModalRef.current);
     if (signupModalRef.current)
       signupModalRef.current.style.display = "none";
     history.push('/');

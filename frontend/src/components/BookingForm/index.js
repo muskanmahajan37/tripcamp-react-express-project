@@ -69,7 +69,6 @@ export default function BookingFormModal() {
 
   const handelCancelClick = e => {
     // e.preventDefault();
-    console.log(bookingModalRef.current);
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
     history.push('/');

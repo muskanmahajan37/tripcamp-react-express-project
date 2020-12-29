@@ -97,7 +97,6 @@ export function LoginFormModal() {
 
   const handelCancelClick = e => {
     // e.preventDefault();
-    console.log(loginModalRef.current);
     if (loginModalRef.current)
       loginModalRef.current.style.display = "none";
     history.push('/');
