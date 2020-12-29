@@ -116,10 +116,16 @@ export function SignupFormModal() {
         if (res.data && res.data.errors) setErrors(res.data.errors);
       });
   };
-  const handelCancelClick = e => {
+  const handleCancelClick = e => {
     if (signupModalRef.current)
       signupModalRef.current.style.display = "none";
     history.push('/');
+  }
+
+  const handleLoginClick = e => {
+    if (signupModalRef.current)
+      signupModalRef.current.style.display = "none";
+    history.push('/login');
   }
   return (
     <div className='modal' ref={signupModalRef}>
@@ -128,6 +134,12 @@ export function SignupFormModal() {
         onSubmit={handleSubmit}
       >
         <h3>Sign up as a new user</h3>
+        <div className="login-signup-invite">
+          <span>Already have an account?</span>
+          <span>
+            <button className="button button-invite" onClick={handleLoginClick}>Click to Login</button>
+          </span>
+        </div>
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
@@ -179,7 +191,7 @@ export function SignupFormModal() {
             >Sign up</button>
             <button
               className='button button-Reset'
-              onClick={handelCancelClick}
+              onClick={handleCancelClick}
             > Cancel </button>
           </div>
         </div>

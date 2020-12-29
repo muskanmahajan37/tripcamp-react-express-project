@@ -95,12 +95,16 @@ export function LoginFormModal() {
       });
   };
 
-  const handelCancelClick = e => {
-    // e.preventDefault();
+  const handleCancelClick = e => {
     if (loginModalRef.current)
       loginModalRef.current.style.display = "none";
     history.push('/');
-    // return <Redirect to='/' />;
+  }
+
+  const handleSignupClick = e => {
+    if (loginModalRef.current)
+      loginModalRef.current.style.display = "none";    
+    history.push('/signup');
   }
 
   return (
@@ -109,7 +113,13 @@ export function LoginFormModal() {
         className='form-container modal-content'
         onSubmit={handleSubmit}
       >
-        <h3>Login Form</h3>
+        <h3>Login to your account</h3>
+        <div className="login-signup-invite">
+          <span>Don't have an account?</span>
+          <span>
+            <button className="button button-invite" onClick={handleSignupClick}>Sign up Now</button>
+          </span>
+        </div>        
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
@@ -142,7 +152,7 @@ export function LoginFormModal() {
           >Log in</button>
           <button
             className='button button-Reset'
-            onClick={handelCancelClick}
+            onClick={handleCancelClick}
           > Cancel </button>
         </div>
       </form>

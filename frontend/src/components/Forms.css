@@ -62,6 +62,12 @@ button:disabled, button[disabled] {
   background-color: #555555;
 }
 
+.button-invite {
+  background-color: rgba(0, 0, 0, 0.6);
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 .button-selectFile {
   background-color: #97ffe7;
   color: black;
@@ -344,4 +350,12 @@ h3 {
   height: 500px;
   overflow: hidden;
   margin: 40px;
+}
+
+.login-signup-invite{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  width: 80%;
 }
