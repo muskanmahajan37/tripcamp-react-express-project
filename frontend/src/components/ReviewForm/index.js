@@ -1,31 +1,32 @@
-// frontend/src/components/BookingForm/index.js
+// frontend/src/components/ReviewForm/index.js
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
-import * as bookingActions from '../../store/booking';
+import * as reviewActions from '../../store/review';
+
+import Rating from '../Rating'; 
 
 import '../Forms.css';
 
-export default function BookingFormModal() {
+export default function ReviewFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [numberOfGuests, setNumberOfGuests] = useState(1);
-  const [specialRequest, setSpecialRequest] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [rating, setRating] = useState(null);
   const [errors, setErrors] = useState([]);
-  const bookingModalRef = useRef(null);
+  const reviewModalRef = useRef(null);
   const history = useHistory();
   const params = useParams();
 
   if (!sessionUser) {
-    if (bookingModalRef.current)
-      bookingModalRef.current.style.display = "none";
-    console.log('booking', history);
+    if (reviewModalRef.current)
+      reviewModalRef.current.style.display = "none";
+    console.log('review', history);
     return <Redirect to='/login' />;
   }
 
@@ -47,41 +48,40 @@ export default function BookingFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    return dispatch(bookingActions.createOneBooking({
-      booking: {
-        userId: sessionUser.id,
-        spotId: spot.id,
-        startDate,
-        endDate,
-        guests: numberOfGuests,
-        specialRequest
-      }
-    }))
-      .then(res => {
-        if (bookingModalRef.current)
-          bookingModalRef.current.style.display = "none";
-        history.push('/');
-      })
-      .catch(res => {
-        if (res.data && res.data.errors) setErrors(res.data.errors);
-      });
+    // return dispatch(reviewActions.createOneReview({
+    //   review: {
+    //     userId: sessionUser.id,
+    //     spotId: spot.id,
+    //     title,
+    //     body,
+    //     rating,
+    //   }
+    // }))
+    //   .then(res => {
+    //     if (reviewModalRef.current)
+    //       reviewModalRef.current.style.display = "none";
+    //     history.push('/');
+    //   })
+    //   .catch(res => {
+    //     if (res.data && res.data.errors) setErrors(res.data.errors);
+    //   });
   };
 
   const handelCancelClick = e => {
     // e.preventDefault();
-    if (bookingModalRef.current)
-      bookingModalRef.current.style.display = "none";
+    if (reviewModalRef.current)
+      reviewModalRef.current.style.display = "none";
     history.push('/');
     // return <Redirect to='/' />;
   }
 
   return (
-    <div className="modal" ref={bookingModalRef}>
+    <div className="modal" ref={reviewModalRef}>
       <form
         className='form-container modal-content'
         onSubmit={handleSubmit}
       >
-        <h3>Booking Form</h3>
+        <h3>Review Form</h3>
         <div>
           {
             spotInfo
@@ -92,46 +92,38 @@ export default function BookingFormModal() {
         </ul>
         <div className="inputs-div">
           <div className="input-div">
-            <label>Start Date</label>
+            <label>Title</label>
             <input
-              className='input-date'
-              type='date'
-              value={startDate}
-              onChange={e => setStartDate(e.target.value)}
+              className='input'
+              type='text'
+              value={title}
+              onChange={e => setTitle(e.target.value)}
               required
             />
           </div>
           <div className="input-div">
-            <label>End Date</label>
-            <input
-              className='input-date'
-              type='date'
-              value={endDate}
-              onChange={e => setEndDate(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-div">
-            <label>Number of Guests</label>
-            <input
-              className='input-number'
-              type='number'
-              value={numberOfGuests}
-              min={1}
-              onChange={e => setNumberOfGuests(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-div">
-            <label>Special Request</label>
+            <label>Body</label>
             <textarea
               className='input'
               type='text'
-              value={specialRequest}
-              onChange={e => setSpecialRequest(e.target.value)}
+              value={body}
+              onChange={e => setBody(e.target.value)}
               required
             />
           </div>
+          <div className="input-div">
+            <label>Rating</label>
+            <Rating userChangeable={true} />
+            {/* <input
+              className='input-number'
+              type='number'
+              value={rating}
+              min={1}
+              onChange={e => setRating(e.target.value)}
+              required
+            /> */}
+          </div>
+
         </div>
         <div className="buttons-div">
           <button

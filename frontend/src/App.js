@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
 import BookingFormModal from './components/BookingForm';
+import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Footer from './components/Footer';
@@ -42,6 +43,9 @@ function App() {
         </Route>
         <Route path='/bookings/spots/:spotId'>
           <BookingFormModal />
+        </Route>
+        <Route path='/reviews/spots/:spotId'>
+          <ReviewFormModal />
         </Route>
       </Switch>
       <Footer />

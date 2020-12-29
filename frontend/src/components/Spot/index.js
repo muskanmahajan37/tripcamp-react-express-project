@@ -33,7 +33,7 @@ export function AllSpots() {
     // return <BookingFormModal spot={spot}/>
   }
   function handleMoreClick(e) {
-    alert("Sorry, this function is still being worked on. Please check back later. Thanks!");
+    history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
   }
 
   return (
@@ -49,14 +49,14 @@ export function AllSpots() {
                 <></>
               }
               <div className="start-rating-on-top-of-image">
-                <Rating rated={2.8} userChangeable={true} />
+                <Rating rated={3 + (Math.random() * 2)} />
               </div>
             </div>
             <div style={{ marginTop: '10px' }}>
               <div className="buttons-and-address">
                 <div className="book-and-more-div">
                   <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
-                  <button onClick={handleMoreClick}>More</button>
+                  <button onClick={handleMoreClick} id={spot.id + "-" + nanoid()}>Review</button>
                 </div>
                 <div className='spot-address'>
                   <p >

@@ -21,6 +21,7 @@ router.post('/',
       return res.status(401).json({ error: "Unauthorized user" });
     }
     bookingDataObj.status = 0;
+    //TODO: implement backend booking validation before attempting to create a row in database
     try{
       const booking = await Booking.create(bookingDataObj);
       res.json({ booking: bookingDataObj });

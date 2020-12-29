@@ -21,7 +21,7 @@
 
 .button {
   background-color: #4CAF50;
-  border: none;
+  border: 0px solid green;
   color: white;
   padding: 5px 20px;
   text-align: center;
@@ -89,8 +89,23 @@ button:disabled, button[disabled] {
   padding: 3px 0px;
 }
 
+.input-div-number, .input-div-date {
+  display: flex;
+  justify-content: flex-start;
+  padding: 3px 0px;
+}
+
 .input {
   width: 60%;
+  min-width: 60%;
+}
+.input-number {
+  width: 50px;
+  margin-right: 188px;
+}
+.input-date {
+  width: fit-content;
+  margin-right: 102px;
 }
 
 .dropdown-menu-item {
