@@ -101,15 +101,22 @@ export function LoginFormModal() {
   };
 
   const handleCancelClick = e => {
+    e.preventDefault();
     if (loginModalRef.current)
       loginModalRef.current.style.display = "none";
     history.push('/');
   }
 
   const handleSignupClick = e => {
+    e.preventDefault();
     if (loginModalRef.current)
       loginModalRef.current.style.display = "none";    
     history.push('/signup');
+  }
+  const handleDemoClick = e => {
+    // e.preventDefault(); // no preventing default so we will login immediately
+    setCredential('Demo-user');
+    setPassword('password');
   }
 
   return (
@@ -159,7 +166,10 @@ export function LoginFormModal() {
         <div className="login-signup-invite">
           <span>Don't have an account?</span>
           <span>
-            <button className="button button-invite" onClick={handleSignupClick}>Sign up Now</button>
+            <button className="button button-invite" onClick={handleSignupClick}>Sign up</button>
+          </span>
+          <span>
+            <button className="button button-invite" onClick={handleDemoClick}>Demo</button>
           </span>
         </div>          
       </form>
