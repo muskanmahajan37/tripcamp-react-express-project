@@ -93,7 +93,7 @@ export const MapWithMarkerClusterer = ({
             spots.map((spot, i) => (
               <Marker
                 key={createKey(spot.gpsLocation)}
-                position={{lat: spot.gpsLocation[0], lng: spot.gpsLocation[1]}}
+                position={{ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] }}
                 clusterer={clusterer}
                 label={labels[i % labels.length]}
                 onClick={() => onSelect(spot)}
@@ -105,14 +105,19 @@ export const MapWithMarkerClusterer = ({
           selected.spot &&
           (
             <InfoWindow
-              position={{lat: selected.spot.gpsLocation[0], lng: selected.spot.gpsLocation[1] }}
+              position={{ lat: selected.spot.gpsLocation[0], lng: selected.spot.gpsLocation[1] }}
               clickable={true}
               onCloseClick={() => setSelected({})}
             >
               <div>
-                {
-                  <p>{selected.spot.name}</p>
-                }
+                <p>{selected.spot.name}</p>
+                <p>{
+                  selected.spot.streetAddress + " " +
+                  selected.spot.city + " " +
+                  selected.spot.stateProvince + " " +
+                  selected.spot.zipCode
+                }</p>
+                {/* {Todo: add a picture} */}
               </div>
             </InfoWindow>
           )
