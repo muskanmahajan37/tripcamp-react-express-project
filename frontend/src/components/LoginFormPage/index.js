@@ -1,6 +1,6 @@
 // frontend/src/components/LoginFormPage/index.js
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 
@@ -72,13 +72,18 @@ export function LoginFormModal() {
   const [errors, setErrors] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const loginModalRef = useRef(null);
+  const submitButtonRef = useRef(null);
   const history = useHistory();
 
-  console.log("login", history);
+  
+  useEffect(() => {
+    // submitButtonRef.current.focus();
+  }, []);
+
+  // console.log("login", history);
   if (sessionUser) {
     return <Redirect to='/' />;
   }
-
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -114,12 +119,7 @@ export function LoginFormModal() {
         onSubmit={handleSubmit}
       >
         <h3>Login to your account</h3>
-        <div className="login-signup-invite">
-          <span>Don't have an account?</span>
-          <span>
-            <button className="button button-invite" onClick={handleSignupClick}>Sign up Now</button>
-          </span>
-        </div>        
+      
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
@@ -149,12 +149,19 @@ export function LoginFormModal() {
           <button
             className='button'
             type='submit'
+            ref={submitButtonRef}
           >Log in</button>
           <button
             className='button button-Reset'
             onClick={handleCancelClick}
           > Cancel </button>
         </div>
+        <div className="login-signup-invite">
+          <span>Don't have an account?</span>
+          <span>
+            <button className="button button-invite" onClick={handleSignupClick}>Sign up Now</button>
+          </span>
+        </div>          
       </form>
     </div>
   );

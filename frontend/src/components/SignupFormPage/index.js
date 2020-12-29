@@ -134,12 +134,6 @@ export function SignupFormModal() {
         onSubmit={handleSubmit}
       >
         <h3>Sign up as a new user</h3>
-        <div className="login-signup-invite">
-          <span>Already have an account?</span>
-          <span>
-            <button className="button button-invite" onClick={handleLoginClick}>Click to Login</button>
-          </span>
-        </div>
         <ul className='error-messages'>
           {errors.map((error, index) => <li key={index}>{error}</li>)}
         </ul>
@@ -194,6 +188,12 @@ export function SignupFormModal() {
               onClick={handleCancelClick}
             > Cancel </button>
           </div>
+          <div className="login-signup-invite">
+          <span>Already have an account?</span>
+          <span>
+            <button className="button button-invite" onClick={handleLoginClick}>Click to Login</button>
+          </span>
+        </div>          
         </div>
       </form>
     </div>
