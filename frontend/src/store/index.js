@@ -9,13 +9,15 @@ import spotReducer from './spot';
 import bookingReducer from './booking';
 import reviewReducer from './review';
 import ratingReducer from './rating';
+import mediumReducer from './media';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotReducer,
   bookings: bookingReducer,
   reviews: reviewReducer,
-  ratings: ratingReducer
+  ratings: ratingReducer,
+  media: mediumReducer
 });
 
 let enhancer;

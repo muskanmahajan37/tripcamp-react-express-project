@@ -46,7 +46,7 @@ export function AllSpots() {
           <div key={nanoid()} >
             <h6>{spot.name}</h6>
             <div className='spot-media-display'>
-              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
+              {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
                 <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
                 :
                 <></>
@@ -80,7 +80,7 @@ export function AllSpots() {
           <div key={nanoid()} >
             <h6>{spot.name}</h6>
             <div className='spot-media-display'>
-              {spot.urls && !spot.urls[0].toLowerCase().includes("youtu") ?
+              {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
                 <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
                 :
                 <></>
@@ -317,7 +317,12 @@ export function SpotFormModal() {
               onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
             >Upload Pic/Vid</button>
             {
-              showUploadForm && <UploadForm divClass="side-modal" redirectHome={false} displayed="block" />
+              showUploadForm && <UploadForm
+                link="official/spots"
+                divClass="side-modal"
+                redirectHome={false}
+                displayed="block"
+              />
             }
           </div>
         </div>

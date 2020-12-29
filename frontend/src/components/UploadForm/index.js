@@ -1,14 +1,17 @@
 import { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import fetch from '../../store/csrf';
+import * as mediumActions from '../../store/media';
 
 export default function UploadForm({
-  link = "useruploads", divClass = "modal",
+  link = "useruploads",
+  divClass = "modal",
   formClass = 'form-container modal-content modal-content-center-items',
   redirectHome = true,
   displayed = 'block',
-  multiple = false
+  multiple = false,
 }) {
   const [enableUpload, setEnableUpload] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
@@ -16,6 +19,7 @@ export default function UploadForm({
   const uploadModalRef = useRef(null);
   const previewImgRef = useRef(null);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   async function getSignedRequest(file) {
     const res = await fetch(`/api/media/sign-s3?file-name=resources/images/${link}/${file.name}&file-type=${file.type}`);
@@ -37,7 +41,21 @@ export default function UploadForm({
       body: file
     });
     if (res.status === 200) {
-      //TODO: add to database and do some React/Redux rendering using the return url
+      return dispatch(mediumActions.createOneMedium(
+        {
+          medium: {
+            url,
+            name: file.name,
+            type: file.type,
+            source: link === 'useruploads'? 1 : 0,
+          }
+        }))
+        .then(res => {
+          //do nothing for now
+        })
+        .catch(res => {
+          // if (res.data && res.data.errors) setErrors(res.data.errors);
+        });
     }
     else {
       alert('Could not upload file.');
@@ -74,7 +92,7 @@ export default function UploadForm({
       history.push('/');
   }
   return (
-    <div className={divClass} ref={uploadModalRef} style={{display: displayed}}>
+    <div className={divClass} ref={uploadModalRef} style={{ display: displayed }}>
       <form type='submit' className={formClass}>
         <h3>Upload Form</h3>
         {

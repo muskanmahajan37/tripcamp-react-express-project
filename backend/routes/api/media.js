@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Medium } = require('../../db/models');
 
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'us-east-1';
@@ -44,5 +44,23 @@ router.post('/save-details', (req, res) => {
   // TODO: Read POSTed form data and do something useful
   res.json("success!");
 });
+
+router.post('/',
+  // requireAuth,
+  asyncHandler(async (req, res) => {
+    const mediumDataObj = req.body.medium;
+    console.log('mediumDataObj', mediumDataObj);
+    // if (req.user.id !== mediumDataObj.userId) {
+    //   return res.status(401).json({ error: "Unauthorized user" });
+    // }
+    //TODO: implement backend medium validation before attempting to create a row in database
+    try{
+      const medium = await Medium.create(mediumDataObj);
+      res.json({ medium });
+    } catch (error) {
+      return res.status(401).json({ error });
+    }
+  })
+);
 
 module.exports = router;
