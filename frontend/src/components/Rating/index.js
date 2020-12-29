@@ -1,11 +1,16 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
+
+import { setRatingPOJO } from '../../store/rating';
+
 import './Rating.css';
 
 export default function Rating({ rated = 0, userChangeable = false }) {
   const [trialRating, setTrialRating] = useState(rated);
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
+  const dispatch = useDispatch();
 
   if (!userChangeable) {
     const ratatedWholeNumber = Math.floor(rated);
@@ -39,9 +44,10 @@ export default function Rating({ rated = 0, userChangeable = false }) {
   }
 
   function onStarClicked(e) {
-    const id = e.target.id.split("-")[0];
-    setRating(Number(id));
-    setTrialRating(Number(id))
+    const ratingNumber = Number(e.target.id.split("-")[0]);
+    setRating(ratingNumber);
+    setTrialRating(ratingNumber)
+    dispatch(setRatingPOJO(ratingNumber));
   }
 
   return (

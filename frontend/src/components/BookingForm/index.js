@@ -128,7 +128,7 @@ export default function BookingFormModal() {
               type='text'
               value={specialRequest}
               onChange={e => setSpecialRequest(e.target.value)}
-              required
+              // required // this is NOT required
             />
           </div>
         </div>

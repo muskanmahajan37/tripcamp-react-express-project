@@ -15,6 +15,7 @@ export default function ReviewFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots);
+  const ratings = useSelector(state => state.ratings);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(null);
