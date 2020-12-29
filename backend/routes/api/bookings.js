@@ -16,8 +16,17 @@ router.get('/', asyncHandler(async (reg, res) => {
 router.post('/',
   requireAuth,
   asyncHandler(async (req, res) => {
-    console.log(req.body);
-    res.json({ booking: req.body });
+    const bookingDataObj = req.body.booking;
+    if (req.user.id !== bookingDataObj.userId) {
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    bookingDataObj.status = 0;
+    try{
+      const booking = await Booking.create(bookingDataObj);
+      res.json({ booking: bookingDataObj });
+    } catch (error) {
+      return res.status(401).json({ error });
+    }
   })
 );
 
