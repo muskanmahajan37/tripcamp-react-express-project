@@ -228,7 +228,7 @@ export function SpotFormModal() {
                 type='number'
                 min={-90}
                 max={90}
-                step={1e-8}
+                step={1e-14}
                 value={latitude}
                 onChange={e => {
                   if (e.target.value < -90) e.target.value = -90;
@@ -242,7 +242,7 @@ export function SpotFormModal() {
                 type='number'
                 min={-180}
                 max={180}
-                step={1e-8}
+                step={1e-14}
                 value={longitude}
                 onChange={e => {
                   if (e.target.value < -180) e.target.value = -180;
