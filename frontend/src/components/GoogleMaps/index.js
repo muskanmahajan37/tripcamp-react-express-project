@@ -1,11 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GoogleMap, LoadScript, Marker, MarkerClusterer, InfoWindow } from '@react-google-maps/api';
 import { nanoid } from 'nanoid';
 
-const containerStyle = {
-  width: '400px',
-  height: '1000px',
-};
 //38.4835° N, 78.8497° W
 const defaultCenter = {
   lat: 38.513962313966964,
@@ -28,6 +24,10 @@ const options = {
 }
 
 const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let containerStyle = {
+  width: '400px',
+  height: '1000px',
+};
 
 function MapComponent({ center = defaultCenter, zoom = 10 }) {
   const [map, setMap] = React.useState(null)
@@ -67,14 +67,23 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
     </LoadScript>
   )
 }
-
 export const MapWithMarkerClusterer = ({
   center = defaultCenter,
   zoom = 7,
   spots = []
 }) => {
   const [selected, setSelected] = useState({});
-  console.log('spots', spots);
+  const [contStyle, setContStyle] = useState(containerStyle);
+
+  useEffect(() => {
+    window.onresize = () => {
+      containerStyle = {
+        width: `${(window.innerWidth / 3.5).toFixed(0)}px`,
+        height: `${window.innerHeight.toFixed(0)}px`
+      };
+      setContStyle(containerStyle);
+    }  
+  }, [window.innerWidth, window.innerHeight]);
 
   const onSelect = spot => {
     setSelected({ spot });
@@ -83,7 +92,7 @@ export const MapWithMarkerClusterer = ({
     <LoadScript
       googleMapsApiKey="AIzaSyAkH92G4PO4QrcdQ1GjsX5ThHe7tWNyQog"
     >
-      <GoogleMap id='marker-example' mapContainerStyle={containerStyle} zoom={zoom} center={center}>
+      <GoogleMap id='marker-example' mapContainerStyle={contStyle} zoom={zoom} center={center}>
         <MarkerClusterer options={options}>
           {(clusterer) =>
             spots.map((spot, i) => (
