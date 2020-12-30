@@ -1,19 +1,22 @@
 .search-over-banner-div {
-  position: absolute;
-  top: 40%;
+  position: -webkit-sticky;
+  position: sticky;
+  margin-top: 0px;
+  top: 30vh;
   width: 30vw;
   left: 34vw;
   height: 5vh;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(201, 243, 208, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.0);
   border-radius: 2.5vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .search-over-banner-div:hover {
-  background-color: rgba(255, 255, 255, 1.0);
+  background-color: rgb(201, 243, 208);
 }
 
 .main-search-bar {

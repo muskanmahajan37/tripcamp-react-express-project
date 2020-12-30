@@ -13,7 +13,10 @@ import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spot';
-import * as bookingActions from './store/booking';
+// import * as bookingActions from './store/booking';
+
+// import MainSearchBar from './components/Search';
+
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -33,6 +36,7 @@ function App() {
     <div className='mainbody'>
       <Navigation />
       <Home />
+      {/* <MainSearchBar /> */}
       <Switch>
         <Route exact path='/'>
         </Route>
