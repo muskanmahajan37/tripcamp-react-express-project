@@ -71,7 +71,7 @@ export function AllSpots({ searchTerm = null }) {
                     {spot.streetAddress}
                   </p>
                   <p >
-                    {spot.city} {spot.stateProvice} {spot.zipCode} {spot.country}
+                    {spot.city} {spot.stateProvince} {spot.zipCode} {spot.country}
                   </p>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export function SpotFormModal() {
   const [fullAddress, setFullAddress] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
   const [city, setCity] = useState("");
-  const [stateProvice, setStateProvince] = useState("");
+  const [stateProvince, setStateProvince] = useState("");
   const [zipCode, setZipcode] = useState(undefined);
   const [country, setCountry] = useState("");
   const [perNightRate, setPerNightRate] = useState(undefined);
@@ -146,7 +146,7 @@ export function SpotFormModal() {
         mediaUrlIds: [media[media.length - 1].id],
         streetAddress,
         city,
-        stateProvice,
+        stateProvince,
         zipCode,
         country,
         perNightRate,
@@ -178,7 +178,7 @@ export function SpotFormModal() {
     setStateProvince(values[2]);
     setZipcode(values[3]);
     setCountry(values[4]);
-    console.log(streetAddress, city, stateProvice, zipCode, country);
+    console.log(streetAddress, city, stateProvince, zipCode, country);
   };
 
   return (
