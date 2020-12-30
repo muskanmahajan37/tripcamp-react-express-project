@@ -21,22 +21,23 @@ export function AllSpots({ searchTerm = null }) {
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
+  // const [spots, setSpots] = useState(reduxSpots);
   let spots;
   let searchText;
 
   // useEffect(() => {
   if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
+    searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
     spots = reduxSpots.filter(spot => {
-      searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
       return spot.name.toLowerCase().includes(searchText)
         || spot.description.toLowerCase().includes(searchText);
     })
-    console.log('spots after filtered', spots, "reduxSpots", reduxSpots);
   } else {
     spots = reduxSpots;
     searchText = undefined;
   }
-  // }, [searchTerms]);
+  console.log('spots after filtered', spots, "searchTerms", searchTerms);
+  // });
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
@@ -53,7 +54,7 @@ export function AllSpots({ searchTerm = null }) {
     const firstPart = originalText.slice(0, index);
     const searchedPart = originalText.slice(index, index + search.length);
     const secondPart = originalText.slice(index + search.length);
-    console.log("partitions", originalText, firstPart, searchedPart, secondPart);
+    // console.log("partitions", originalText, firstPart, searchedPart, secondPart);
     return <>{firstPart}<b style={{ color: "white", backgroundColor: "green" }}>{searchedPart}</b>{secondPart}</>;
   };
 
