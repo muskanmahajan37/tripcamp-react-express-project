@@ -22,17 +22,21 @@ export function AllSpots({ searchTerm = null }) {
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
   let spots;
+  let searchText;
 
   // useEffect(() => {
-    if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
-      console.log('searchTerms[searchTerms.length - 1].text', searchTerms[searchTerms.length - 1].text);
-      spots = reduxSpots.filter(spot => {
-        return spot.name.toLowerCase().includes(searchTerms[searchTerms.length - 1].text);
-      })
-      console.log('spots after filtered', spots, "reduxSpots", reduxSpots);
-    } else {
-      spots = reduxSpots;
-    }
+  if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
+    console.log('searchTerms[searchTerms.length - 1].text', searchTerms[searchTerms.length - 1].text);
+    spots = reduxSpots.filter(spot => {
+      searchText = searchTerms[searchTerms.length - 1].text;
+      return spot.name.toLowerCase().includes(searchText)
+        || spot.description.toLowerCase().includes(searchText);
+    })
+    console.log('spots after filtered', spots, "reduxSpots", reduxSpots);
+  } else {
+    spots = reduxSpots;
+    searchText = undefined;
+  }
   // }, [searchTerms]);
 
   function handleBookNowClick(e) {
@@ -44,12 +48,20 @@ export function AllSpots({ searchTerm = null }) {
     history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
   }
 
+  const highlightSearchText = (originalText, search) => {
+    if (!search || !originalText.toLowerCase().includes(search)) return originalText;
+    const index = originalText.toLowerCase().indexOf(search);
+    const array = originalText.split(search);
+    console.log("array of text", array);
+    return <>{array[0]} <b style={{ color: "white", backgroundColor: "black" }}>{search}</b> {array[1]}</>;
+  };
+
   return (
     <div className='spots-and-maps'>
       <div className="spots-home-display-grid">
         {spots && spots.map(spot =>
           <div key={nanoid()} >
-            <h6>{spot.name}</h6>
+            <h6>{highlightSearchText(spot.name, searchText)}</h6>
             <div className='spot-media-display'>
               {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
                 <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
@@ -76,7 +88,7 @@ export function AllSpots({ searchTerm = null }) {
                 </div>
               </div>
               <p className='spot-description hide-scollbar'>
-                {spot.description}
+                {highlightSearchText(spot.description, searchText)}
               </p>
             </div>
           </div>
@@ -84,7 +96,7 @@ export function AllSpots({ searchTerm = null }) {
       </div>
       <div className='home-side-map'>
         {
-          spots && spots.length &&  <MapWithMarkerClusterer
+          spots && spots.length && <MapWithMarkerClusterer
             center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
             zoom={5}
             spots={spots} />
