@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker, MarkerClusterer, InfoWindow } from '@react-google-maps/api';
+import { nanoid } from 'nanoid';
 
 const containerStyle = {
   width: '400px',
@@ -24,10 +25,6 @@ const defaultLocations = [
 const options = {
   imagePath:
     'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m', // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
-}
-
-function createKey(location) {
-  return location.lat + location.lng
 }
 
 const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -74,7 +71,6 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
 export const MapWithMarkerClusterer = ({
   center = defaultCenter,
   zoom = 7,
-  locations = defaultLocations,
   spots = []
 }) => {
   const [selected, setSelected] = useState({});
@@ -92,7 +88,7 @@ export const MapWithMarkerClusterer = ({
           {(clusterer) =>
             spots.map((spot, i) => (
               <Marker
-                key={createKey(spot.gpsLocation)}
+                key={nanoid()}
                 position={{ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] }}
                 clusterer={clusterer}
                 label={labels[i % labels.length]}

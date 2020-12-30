@@ -16,19 +16,24 @@ import * as spotActions from '../../store/spot';
 import '../Forms.css';
 import './Spot.css';
 
-export function AllSpots() {
-  const spots = useSelector(state => state.spots);
+export function AllSpots({ searchTerm = null }) {
+  const reduxSpots = useSelector(state => state.spots);
+  const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
-  let locations = [];
+  let spots;
 
-  useEffect(() => {
-    if (spots) {
-      spots.map(spot => {
-        locations.push({ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] });
-      });
+  // useEffect(() => {
+    if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
+      console.log('searchTerms[searchTerms.length - 1].text', searchTerms[searchTerms.length - 1].text);
+      spots = reduxSpots.filter(spot => {
+        return spot.name.toLowerCase().includes(searchTerms[searchTerms.length - 1].text);
+      })
+      console.log('spots after filtered', spots, "reduxSpots", reduxSpots);
+    } else {
+      spots = reduxSpots;
     }
-  }, [spots.length]);
+  // }, [searchTerms]);
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
@@ -79,10 +84,9 @@ export function AllSpots() {
       </div>
       <div className='home-side-map'>
         {
-          spots && <MapWithMarkerClusterer 
-            center={locations[0]}
-            zoom={5} 
-            locations={locations}
+          spots && spots.length &&  <MapWithMarkerClusterer
+            center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
+            zoom={5}
             spots={spots} />
         }
       </div>
@@ -130,7 +134,7 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    console.log("handleSubmit media", media, " id", media&&media[media.length-1].id);
+    console.log("handleSubmit media", media, " id", media && media[media.length - 1].id);
 
     return dispatch(spotActions.createOneSpot({
       spot: {
@@ -139,7 +143,7 @@ export function SpotFormModal() {
         description,
         units,
         gpsLocation: [latitude, longitude],
-        mediaUrlIds: [media[media.length-1].id],
+        mediaUrlIds: [media[media.length - 1].id],
         streetAddress,
         city,
         stateProvice,
@@ -188,7 +192,7 @@ export function SpotFormModal() {
         <h3>Create Your Spot</h3>
 
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error, index) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">

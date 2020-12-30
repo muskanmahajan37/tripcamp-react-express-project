@@ -10,6 +10,7 @@ import bookingReducer from './booking';
 import reviewReducer from './review';
 import ratingReducer from './rating';
 import mediumReducer from './media';
+import searchReducer from './search';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   bookings: bookingReducer,
   reviews: reviewReducer,
   ratings: ratingReducer,
-  media: mediumReducer
+  media: mediumReducer,
+  searchs: searchReducer
 });
 
 let enhancer;

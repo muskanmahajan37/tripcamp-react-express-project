@@ -1,7 +1,5 @@
 // frontend/src/store/rating.js
 
-import fetch from './csrf';
-
 const SET_ONE_RATING = 'session/SET_ONE_RATING';
 const REMOVE_ONE_RATING = 'session/REMOVE_ONE_RATING';
 
@@ -17,7 +15,6 @@ export const removeRatingPOJO = () => ({
 const initialState = [];
 
 const ratingReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case SET_ONE_RATING:
       return [action.rating];
