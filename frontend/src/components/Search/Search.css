@@ -6,7 +6,7 @@
   width: 30vw;
   left: 34vw;
   height: 5vh;
-  background-color: rgba(201, 243, 208, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.0);
   border-radius: 2.5vh;
   display: flex;
@@ -16,7 +16,7 @@
 }
 
 .search-over-banner-div:hover {
-  background-color: rgb(201, 243, 208);
+  background-color: rgb(255, 255, 255);
 }
 
 .main-search-bar {
