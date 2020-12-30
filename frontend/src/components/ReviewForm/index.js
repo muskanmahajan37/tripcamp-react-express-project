@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 
-import * as sessionActions from '../../store/session';
 import * as reviewActions from '../../store/review';
 
 import Rating from '../Rating';
@@ -30,7 +29,6 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   useEffect(() => {
     realtimeRating = ratings[ratings.length - 1];
     setRating(realtimeRating);
-    console.log('realtimeRating', realtimeRating);
   }, [ratings]);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
       <form
         className={formContentClass}
         onSubmit={handleSubmit}
-      // onClick={handleFormClick}
       >
         <h3>Review Form</h3>
         <div>
