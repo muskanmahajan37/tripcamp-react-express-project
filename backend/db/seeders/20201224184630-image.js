@@ -61,12 +61,6 @@ module.exports = {
         type: 'image/jpg',
         source: 0
       },
-      // {
-      //   url: '/resources/images/spots/taxua-shutterstock_1346698394_small.jpg',
-      //   name: 'taxua-shutterstock_1346698394_small.jpg',
-      //   type: 'image/jpg',
-      //   source: 0
-      // },
       {
         url: 'https://www.vietnambooking.com/wp-content/uploads/2020/07/ta-xua-san-may-7.jpg',
         name: 'ta-xua-san-may-7.jpg',
@@ -85,7 +79,24 @@ module.exports = {
         type: 'image/jpg',
         source: 0
       },
-
+      {
+        url: 'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/BullRun6.jpg',
+        name: 'BullRun6.jpg',
+        type: 'image/jpeg',
+        source: 0
+      },
+      {
+        url: 'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/Atrium8.jpg',
+        name: 'Atrium8.jpg',
+        type: 'image/jpeg',
+        source: 0
+      },
+      {
+        url: 'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/shennadoahvalley2.jpg',
+        name: 'shennadoahvalley2.jpg',
+        type: 'image/jpeg',
+        source: 0
+      }
     ]);
   },
 

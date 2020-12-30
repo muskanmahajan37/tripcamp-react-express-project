@@ -70,6 +70,64 @@ module.exports = {
         perNightRate: 10.00,
         website: 'https://nemtv.vn/'
       }, 
+      {
+        name: "Bull Run Campground",
+        description: "Hike along various trails, take on a few rounds of disc golf or just find a new spot for a family picnic! In the summertime, \
+                      visitors can also enjoy their day at Atlantis Waterpark! All these great features are within walking distance of the Bull Run \
+                      campground! The variety of campsites available at Bull Run Campground are RV sites with electric only service, RV sites with \
+                      full-service (which includes sewer, water and electric), rustic cabins and group camping areas. All campsites have a charcoal grill, \
+                      fire ring and picnic table. There are two bathhouses in the campground that offer hot showers, sinks, toilets and laundry facilities. \
+                      The camp store sells camping supplies, snacks, ice and firewood and is open daily from 8:00 a.m. to 8:00 p.",
+        units: 15,
+        gpsLocation: [38.81066111,-77.49129471],
+        mediaUrlIds: [12],
+        streetAddress: "7700 Bull Run Dr",
+        city: 'Centreville',
+        stateProvince: 'VA',
+        zipCode: 2012,
+        country: "USA",
+        perNightRate: 10.00,
+        website: 'https://www.novaparks.com/cabins-camping/camping'
+      }, 
+      {
+        name: "The Atrium at Meadowlark",
+        description: "The Atrium at Meadowlark features exposed brick walls, a glass-enclosed cathedral ceiling, and a large terrace overlooking the botanical \
+                      gardens. This remarkable space will seat up to 230 guests, with standing room for 300. Take advantage of the gazebos, Bell Garden, and \
+                      Lilac Pavilion for photography and other event options at Meadowlark Botanical Gardens. Great Blue Heron provides full on-site catering for \
+                      any event at The Atrium. \
+                      Settled within Meadowlark Botanical Gardens are three gazebos that serve as perfect locations for a private and intimate wedding ceremony. \
+                      Each wedding gazebo accommodates varying capacities and are located throughout the garden. Maximum capacities range between 50 to 120 \
+                      standing guests in and around the gazebos. The Lake Caroline Gazebo is the most commonly used gazebo for wedding ceremonies as it is located \
+                      at the end of a dock in the middle of Lake Caroline. With a 360 degree view of the gardens, this gazebo is perfect for an outdoor ceremony.",
+        units: 15,
+        gpsLocation: [38.93823645,-77.28193882],
+        mediaUrlIds: [13],
+        streetAddress: "9750 Meadowlark Gardens Ct	",
+        city: 'Vienna',
+        stateProvince: 'VA',
+        zipCode: 22182,
+        country: "USA",
+        perNightRate: 200.00,
+        website: 'https://www.novaparks.com/weddings-catering/the-atrium-at-meadowlark'
+      }, 
+      {
+        name: "Shenandoah National Park",
+        description: "Fall colors are great. Fall temperatures? Not always so much. That's why if you prefer the climate-controlled comfort of your SUV there's \
+                      no better place in America for leaves than Shenandoah National Park. It's home to the famous 105-mile Skyline Drive, where you'll be enshrouded \
+                      by a canopy of red, orange, yellow, and green. Aim the park’s eastern border and you’ll find another famous drive: Blue Ridge Parkway, \
+                      which climbs thousands of feet in elevation from its start in central Virginia to its end in Cherokee National Forest. Typically, higher \
+                      elevations will turn first -- toward mid-September -- and the lower elevations will transition as the season wears on.",
+        units: 155,
+        gpsLocation: [38.55066256688068,-78.4648730208818],
+        mediaUrlIds: [14],
+        streetAddress: "Shenandoah Valley",
+        city: 'Linville',
+        stateProvince: 'VA',
+        zipCode: 22802,
+        country: "USA",
+        perNightRate: 10.00,
+        website: 'https://www.nps.gov/shen/index.htm'
+      }, 
     ]);
   },
 
