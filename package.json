@@ -1,5 +1,5 @@
 {
-  "name": "tripcamp",
+  "name": "authenticate-me",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suasllc/tripcamp-react-express-project.git"
+    "url": "git+https://github.com/suasllc/fullstack-authenticate-me.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/suasllc/tripcamp-react-express-project/issues"
+    "url": "https://github.com/suasllc/fullstack-authenticate-me/issues"
   },
-  "homepage": "https://github.com/suasllc/tripcamp-react-express-project#readme"
+  "homepage": "https://github.com/suasllc/fullstack-authenticate-me#readme"
 }
