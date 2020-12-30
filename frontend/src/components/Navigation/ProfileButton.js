@@ -18,7 +18,7 @@ export default function ProfileButton({ user }) {
   const createSpot = e => {
     e.preventDefault();
     // dropdownMenuRef.current.style = "visibility: hidden;";
-    history.push('/spots');
+    history.push('/spots/create');
   }
 
   function DropdownMenu() {

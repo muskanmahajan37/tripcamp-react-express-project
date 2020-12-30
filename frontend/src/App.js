@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { LoginFormModal } from './components/LoginFormPage';
 import { SignupFormModal } from './components/SignupFormPage';
-import { SpotFormModal } from './components/Spot';
+import Spot, { SpotFormModal } from './components/Spot';
 import BookingFormModal from './components/BookingForm';
 import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
@@ -35,10 +35,10 @@ function App() {
   return isLoaded && (
     <div className='mainbody'>
       <Navigation />
-      <Home />
       {/* <MainSearchBar /> */}
       <Switch>
         <Route exact path='/'>
+          <Home />
         </Route>
         <Route path='/login'>
           <LoginFormModal />
@@ -46,7 +46,10 @@ function App() {
         <Route path='/signup'>
           <SignupFormModal />
         </Route>
-        <Route path='/spots'>
+        <Route path='/spots/:spotId' >
+          <Spot />
+        </Route>
+        <Route path='/spots/create'>
           <SpotFormModal />
         </Route>
         <Route path='/bookings/spots/:spotId'>

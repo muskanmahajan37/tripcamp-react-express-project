@@ -2,9 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-// import ReactPlayer from 'react-player/youtube'
+import ReactPlayer from 'react-player/youtube'
 
 import { MapWithMarkerClusterer } from '../GoogleMaps';
 import Rating from '../Rating';
@@ -24,7 +24,6 @@ export function AllSpots({ searchTerm = null }) {
   // const [spots, setSpots] = useState(reduxSpots);
   let spots;
   let searchText;
-  const [singleSpot, setSingleSpot] = useState(null);
 
   //TODO: make this useEffect work
   // useEffect(() => {
@@ -61,17 +60,13 @@ export function AllSpots({ searchTerm = null }) {
 
   const handleSpotSelection = e => {
     e.preventDefault();
-    const selectedSpot = reduxSpots.find(spot => spot.id === Number(e.target.id.split("-")[0]));
-    setSingleSpot(selectedSpot);
-    console.log('selectedSpot', selectedSpot);
+    history.push(`/spots/${e.target.id.split("-")[0]}`);
   };
 
   return (
     <div className='spots-and-maps'>
       {spots && <div className="spots-home-display-grid">
-        {singleSpot ? 
-          <DisplaySelectedSpot spot={singleSpot} />
-          :
+        {
           spots.map(spot =>
             <div key={nanoid()} >
               <h6>{highlightSearchText(spot.name, searchText)}</h6>
@@ -365,29 +360,48 @@ export function SpotFormModal() {
   );
 }
 
-export default function DisplaySelectedSpot({ spot = null }) {
+export default function Spot() {
   // const dispatch = useDispatch();
+  const reduxSpots = useSelector(state => state.spots);
+  const [spot, setSpot] = useState(null);
+  const params = useParams();
+  useEffect(() => {
+    if (params && reduxSpots) {
+      setSpot(reduxSpots.find(spot => spot.id === Number(params.spotId)));
+    }
+    console.log("spot", spot, params);
+  }, [params]);
   return (
     <div>
       {spot &&
-        <div key={spot.name}>
-          <h3>{spot.name}</h3>
-          <div className='spot-media-display'>
-            {spot.urls && spot.urls.map(url =>
-              url.toLowerCase().includes("youtu") ?
-                // <ReactPlayer
-                //   url={url}
-                //   width='400px'
-                //   height='225px'
-                //   controls={true}
-                //   key={url}
-                // />
-                <></>
-                :
-                <img key={url} src={url} alt={spot.name} className='media-display' />
-            )}
+        <>
+          <div key={spot.name}>
+            <h3>{spot.name}</h3>
+            <div className='spot-media-display'>
+              {spot.urls && spot.urls.map(url =>
+                url.toLowerCase().includes("youtu") ?
+                  <ReactPlayer
+                    url={url}
+                    width='400px'
+                    height='225px'
+                    controls={true}
+                    key={url}
+                  />
+                  // <></>
+                  :
+                  <img key={url} src={url} alt={spot.name} className='media-display' />
+              )}
+            </div>
           </div>
-        </div>
+          <div className='home-side-map'>
+            {
+              spot && <MapWithMarkerClusterer
+                center={{ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] }}
+                zoom={5}
+                spots={[spot]} />
+            }
+          </div>
+        </>
       }
     </div>
   );
