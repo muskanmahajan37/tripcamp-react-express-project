@@ -26,9 +26,8 @@ export function AllSpots({ searchTerm = null }) {
 
   // useEffect(() => {
   if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
-    console.log('searchTerms[searchTerms.length - 1].text', searchTerms[searchTerms.length - 1].text);
     spots = reduxSpots.filter(spot => {
-      searchText = searchTerms[searchTerms.length - 1].text;
+      searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
       return spot.name.toLowerCase().includes(searchText)
         || spot.description.toLowerCase().includes(searchText);
     })
@@ -49,11 +48,13 @@ export function AllSpots({ searchTerm = null }) {
   }
 
   const highlightSearchText = (originalText, search) => {
-    if (!search || !originalText.toLowerCase().includes(search)) return originalText;
-    const index = originalText.toLowerCase().indexOf(search);
-    const array = originalText.split(search);
-    console.log("array of text", array);
-    return <>{array[0]} <b style={{ color: "white", backgroundColor: "black" }}>{search}</b> {array[1]}</>;
+    if (!search || !originalText.toLowerCase().includes(search.toLowerCase())) return originalText;
+    const index = originalText.toLowerCase().indexOf(search.toLowerCase());
+    const firstPart = originalText.slice(0, index);
+    const searchedPart = originalText.slice(index, index + search.length);
+    const secondPart = originalText.slice(index + search.length);
+    console.log("partitions", originalText, firstPart, searchedPart, secondPart);
+    return <>{firstPart}<b style={{ color: "white", backgroundColor: "green" }}>{searchedPart}</b>{secondPart}</>;
   };
 
   return (
