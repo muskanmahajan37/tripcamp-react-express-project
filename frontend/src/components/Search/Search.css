@@ -1,0 +1,8 @@
+.main-search-bar{
+  border: 1px solid green;
+  height: 50px;
+  border-radius: 25px;
+  /* (top-left, top-right, bottom-right, bottom-left corner): */
+  width: 500px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
