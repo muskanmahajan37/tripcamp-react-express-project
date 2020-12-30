@@ -24,20 +24,21 @@ export function AllSpots({ searchTerm = null }) {
   // const [spots, setSpots] = useState(reduxSpots);
   let spots;
   let searchText;
+  const [singleSpot, setSingleSpot] = useState(null);
 
   //TODO: make this useEffect work
   // useEffect(() => {
-    if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
-      searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
-      spots = (reduxSpots.filter(spot => {
-        return spot.name.toLowerCase().includes(searchText)
-          || spot.description.toLowerCase().includes(searchText);
-      }));
-    } else {
-      spots = (reduxSpots);
-      searchText = undefined;
-    }
-    console.log('spots after filtered', spots, "searchTerms", searchTerms);
+  if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
+    searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
+    spots = (reduxSpots.filter(spot => {
+      return spot.name.toLowerCase().includes(searchText)
+        || spot.description.toLowerCase().includes(searchText);
+    }));
+  } else {
+    spots = (reduxSpots);
+    searchText = undefined;
+  }
+  console.log('spots after filtered', spots, "searchTerms", searchTerms);
   // }, [searchTerms[searchTerms.length - 1]]);
 
   function handleBookNowClick(e) {
@@ -58,44 +59,61 @@ export function AllSpots({ searchTerm = null }) {
     return <>{firstPart}<b style={{ color: "white", backgroundColor: "green" }}>{searchedPart}</b>{secondPart}</>;
   };
 
+  const handleSpotSelection = e => {
+    e.preventDefault();
+    const selectedSpot = reduxSpots.find(spot => spot.id === Number(e.target.id.split("-")[0]));
+    setSingleSpot(selectedSpot);
+    console.log('selectedSpot', selectedSpot);
+  };
+
   return (
     <div className='spots-and-maps'>
-      <div className="spots-home-display-grid">
-        {spots && spots.map(spot =>
-          <div key={nanoid()} >
-            <h6>{highlightSearchText(spot.name, searchText)}</h6>
-            <div className='spot-media-display'>
-              {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
-                <img key={spot.urls[0]} src={spot.urls[0]} alt={spot.name} className='spot-default-image' />
-                :
-                <></>
-              }
-              <div className="start-rating-on-top-of-image">
-                <Rating rated={3 + (Math.random() * 2)} />
-              </div>
-            </div>
-            <div style={{ marginTop: '10px' }}>
-              <div className="buttons-and-address">
-                <div className="book-and-more-div">
-                  <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
-                  <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
-                </div>
-                <div className='spot-address'>
-                  <p >
-                    {spot.streetAddress}
-                  </p>
-                  <p >
-                    {spot.city} {spot.stateProvince} {spot.zipCode} {spot.country}
-                  </p>
+      {spots && <div className="spots-home-display-grid">
+        {singleSpot ? 
+          <DisplaySelectedSpot spot={singleSpot} />
+          :
+          spots.map(spot =>
+            <div key={nanoid()} >
+              <h6>{highlightSearchText(spot.name, searchText)}</h6>
+              <div className='spot-media-display'>
+                {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
+                  <img
+                    key={spot.urls[0]}
+                    src={spot.urls[0]}
+                    alt={spot.name}
+                    id={spot.id + "-" + nanoid()}
+                    className='spot-default-image'
+                    onClick={handleSpotSelection}
+                  />
+                  :
+                  <></>
+                }
+                <div className="start-rating-on-top-of-image">
+                  <Rating rated={3 + (Math.random() * 2)} />
                 </div>
               </div>
-              <p className='spot-description hide-scollbar'>
-                {highlightSearchText(spot.description, searchText)}
-              </p>
+              <div style={{ marginTop: '10px' }}>
+                <div className="buttons-and-address">
+                  <div className="book-and-more-div">
+                    <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                    <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
+                  </div>
+                  <div className='spot-address'>
+                    <p >
+                      {spot.streetAddress}
+                    </p>
+                    <p >
+                      {spot.city} {spot.stateProvince} {spot.zipCode} {spot.country}
+                    </p>
+                  </div>
+                </div>
+                <p className='spot-description hide-scollbar'>
+                  {highlightSearchText(spot.description, searchText)}
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+      </div>}
       <div className='home-side-map'>
         {
           spots && spots.length && <MapWithMarkerClusterer
@@ -347,12 +365,11 @@ export function SpotFormModal() {
   );
 }
 
-export default function Spot() {
-  const dispatch = useDispatch();
-  const spots = useSelector(state => state.spots);
+export default function DisplaySelectedSpot({ spot = null }) {
+  // const dispatch = useDispatch();
   return (
     <div>
-      {spots && spots.map(spot =>
+      {spot &&
         <div key={spot.name}>
           <h3>{spot.name}</h3>
           <div className='spot-media-display'>
@@ -371,7 +388,7 @@ export default function Spot() {
             )}
           </div>
         </div>
-      )}
+      }
     </div>
   );
 }
