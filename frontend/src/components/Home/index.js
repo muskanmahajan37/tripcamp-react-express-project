@@ -13,9 +13,7 @@ export default function Home() {
     <div className="main-home-view">
       <div className='banner-and-search-div'>
         <Banner />
-        <div className='search-over-banner-div main-search-bar'>
-          <MainSearchBar />
-        </div>
+        <MainSearchBar />
       </div>
       <div className="main-home-view-spots" >
         <AllSpots />
