@@ -215,6 +215,17 @@ img {
   justify-content: space-between;
   align-items: start;
 }
+.single-spot-and-maps {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
 
 .home-side-map {
   height: 100%;

@@ -43,7 +43,7 @@ export default function Spot() {
     if (image) image.style = "display: block";
   }, [indexToDisplay, imageUrls])
   return (
-    <div className='spots-and-maps'>
+    <div className='single-spot-and-maps'>
       {spot &&
         <>
           <div key={spot.name} >

@@ -36,21 +36,19 @@ function App() {
     <div className='mainbody'>
       <Navigation />
       {/* <MainSearchBar /> */}
+      <Home />
       <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
         <Route path='/login'>
           <LoginFormModal />
         </Route>
         <Route path='/signup'>
           <SignupFormModal />
         </Route>
+        <Route exact path='/spots/create'>
+          <SpotFormModal />
+        </Route>
         <Route path='/spots/:spotId' >
           <Spot />
-        </Route>
-        <Route path='/spots/create'>
-          <SpotFormModal />
         </Route>
         <Route path='/bookings/spots/:spotId'>
           <BookingFormModal />
@@ -59,6 +57,7 @@ function App() {
           <ReviewFormModal />
         </Route>
       </Switch>
+
       <Footer />
     </div>
   );
