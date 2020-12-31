@@ -20,7 +20,7 @@ const removeSpotPOJO = () => ({
 });
 
 
-export const getOneSpot = (id) => async dispatch => {
+export const getOneSpot = (id, withReviews = false) => async dispatch => {
   const res = await fetch(`/api/spots/${id}`, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
