@@ -243,14 +243,14 @@ export function AllSpots({ searchTerm = null }) {
             </div>
           )}
       </div>}
-      <div className='home-side-map'>
+      {/* <div className='home-side-map'>
         {
           spots && spots.length && <MapWithMarkerClusterer
             center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
             zoom={5}
             spots={spots} />
         }
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -18,9 +18,9 @@ export default function Home() {
         <MainSearchBar />
         <Banner />
       </div>
-      <div className="main-home-view-spots" >
+      {/* <div className="main-home-view-spots" > */}
         <AllSpots searchTerm={""} />
-      </div>
+      {/* </div> */}
     </div>
   );
 }
