@@ -16,10 +16,126 @@
   width: 90%;
 }
 
+.single-spot-media-display {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  width: 70vw;
+  overflow: hidden;
+}
+.single-spot-name-div{
+  display: flex;
+  justify-content: center;
+}
+
 .media-display {
   width: 400px;
   height: 300px;
+  border-radius: 10px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
+
+/*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow_gallery*/
+
+/* Add a pointer when hovering over the thumbnail images */
+
+img {
+  vertical-align: middle;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+
+.slide-container {
+  position: relative;
+  width: 70%;
+}
+
+/* Hide the images by default */
+
+.spotSlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+
+.prev:hover, .next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+
+.column {
+  float: left;
+  overflow: hidden;
+}
+
+/* Add a transparency effect for thumnbail images */
+
+.demo {
+  opacity: 0.6;
+}
+
+.active, .demo:hover {
+  opacity: 1;
+}
+
+/*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow_gallery*/
 
 .buttons-and-address {
   display: flex;
@@ -31,6 +147,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .book-and-more-div button {
   margin: 2px;
   padding: 5px;
@@ -85,6 +202,7 @@
   align-items: center;
   padding: 0px 10px 0px;
 }
+
 .spot-address p {
   font-size: 18px;
   padding: 0;

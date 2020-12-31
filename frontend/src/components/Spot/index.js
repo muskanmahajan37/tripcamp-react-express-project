@@ -20,33 +20,92 @@ export default function Spot() {
   // const dispatch = useDispatch();
   const reduxSpots = useSelector(state => state.spots);
   const [spot, setSpot] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [indexToDisplay, setIndexToDisplay] = useState(0);
   const params = useParams();
   useEffect(() => {
     if (params && reduxSpots) {
       setSpot(reduxSpots.find(spot => spot.id === Number(params.spotId)));
     }
-    console.log("spot", spot, params);
   }, [params]);
+  useEffect(() => {
+    if (spot && spot.urls) {
+      setImageUrls(spot.urls.filter(url => !url.toLowerCase().includes("youtu")));
+      setVideoUrls(spot.urls.filter(url => url.toLowerCase().includes("youtu")));
+    }
+  }, [spot]);
+
+  useEffect(() => {
+    [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none");
+    console.log(indexToDisplay);
+    const image = document.getElementById(`image${indexToDisplay}`);
+    if (image) image.style = "display: block";
+  }, [indexToDisplay, imageUrls])
   return (
     <div className='spots-and-maps'>
       {spot &&
         <>
-          <div key={spot.name}>
-            <h3>{spot.name}</h3>
-            <div className='spot-media-display'>
-              {spot.urls && spot.urls.map(url =>
-                url.toLowerCase().includes("youtu") ?
-                  <ReactPlayer
-                    url={url}
-                    width='400px'
-                    height='225px'
-                    controls={true}
-                    key={url}
-                  />
-                  // <></>
-                  :
-                  <img key={url} src={url} alt={spot.name} className='media-display' />
-              )}
+          <div key={spot.name} >
+            <div className='single-spot-name-div'>
+              <h3>{spot.name}</h3>
+            </div>
+            <div className='single-spot-media-display'>
+              <div className='slide-container'>
+                {imageUrls && imageUrls.map((url, i) =>
+                  <div className="spotSlides" id={"image" + i}>
+                    <div className="numbertext">{`${i + 1} / ${imageUrls.length}`}</div>
+                    <img key={nanoid()}
+                      src={url} alt={spot.name}
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+                )}
+                <a className="prev"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    let prev = indexToDisplay - 1;
+                    if (prev < 0) prev = imageUrls.length - 1;
+                    setIndexToDisplay(prev);
+                  }}
+                >❮</a>
+                <a className="next"
+                  onMouseDown={e => {
+                    e.preventDefault();
+                    let next = indexToDisplay + 1;
+                    if (next >= imageUrls.length) next = 0;
+                    setIndexToDisplay(next);
+                  }}
+                >❯</a>
+                <div className="row">
+                  {imageUrls && imageUrls.map((url, i) =>
+                    <div className="column" style={{
+                      width: `${100 / imageUrls.length}%`,
+                      height: `150px`
+                    }}>
+                      <img key={nanoid()} src={url}
+                        alt={spot.name}
+                        className='demo cursor'
+                        style={{ width: "100%" }}
+                        id={i + "-" + nanoid()}
+                        onClick={e => {
+                          e.preventDefault();
+                          setIndexToDisplay(e.target.id.split("-")[0]);
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* {videoUrls && videoUrls.map(url =>
+                <ReactPlayer
+                  url={url}
+                  width='400px'
+                  height='225px'
+                  controls={true}
+                  key={url}
+                />
+              )} */}
             </div>
           </div>
           <div className='home-side-map'>
@@ -83,7 +142,7 @@ export function AllSpots({ searchTerm = null }) {
     spots = (reduxSpots);
     searchText = undefined;
   }
-  console.log('spots after filtered', spots, "searchTerms", searchTerms);
+  // console.log('spots after filtered', spots, "searchTerms", searchTerms);
   // }, [searchTerms[searchTerms.length - 1]]);
 
   function handleBookNowClick(e) {
