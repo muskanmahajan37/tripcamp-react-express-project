@@ -75,7 +75,7 @@ export default function ProfileButton({ user }) {
     <>
       <span
         className="dropdown-menu-parent"
-        style={{ marginRight: '20px' }}
+        style={{ marginRight: '10px' }}
       // onClick={() => { setShowMenu(!showMenu); }}
       // onMouseOver={() => { setShowMenu(true); }}
       // onMouseOut={() => { setShowMenu(false); }}
@@ -83,7 +83,7 @@ export default function ProfileButton({ user }) {
       >
         <button
           className="fas fa-atom icon-span"
-          style={{ marginRight: '20px' }}
+          style={{ marginRight: '10px' }}
         />
         {
           // showMenu &&
