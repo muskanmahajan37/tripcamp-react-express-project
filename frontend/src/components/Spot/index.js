@@ -62,9 +62,9 @@ export default function Spot() {
     console.log('numberOfReviews', numberOfReviews);
   }, [spot]);
 
-  useEffect(() => {
-    setRatingUpdater(calculatedRating);
-  }, [calculatedRating, noOfReviews])  
+  // useEffect(() => {
+  //   setRatingUpdater(calculatedRating);
+  // }, [calculatedRating])  
 
   useEffect(() => {
     [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none;");
