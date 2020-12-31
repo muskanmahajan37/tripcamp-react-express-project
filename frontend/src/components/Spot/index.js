@@ -221,7 +221,7 @@ export function AllSpots({ searchTerm = null }) {
                   <Rating rated={3 + (Math.random() * 2)} />
                 </div>
               </div>
-              <div style={{ marginTop: '10px' }}>
+              <div className='buttons-address-description'>
                 <div className="buttons-and-address">
                   <div className="book-and-more-div">
                     <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
