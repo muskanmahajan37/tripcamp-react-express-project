@@ -22,7 +22,7 @@ export const removeCurrentSpot = () => ({
 
 export const getOneSpot = (id, withReviews = false) => async dispatch => {
   let link = `/api/spots/${id}`;
-  if(withReviews) link += '/reviews';  
+  if (withReviews) link += '/reviews';
   const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
@@ -34,7 +34,7 @@ export const getOneSpot = (id, withReviews = false) => async dispatch => {
 
 export const getAllSpots = (withReviews = false) => async dispatch => {
   let link = '/api/spots';
-  if(withReviews) link += '/reviews';
+  if (withReviews) link += '/reviews';
   const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
@@ -57,14 +57,15 @@ export const createOneSpot = ({ spot }) => async dispatch => {
 }
 
 
-const initialState = {allSpots: []};
+const initialState = { allSpots: [] };
 
 const spotReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SET_ONE_SPOT:
       newState = Object.assign({}, state);
-      newState.allSpots.push(action.spot);
+      if (!newState.allSpots.includes(action.spot))
+        newState.allSpots.push(action.spot);
       newState.currentSpot = action.spot;
       return newState;
     case SET_ALL_SPOTS:

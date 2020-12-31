@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, Redirect, useParams } from 'react-router-dom';
+import { useHistory, Redirect, useParams, useLocation } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 // import ReactPlayer from 'react-player/youtube'
 
@@ -16,6 +16,19 @@ import * as spotActions from '../../store/spot';
 import '../Forms.css';
 import './Spot.css';
 
+function calculateRatingFunction(spot) {
+  let rated = 0;
+  if (!spot) return undefined;
+  if (spot.Reviews) {
+    for (let i = 0; i < spot.Reviews.length; i++) {
+      rated += spot.Reviews[i].rating;
+    }
+    if (spot.Reviews.length > 0)
+      rated /= spot.Reviews.length;
+  }
+  return rated;
+}
+
 export default function Spot() {
   // const dispatch = useDispatch();
   const reduxSpots = useSelector(state => state.spots.allSpots);
@@ -24,23 +37,8 @@ export default function Spot() {
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const [calculatedRating, setCalculatedRating] = useState(undefined);
-  const [realTimeCalculatedRating, setRealTimeCalculatedRating] = useState(calculatedRating);
+  const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
-
-  function calculateRating(spot) {
-    let rated = 0;
-    if (!spot) return undefined;
-    if (spot.Reviews) {
-      for (let i = 0; i < spot.Reviews.length; i++) {
-        rated += spot.Reviews[i].rating;
-        console.log('currentReview', spot.Reviews[i]);
-      }
-      if (spot.Reviews.length > 0)
-        rated /= spot.Reviews.length;
-    }
-    console.log('rated', rated);
-    return rated;
-  }
 
   useEffect(() => {
     if (params && reduxSpots) {
@@ -50,7 +48,7 @@ export default function Spot() {
   }, [params]);
 
   useEffect(() => {
-    setRealTimeCalculatedRating(calculateRating);
+    setRatingUpdater(calculatedRating);
   }, [calculatedRating])
 
   useEffect(() => {
@@ -58,9 +56,8 @@ export default function Spot() {
       setImageUrls(spot.urls.filter(url => !url.toLowerCase().includes("youtu")));
       setVideoUrls(spot.urls.filter(url => url.toLowerCase().includes("youtu")));
     }
-    const rated = calculateRating(spot);
+    const rated = calculateRatingFunction(spot);
     setCalculatedRating(rated);
-    console.log('calculateRating rated', rated);    
   }, [spot]);
 
   useEffect(() => {
@@ -154,24 +151,46 @@ export function AllSpots({ searchTerm = null }) {
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
   const dispatch = useDispatch();
-  // const [spots, setSpots] = useState(reduxSpots);
-  let spots;
-  let searchText;
+  const [searchText, setSearchText] = useState(undefined);
+  const [highlighting, setHighlighting] = useState(searchText);
+  const location = useLocation();
 
-  //TODO: make this useEffect work
-  // useEffect(() => {
-  if (searchTerms.length && searchTerms[searchTerms.length - 1]) {
-    searchText = searchTerms[searchTerms.length - 1].text.toLowerCase();
-    spots = (reduxSpots.filter(spot => {
-      return spot.name.toLowerCase().includes(searchText)
-        || spot.description.toLowerCase().includes(searchText);
-    }));
-  } else {
-    spots = (reduxSpots);
-    searchText = undefined;
-  }
-  // console.log('spots after filtered', spots, "searchTerms", searchTerms);
-  // }, [searchTerms[searchTerms.length - 1]]);
+  const [spots, setSpots] = useState(reduxSpots);
+
+  useEffect(() => {
+    if (searchTerms[searchTerms.length - 1]) {
+      setSearchText(searchTerms[searchTerms.length - 1].text.toLowerCase());
+    } else {
+      setSearchText(undefined);
+    }
+  }, [searchTerms]);
+  useEffect(() => {
+    if (searchText) {
+      setSpots(reduxSpots.filter(spot => {
+        const rated = calculateRatingFunction(spot);
+        spot.rated = rated;
+        return spot.name.toLowerCase().includes(searchText)
+          || spot.description.toLowerCase().includes(searchText);
+      }));
+      history.push(`/search/${searchText}`);
+    } else {
+      setSpots(reduxSpots.map(spot => {
+        const rated = calculateRatingFunction(spot);
+        spot.rated = rated;
+        return spot;
+      }));
+      // history.push('/');
+    }
+  }, [searchText, reduxSpots]);
+
+  useEffect(() => {
+    setHighlighting(searchText);
+    if (!searchText) history.push('/');
+  }, [searchText])
+
+  useEffect(()=>{
+    if(location.pathname === '/') setSearchText(undefined);
+  }, [location.pathname]);
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
@@ -182,7 +201,7 @@ export function AllSpots({ searchTerm = null }) {
     history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
   }
 
-  const highlightSearchText = (originalText, search) => {
+  function highlightSearchText(originalText, search) {
     if (!search || !originalText.toLowerCase().includes(search.toLowerCase())) return originalText;
     const index = originalText.toLowerCase().indexOf(search.toLowerCase());
     const firstPart = originalText.slice(0, index);
@@ -203,7 +222,7 @@ export function AllSpots({ searchTerm = null }) {
         {
           spots.map(spot =>
             <div key={nanoid()} >
-              <h6>{highlightSearchText(spot.name, searchText)}</h6>
+              <h6>{highlightSearchText(spot.name, searchText) || highlighting}</h6>
               <div className='spot-media-display'>
                 {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
                   <img
@@ -218,7 +237,7 @@ export function AllSpots({ searchTerm = null }) {
                   <></>
                 }
                 <div className="start-rating-on-top-of-image">
-                  <Rating rated={3 + (Math.random() * 2)} />
+                  <Rating rated={spot.rated} />
                 </div>
               </div>
               <div className='buttons-address-description'>

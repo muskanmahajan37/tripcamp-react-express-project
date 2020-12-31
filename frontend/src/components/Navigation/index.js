@@ -13,8 +13,8 @@ function Navigation() {
       <NavLink to={'/'}>Home</NavLink>
       { sessionUser ?
         <>
-        <NotificationBell user={sessionUser}/>
-        <ProfileButton user={sessionUser}/>
+          <NotificationBell user={sessionUser} />
+          <ProfileButton user={sessionUser} />
         </>
         :
         <>
