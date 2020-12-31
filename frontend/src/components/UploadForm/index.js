@@ -99,7 +99,7 @@ export default function UploadForm({
         {
           uploadStatus && <p style={{ color: 'green' }}>{uploadStatus}</p>
         }
-        <label class="button button-selectFile">
+        <label className="button button-selectFile">
           <i className="fa fa-image"></i> {(fileToUpload && fileToUpload.name) || "Choose File To Upload"}
           <input type="file" style={{ display: "none" }} name="image" id="file-input" onChange={onFileInputChange} files={fileToUpload} />
         </label>

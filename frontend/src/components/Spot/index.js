@@ -79,7 +79,7 @@ export default function Spot() {
                 >❯</a>
                 <div className="row">
                   {imageUrls && imageUrls.map((url, i) =>
-                    <div className="column" style={{
+                    <div className="column" key={nanoid()} style={{
                       width: `${100 / imageUrls.length}%`,
                       height: `150px`
                     }}>
@@ -103,7 +103,7 @@ export default function Spot() {
                   width='400px'
                   height='225px'
                   controls={true}
-                  key={url}
+                  key={nanoid()}
                 />
               )} */}
             </div>
@@ -360,11 +360,11 @@ export function SpotFormModal() {
               required
             />
           </div>
-          <div className="input-div-number">
+          <div className="input-div">
             <label>GPS Location (Lat, Long)</label>
             <div className="input-div" style={{ paddingTop: '0px', paddingLeft: '5px' }}>
               <input
-                className='input'
+                className='input-gps'
                 type='number'
                 min={-90}
                 max={90}
@@ -378,7 +378,7 @@ export function SpotFormModal() {
                 required
               />
               <input
-                className='input'
+                className='input-gps'
                 type='number'
                 min={-180}
                 max={180}

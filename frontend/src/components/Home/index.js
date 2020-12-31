@@ -5,7 +5,7 @@ import MainSearchBar from '../Search';
 import './Home.css';
 
 export default function Home() {
-  return (<>
+  return (
     <div className="main-home-view">
       <div className='banner-and-search-div'>
         <MainSearchBar />
@@ -15,6 +15,5 @@ export default function Home() {
         <AllSpots searchTerm={""} />
       </div>
     </div>
-  </>
   );
 }
