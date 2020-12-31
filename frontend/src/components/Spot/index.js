@@ -201,11 +201,11 @@ export function AllSpots({ searchTerm = null }) {
                     <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
                   </div>
                   <div className='spot-address'>
-                    <p >
+                    <p style={{maxWidth: '210px', fontSize: '16px'}}>
                       {spot.streetAddress}
                     </p>
                     <p >
-                      {spot.city} {spot.stateProvince} {spot.zipCode} {spot.country}
+                      {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
                     </p>
                   </div>
                 </div>

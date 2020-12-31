@@ -10,6 +10,7 @@ import Rating from '../Rating';
 
 import '../Forms.css';
 import { nanoid } from 'nanoid';
+import { set } from 'js-cookie';
 
 export default function ReviewFormModal({ divClass = "modal", formContentClass = 'form-container modal-content' }) {
   const dispatch = useDispatch();
@@ -23,26 +24,33 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const history = useHistory();
   const params = useParams();
   const [rating, setRating] = useState(null);
+  const [enableSubmit, setEnableSubmit] = useState(false);
   let realtimeRating;
   const [spot, setSpot] = useState(null);
-
-  useEffect(() => {
-    realtimeRating = ratings[ratings.length - 1];
-    setRating(realtimeRating);
-  }, [ratings]);
 
   useEffect(() => {
     if (params && spots) {
       setSpot(spots.find(spot => spot.id === Number(params.spotId)));
       realtimeRating = undefined;
+      setRating(realtimeRating);
     }
-    console.log("spot", spot, params, realtimeRating);
   }, [params]);
+
+  useEffect(() => {
+    realtimeRating = ratings[ratings.length - 1];
+    setRating(realtimeRating);
+    console.log("spot", spot, params, 'realtimeRating', realtimeRating);
+  }, [ratings]);
+
+  useEffect(() => {
+    if(realtimeRating && title && body) setEnableSubmit(true);
+    else setEnableSubmit(false);
+    console.log("realtimeRating && title && body", realtimeRating, title, body, realtimeRating && title && body);
+  }, [ratings, title, body])
 
   if (!sessionUser) {
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
-    console.log('review', history);
     return <Redirect to='/login' />;
   }
 
@@ -50,7 +58,8 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     setErrors([]);
 
-    if (!realtimeRating)
+    console.log('realtimeRating', realtimeRating, 'ratings[ratings.length - 1]', ratings[ratings.length - 1]);
+    if (!ratings[ratings.length - 1])
       return setErrors(["Select a rating"]);
 
     return dispatch(reviewActions.createOneReview({
@@ -59,7 +68,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
         spotId: spot.id,
         title,
         body,
-        rating: realtimeRating
+        rating: ratings[ratings.length - 1]
       }
     }))
       .then(res => {
@@ -130,6 +139,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
           <button
             className='button'
             type='submit'
+            disabled={!enableSubmit}
           >Submit</button>
           <button
             className='button button-Reset'

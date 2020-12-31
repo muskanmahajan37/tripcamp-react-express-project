@@ -146,6 +146,7 @@ img {
 .book-and-more-div {
   display: flex;
   flex-direction: column;
+  min-width: 80px;
 }
 
 .book-and-more-div button {
