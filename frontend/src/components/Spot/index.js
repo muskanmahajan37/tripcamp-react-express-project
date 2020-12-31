@@ -18,15 +18,17 @@ import './Spot.css';
 
 function calculateRatingFunction(spot) {
   let rated = 0;
-  if (!spot) return undefined;
+  let numberOfReviews = 0;
+  if (!spot) return { rated: undefined, numberOfReviews: undefined };
   if (spot.Reviews) {
+    numberOfReviews = spot.Reviews.length;
     for (let i = 0; i < spot.Reviews.length; i++) {
       rated += spot.Reviews[i].rating;
     }
     if (spot.Reviews.length > 0)
       rated /= spot.Reviews.length;
   }
-  return rated;
+  return { rated, numberOfReviews };
 }
 
 export default function Spot() {
@@ -37,6 +39,7 @@ export default function Spot() {
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const [calculatedRating, setCalculatedRating] = useState(undefined);
+  const [noOfReviews, setNoOfReviews] = useState(undefined);
   const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
 
@@ -47,36 +50,42 @@ export default function Spot() {
     }
   }, [params]);
 
-  useEffect(() => {
-    setRatingUpdater(calculatedRating);
-  }, [calculatedRating])
 
   useEffect(() => {
     if (spot && spot.urls) {
       setImageUrls(spot.urls.filter(url => !url.toLowerCase().includes("youtu")));
       setVideoUrls(spot.urls.filter(url => url.toLowerCase().includes("youtu")));
     }
-    const rated = calculateRatingFunction(spot);
+    const { rated, numberOfReviews } = calculateRatingFunction(spot);
     setCalculatedRating(rated);
+    setNoOfReviews(numberOfReviews);
+    console.log('numberOfReviews', numberOfReviews);
   }, [spot]);
 
   useEffect(() => {
-    [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none");
+    setRatingUpdater(calculatedRating);
+  }, [calculatedRating, noOfReviews])  
+
+  useEffect(() => {
+    [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none;");
     const image = document.getElementById(`image${indexToDisplay}`);
-    if (image) image.style = "display: block";
+    if (image) image.style = "display: block;";
   }, [indexToDisplay, imageUrls])
+
   return (
     <div className='single-spot-and-maps'>
       {spot &&
         <>
-          <div key={spot.name} >
+          <div key={spot.name} className="single-spot-main-view">
             <div className='single-spot-name-div'>
               <h3>{spot.name}</h3>
             </div>
             <div className='single-spot-media-display'>
               <div className='slide-container'>
                 {imageUrls && imageUrls.map((url, i) =>
-                  <div className="spotSlides" id={"image" + i} key={nanoid()}>
+                  <div className="spotSlides" id={"image" + i} key={nanoid()}
+                    style={{ display: i === indexToDisplay ? 'block' : 'none' }}
+                  >
                     <div className="numbertext">{`${i + 1} / ${imageUrls.length}`}</div>
                     <img key={nanoid()}
                       src={url} alt={spot.name}
@@ -130,7 +139,7 @@ export default function Spot() {
                 />
               )} */}
             </div>
-            <Rating rated={calculatedRating} />
+            <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
           </div>
           <div className='home-side-map'>
             {
@@ -167,7 +176,7 @@ export function AllSpots({ searchTerm = null }) {
   useEffect(() => {
     if (searchText) {
       setSpots(reduxSpots.filter(spot => {
-        const rated = calculateRatingFunction(spot);
+        const { rated } = calculateRatingFunction(spot);
         spot.rated = rated;
         return spot.name.toLowerCase().includes(searchText)
           || spot.description.toLowerCase().includes(searchText);
@@ -175,7 +184,7 @@ export function AllSpots({ searchTerm = null }) {
       history.push(`/search/${searchText}`);
     } else {
       setSpots(reduxSpots.map(spot => {
-        const rated = calculateRatingFunction(spot);
+        const { rated } = calculateRatingFunction(spot);
         spot.rated = rated;
         return spot;
       }));
@@ -188,8 +197,8 @@ export function AllSpots({ searchTerm = null }) {
     if (!searchText) history.push('/');
   }, [searchText])
 
-  useEffect(()=>{
-    if(location.pathname === '/') setSearchText(undefined);
+  useEffect(() => {
+    if (location.pathname === '/') setSearchText(undefined);
   }, [location.pathname]);
 
   function handleBookNowClick(e) {

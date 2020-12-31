@@ -38,6 +38,12 @@
   padding-right: 2px;
 }
 
+.single-spot-main-view{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_slideshow_gallery*/
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -308,7 +314,7 @@ img {
 }
 .single-spot-and-maps {
   position: absolute;
-  top: 0;
+  top: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

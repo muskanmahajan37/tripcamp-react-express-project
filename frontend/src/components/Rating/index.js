@@ -6,7 +6,7 @@ import { setRatingPOJO } from '../../store/rating';
 
 import './Rating.css';
 
-export default function Rating({ rated = 0, userChangeable = false }) {
+export default function Rating({ rated = 0, userChangeable = false, numberOfReviews = 0 }) {
   const [trialRating, setTrialRating] = useState(rated);
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
@@ -31,7 +31,10 @@ export default function Rating({ rated = 0, userChangeable = false }) {
           })
         }
         <span className="star-set-font-size">
-          { typeof(rated) === 'number' ? rated.toFixed(1) : <></>}
+          { typeof(rated) === 'number' && rated ? rated.toFixed(1) : <></>}
+          <span>
+          {` - ${numberOfReviews} Reviews`}
+          </span>
         </span>
       </div>
     );
