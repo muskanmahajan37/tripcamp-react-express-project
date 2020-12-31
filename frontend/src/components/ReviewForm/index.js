@@ -10,7 +10,6 @@ import Rating from '../Rating';
 
 import '../Forms.css';
 import { nanoid } from 'nanoid';
-import { set } from 'js-cookie';
 
 export default function ReviewFormModal({ divClass = "modal", formContentClass = 'form-container modal-content' }) {
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   useEffect(() => {
     if(realtimeRating && title && body) setEnableSubmit(true);
     else setEnableSubmit(false);
-  }, [ratings, title, body])
+  }, [ratings])
 
   if (!sessionUser) {
     if (reviewModalRef.current)

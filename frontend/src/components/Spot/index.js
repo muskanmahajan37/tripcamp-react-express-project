@@ -4,11 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Redirect, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
-import ReactPlayer from 'react-player/youtube'
+// import ReactPlayer from 'react-player/youtube'
 
 import { MapWithMarkerClusterer } from '../GoogleMaps';
 import Rating from '../Rating';
-import BookingFormModal from '../BookingForm';
+// import BookingFormModal from '../BookingForm';
 import UploadForm from '../UploadForm';
 
 import * as spotActions from '../../store/spot';
@@ -23,18 +23,44 @@ export default function Spot() {
   const [imageUrls, setImageUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
+  const [calculatedRating, setCalculatedRating] = useState(undefined);
+  const [realTimeCalculatedRating, setRealTimeCalculatedRating] = useState(calculatedRating);
   const params = useParams();
+
+  function calculateRating(spot) {
+    let rated = 0;
+    if (!spot) return undefined;
+    if (spot.Reviews) {
+      for (let i = 0; i < spot.Reviews.length; i++) {
+        rated += spot.Reviews[i].rating;
+        console.log('currentReview', spot.Reviews[i]);
+      }
+      if (spot.Reviews.length > 0)
+        rated /= spot.Reviews.length;
+    }
+    console.log('rated', rated);
+    return rated;
+  }
 
   useEffect(() => {
     if (params && reduxSpots) {
-      setSpot(reduxSpots.find(spot => spot.id === Number(params.spotId)));
+      const selectedSpot = reduxSpots.find(spot => spot.id === Number(params.spotId));
+      setSpot(selectedSpot);
     }
   }, [params]);
+
+  useEffect(() => {
+    setRealTimeCalculatedRating(calculateRating);
+  }, [calculatedRating])
+
   useEffect(() => {
     if (spot && spot.urls) {
       setImageUrls(spot.urls.filter(url => !url.toLowerCase().includes("youtu")));
       setVideoUrls(spot.urls.filter(url => url.toLowerCase().includes("youtu")));
     }
+    const rated = calculateRating(spot);
+    setCalculatedRating(rated);
+    console.log('calculateRating rated', rated);    
   }, [spot]);
 
   useEffect(() => {
@@ -107,6 +133,7 @@ export default function Spot() {
                 />
               )} */}
             </div>
+            <Rating rated={calculatedRating} />
           </div>
           <div className='home-side-map'>
             {
@@ -201,7 +228,7 @@ export function AllSpots({ searchTerm = null }) {
                     <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
                   </div>
                   <div className='spot-address'>
-                    <p style={{maxWidth: '210px', fontSize: '16px'}}>
+                    <p style={{ maxWidth: '210px', fontSize: '16px' }}>
                       {spot.streetAddress}
                     </p>
                     <p >

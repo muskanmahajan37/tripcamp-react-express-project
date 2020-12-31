@@ -11,7 +11,6 @@ export default function Rating({ rated = 0, userChangeable = false }) {
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
   const dispatch = useDispatch();
-  const ratings = useSelector(state => state.ratings);
 
   if (!userChangeable) {
     const ratatedWholeNumber = Math.floor(rated);
@@ -31,7 +30,9 @@ export default function Rating({ rated = 0, userChangeable = false }) {
             />
           })
         }
-        <span className="star-set-font-size">{rated.toFixed(1)}</span>
+        <span className="star-set-font-size">
+          { typeof(rated) === 'number' ? rated.toFixed(1) : <></>}
+        </span>
       </div>
     );
   }
