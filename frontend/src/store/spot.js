@@ -21,7 +21,10 @@ const removeSpotPOJO = () => ({
 
 
 export const getOneSpot = (id, withReviews = false) => async dispatch => {
-  const res = await fetch(`/api/spots/${id}`, {
+  let link = `/api/spots/${id}`;
+  if(withReviews) link += '/reviews';  
+  console.log('\n\n\n\n\nSingle spot pulling', link);
+  const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
     const fedback_spot = res.data.spot; //we need this user back from backend, NOT the provided
@@ -30,8 +33,10 @@ export const getOneSpot = (id, withReviews = false) => async dispatch => {
   return res;
 }
 
-export const getAllSpots = () => async dispatch => {
-  const res = await fetch(`/api/spots`, {
+export const getAllSpots = (withReviews = false) => async dispatch => {
+  let link = '/api/spots';
+  if(withReviews) link += '/reviews';
+  const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
     const fedback_spots = res.data.spots; //we need this user back from backend, NOT the provided

@@ -25,7 +25,8 @@ function App() {
   console.log(sessionUser);
 
   useEffect(() => {
-    dispatch(spotActions.getAllSpots());
+    const withReviews = true;
+    dispatch(spotActions.getAllSpots(withReviews));
   }, [dispatch]);
 
   useEffect(() => {

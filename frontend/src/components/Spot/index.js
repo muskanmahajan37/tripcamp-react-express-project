@@ -38,7 +38,6 @@ export default function Spot() {
 
   useEffect(() => {
     [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none");
-    console.log(indexToDisplay);
     const image = document.getElementById(`image${indexToDisplay}`);
     if (image) image.style = "display: block";
   }, [indexToDisplay, imageUrls])
@@ -53,7 +52,7 @@ export default function Spot() {
             <div className='single-spot-media-display'>
               <div className='slide-container'>
                 {imageUrls && imageUrls.map((url, i) =>
-                  <div className="spotSlides" id={"image" + i}>
+                  <div className="spotSlides" id={"image" + i}> key={nanoid()}
                     <div className="numbertext">{`${i + 1} / ${imageUrls.length}`}</div>
                     <img key={nanoid()}
                       src={url} alt={spot.name}

@@ -115,14 +115,14 @@ export const MapWithMarkerClusterer = ({
               onCloseClick={() => setSelected({})}
             >
               <div>
-                <p>{selected.spot.name}</p>
+                <p><b>{selected.spot.name}</b></p>
                 <p>{
                   selected.spot.streetAddress + " " +
                   selected.spot.city + " " +
                   selected.spot.stateProvince + " " +
                   selected.spot.zipCode
                 }</p>
-                {/* {Todo: add a picture} */}
+                {/* {Todo: add a picture, add rating} */}
               </div>
             </InfoWindow>
           )
