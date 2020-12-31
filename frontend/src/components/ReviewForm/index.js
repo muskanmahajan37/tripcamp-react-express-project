@@ -14,7 +14,7 @@ import { nanoid } from 'nanoid';
 export default function ReviewFormModal({ divClass = "modal", formContentClass = 'form-container modal-content' }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const spots = useSelector(state => state.spots);
+  const spots = useSelector(state => state.spots.allSpots);
   const ratings = useSelector(state => state.ratings);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");

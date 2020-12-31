@@ -18,12 +18,13 @@ import './Spot.css';
 
 export default function Spot() {
   // const dispatch = useDispatch();
-  const reduxSpots = useSelector(state => state.spots);
+  const reduxSpots = useSelector(state => state.spots.allSpots);
   const [spot, setSpot] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const params = useParams();
+
   useEffect(() => {
     if (params && reduxSpots) {
       setSpot(reduxSpots.find(spot => spot.id === Number(params.spotId)));
@@ -52,7 +53,7 @@ export default function Spot() {
             <div className='single-spot-media-display'>
               <div className='slide-container'>
                 {imageUrls && imageUrls.map((url, i) =>
-                  <div className="spotSlides" id={"image" + i}> key={nanoid()}
+                  <div className="spotSlides" id={"image" + i} key={nanoid()}>
                     <div className="numbertext">{`${i + 1} / ${imageUrls.length}`}</div>
                     <img key={nanoid()}
                       src={url} alt={spot.name}
@@ -121,7 +122,7 @@ export default function Spot() {
   );
 }
 export function AllSpots({ searchTerm = null }) {
-  const reduxSpots = useSelector(state => state.spots);
+  const reduxSpots = useSelector(state => state.spots.allSpots);
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -228,7 +229,7 @@ export function AllSpots({ searchTerm = null }) {
 export function SpotFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  // const spots = useSelector(state => state.spots);
+  // const spots = useSelector(state => state.spots.allSpots);
   const media = useSelector(state => state.media);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

@@ -23,7 +23,6 @@ const removeSpotPOJO = () => ({
 export const getOneSpot = (id, withReviews = false) => async dispatch => {
   let link = `/api/spots/${id}`;
   if(withReviews) link += '/reviews';  
-  console.log('\n\n\n\n\nSingle spot pulling', link);
   const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
@@ -58,17 +57,20 @@ export const createOneSpot = ({ spot }) => async dispatch => {
 }
 
 
-const initialState = [];
+const initialState = {allSpots: []};
 
 const spotReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SET_ONE_SPOT:
-      newState = JSON.parse(JSON.stringify(state));
-      newState.push(JSON.parse(JSON.stringify(action.spot)));
+      newState = Object.assign({}, state);
+      newState.allSpots.push(action.spot);
+      newState.currentSpot = action.spot;
       return newState;
     case SET_ALL_SPOTS:
-      newState = JSON.parse(JSON.stringify([...state, ...action.spots]));
+      newState = Object.assign({}, state);
+      delete newState.currentSpot;
+      newState.allSpots = [...newState.allSpots, ...action.spots];
       return newState;
     default:
       return state;

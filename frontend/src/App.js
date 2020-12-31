@@ -22,7 +22,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  console.log(sessionUser);
+  // console.log(sessionUser);
 
   useEffect(() => {
     const withReviews = true;

@@ -12,7 +12,7 @@ import '../Forms.css';
 export default function BookingFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const spots = useSelector(state => state.spots);
+  const spots = useSelector(state => state.spots.allSpots);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
