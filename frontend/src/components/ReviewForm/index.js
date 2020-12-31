@@ -23,7 +23,6 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const reviewModalRef = useRef(null);
   const history = useHistory();
   const params = useParams();
-  const [rating, setRating] = useState(null);
   const [enableSubmit, setEnableSubmit] = useState(false);
   let realtimeRating;
   const [spot, setSpot] = useState(null);
@@ -32,20 +31,16 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     if (params && spots) {
       setSpot(spots.find(spot => spot.id === Number(params.spotId)));
       realtimeRating = undefined;
-      setRating(realtimeRating);
     }
   }, [params]);
 
   useEffect(() => {
     realtimeRating = ratings[ratings.length - 1];
-    setRating(realtimeRating);
-    console.log("spot", spot, params, 'realtimeRating', realtimeRating);
   }, [ratings]);
 
   useEffect(() => {
     if(realtimeRating && title && body) setEnableSubmit(true);
     else setEnableSubmit(false);
-    console.log("realtimeRating && title && body", realtimeRating, title, body, realtimeRating && title && body);
   }, [ratings, title, body])
 
   if (!sessionUser) {
