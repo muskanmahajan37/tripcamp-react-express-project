@@ -126,6 +126,7 @@ export function AllSpots({ searchTerm = null }) {
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const dispatch = useDispatch();
   // const [spots, setSpots] = useState(reduxSpots);
   let spots;
   let searchText;
@@ -165,6 +166,7 @@ export function AllSpots({ searchTerm = null }) {
 
   const handleSpotSelection = e => {
     e.preventDefault();
+    dispatch(spotActions.setSpotPOJO(reduxSpots.find(spot => spot.id === Number(e.target.id.split("-")[0]))));
     history.push(`/spots/${e.target.id.split("-")[0]}`);
   };
 

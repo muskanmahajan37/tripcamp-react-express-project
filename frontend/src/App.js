@@ -22,7 +22,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  // console.log(sessionUser);
 
   useEffect(() => {
     const withReviews = true;
@@ -36,7 +35,6 @@ function App() {
   return isLoaded && (
     <div className='mainbody'>
       <Navigation />
-      {/* <MainSearchBar /> */}
       <Home />
       <Switch>
         <Route path='/login'>
