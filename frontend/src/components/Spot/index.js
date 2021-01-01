@@ -209,7 +209,7 @@ export function AllSpots({ searchTerm = null }) {
   }, [searchText])
 
   useEffect(() => {
-    // if (location.pathname === '/') setSearchText(undefined);
+    if (location.pathname === '/') setSearchText(undefined);
   }, [location.pathname]);
 
   function handleBookNowClick(e) {

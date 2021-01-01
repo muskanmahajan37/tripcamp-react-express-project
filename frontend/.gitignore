@@ -24,3 +24,4 @@ yarn-error.log*
 
 frontend/.eslintcache
 backend/.eslintcache
+.eslintcache
