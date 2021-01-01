@@ -33,10 +33,8 @@ function Navigation() {
   useEffect(() => {
     let path = location.pathname;
     const id = path.slice(path.lastIndexOf('/') + 1);
-    console.log(path, id, Number(id));
     if(Number(id)) {
       path = path.slice(0, path.lastIndexOf('/') + 1);
-      console.log("Great, it's a number", Number(id), path);
     }
     switch (path) {
       case '/login':

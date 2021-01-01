@@ -34,6 +34,7 @@ function calculateRatingFunction(spot) {
 export default function Spot() {
   // const dispatch = useDispatch();
   const reduxSpots = useSelector(state => state.spots.allSpots);
+  const currentSpot = useSelector(state => state.spots.currentSpot);
   const [spot, setSpot] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
@@ -44,6 +45,8 @@ export default function Spot() {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  console.log('currentSpot', currentSpot);
 
   useEffect(() => {
     if (params && reduxSpots) {

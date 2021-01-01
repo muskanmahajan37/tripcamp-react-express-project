@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Spot from './components/Spot';
-import BookingFormModal from './components/BookingForm';
-import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Footer from './components/Footer';
-import { AddFriendsModal } from './components/AddFriends';
 
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spot';
-// import * as bookingActions from './store/booking';
-
-// import MainSearchBar from './components/Search';
-
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,11 +29,14 @@ function App() {
       <Navigation />
       {/* <Home /> */}
       <Switch>
+        <Route path='/spots/:spotId' >
+          <Spot />
+        </Route>
         <Route path='/' >
           <Home />
         </Route>
-        <Route path='/spots/:spotId' >
-          <Spot />
+        <Route >
+          <h4>404 not found. Sorry!</h4>
         </Route>
       </Switch>
 
