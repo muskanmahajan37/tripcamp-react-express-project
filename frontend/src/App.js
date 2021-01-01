@@ -34,22 +34,13 @@ function App() {
   return isLoaded && (
     <div className='mainbody'>
       <Navigation />
-      <Home />
+      {/* <Home /> */}
       <Switch>
         <Route path='/' >
-          {/* <Home /> */}
+          <Home />
         </Route>
         <Route path='/spots/:spotId' >
           <Spot />
-        </Route>
-        <Route path='/bookings/spots/:spotId'>
-          <BookingFormModal />
-        </Route>
-        <Route path='/reviews/spots/:spotId'>
-          <ReviewFormModal />
-        </Route>
-        <Route path='/users/addfriend' >
-          <AddFriendsModal />
         </Route>
       </Switch>
 

@@ -9,6 +9,9 @@ import { removeCurrentSpot } from '../../store/spot';
 import { LoginFormModal } from '../LoginFormPage';
 import { SignupFormModal } from '../SignupFormPage';
 import { SpotFormModal } from '../Spot';
+import { AddFriendsModal } from '../AddFriends';
+import BookingFormModal from '../BookingForm';
+import ReviewFormModal from '../ReviewForm';
 
 
 function Navigation() {
@@ -16,31 +19,46 @@ function Navigation() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const [showLoginForm, setShowLoginFrom] = useState(false);
-  const [showSignupForm, setShowSignupForm] = useState(false);
-  const [showSpotForm, setShowSpotForm] = useState(false);
+  const [showForms, setShowForms] = useState(new Array(6).fill(false));
+
+  const Forms = [
+    <LoginFormModal />,
+    <SignupFormModal />,
+    <SpotFormModal />,
+    <AddFriendsModal />,
+    <BookingFormModal />,
+    <ReviewFormModal />
+  ];
 
   useEffect(() => {
-    switch (location.pathname) {
+    let path = location.pathname;
+    const id = path.slice(path.lastIndexOf('/') + 1);
+    console.log(path, id, Number(id));
+    if(Number(id)) {
+      path = path.slice(0, path.lastIndexOf('/') + 1);
+      console.log("Great, it's a number", Number(id), path);
+    }
+    switch (path) {
       case '/login':
-        setShowLoginFrom(true);
-        setShowSignupForm(false);
-        setShowSpotForm(false);
+        setShowForms([true, false, false, false, false, false]);
         break;
       case '/signup':
-        setShowLoginFrom(false);
-        setShowSignupForm(true);
-        setShowSpotForm(false);
+        setShowForms([false, true, false, false, false, false]);
         break;
       case '/spots/create':
-        setShowLoginFrom(false);
-        setShowSignupForm(false);
-        setShowSpotForm(true);
+        setShowForms([false, false, true, false, false, false]);
+        break;
+      case '/users/addfriend':
+        setShowForms([false, false, false, true, false, false]);
+        break;
+      case '/bookings/spots/':
+        setShowForms([false, false, false, false, true, false]);
+        break;
+      case '/reviews/spots/':
+        setShowForms([false, false, false, false, false, true]);
         break;
       default:
-        setShowLoginFrom(false);
-        setShowSignupForm(false);
-        setShowSpotForm(false);
+        setShowForms([false, false, false, false, false, false]);
         break;
     }
   }, [location.pathname])
@@ -69,9 +87,7 @@ function Navigation() {
           </>
         }
       </nav>
-      {showLoginForm && <LoginFormModal />}
-      {showSignupForm && <SignupFormModal />}
-      {showSpotForm && <SpotFormModal />}
+      {showForms.map((show, i) => show && Forms[i])}
     </div>
   )
 }

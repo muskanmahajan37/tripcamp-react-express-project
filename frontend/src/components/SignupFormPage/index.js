@@ -125,8 +125,8 @@ export function SignupFormModal() {
 
   const handleLoginClick = e => {
     e.preventDefault();
-    if (signupModalRef.current)
-      signupModalRef.current.style.display = "none";
+    // if (signupModalRef.current)
+    //   signupModalRef.current.style.display = "none";
     history.push('/login');
   }
   return (
