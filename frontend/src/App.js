@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { LoginFormModal } from './components/LoginFormPage';
-import { SignupFormModal } from './components/SignupFormPage';
-import Spot, { SpotFormModal } from './components/Spot';
+import Spot from './components/Spot';
 import BookingFormModal from './components/BookingForm';
 import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
@@ -38,14 +36,8 @@ function App() {
       <Navigation />
       <Home />
       <Switch>
-        <Route path='/login'>
-          <LoginFormModal />
-        </Route>
-        <Route path='/signup'>
-          <SignupFormModal />
-        </Route>
-        <Route exact path='/spots/create'>
-          <SpotFormModal />
+        <Route path='/' >
+          {/* <Home /> */}
         </Route>
         <Route path='/spots/:spotId' >
           <Spot />
