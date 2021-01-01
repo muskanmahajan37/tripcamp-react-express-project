@@ -42,6 +42,8 @@ export default function Spot() {
   const [noOfReviews, setNoOfReviews] = useState(undefined);
   const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (params && reduxSpots) {
@@ -74,6 +76,15 @@ export default function Spot() {
 
   return (
     <div className='single-spot-and-maps'>
+      <button className="button"
+        onClick={e=>{
+          e.preventDefault();
+          dispatch(spotActions.removeCurrentSpot());
+          history.push('/');
+        }}
+      >
+        All Spots
+      </button>
       {spot &&
         <>
           <div key={spot.name} className="single-spot-main-view">
@@ -198,7 +209,7 @@ export function AllSpots({ searchTerm = null }) {
   }, [searchText])
 
   useEffect(() => {
-    if (location.pathname === '/') setSearchText(undefined);
+    // if (location.pathname === '/') setSearchText(undefined);
   }, [location.pathname]);
 
   function handleBookNowClick(e) {
