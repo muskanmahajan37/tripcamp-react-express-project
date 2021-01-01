@@ -77,7 +77,7 @@ export default function Spot() {
   return (
     <div className='single-spot-and-maps'>
       <button className="button"
-        onClick={e=>{
+        onClick={e => {
           e.preventDefault();
           dispatch(spotActions.removeCurrentSpot());
           history.push('/');
@@ -151,6 +151,23 @@ export default function Spot() {
               )} */}
             </div>
             <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
+            <div className="buttons-and-address">
+                  <div className="book-and-more-div">
+                    <button  id={spot.id + "-" + nanoid()}>Book Now</button>
+                    <button  id={spot.id + "-" + nanoid()}>Review</button>
+                  </div>
+                  <div className='spot-address'>
+                    <p style={{ maxWidth: '210px', fontSize: '16px' }}>
+                      {spot.streetAddress}
+                    </p>
+                    <p >
+                      {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
+                    </p>
+                  </div>
+                </div>
+            <p className='spot-description hide-scollbar'>
+              {spot.description}
+            </p>
           </div>
           <div className='home-side-map'>
             {

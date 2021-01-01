@@ -63,6 +63,9 @@ img {
 
 .spotSlides {
   display: none;
+  height: 30vw;
+  overflow: hidden;
+  object-fit: cover;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -137,6 +140,8 @@ img {
 
 .demo {
   opacity: 0.6;
+  height: 14vh;
+  object-fit: cover;
 }
 
 .active, .demo:hover {
