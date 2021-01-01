@@ -10,6 +10,7 @@ import ReviewFormModal from './components/ReviewForm';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Footer from './components/Footer';
+import { AddFriendsModal } from './components/AddFriends';
 
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spot';
@@ -54,6 +55,9 @@ function App() {
         </Route>
         <Route path='/reviews/spots/:spotId'>
           <ReviewFormModal />
+        </Route>
+        <Route path='/users/addfriend' >
+          <AddFriendsModal />
         </Route>
       </Switch>
 

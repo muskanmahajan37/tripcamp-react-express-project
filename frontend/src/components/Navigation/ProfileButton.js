@@ -21,6 +21,12 @@ export default function ProfileButton({ user }) {
     history.push('/spots/create');
   }
 
+  const addAUser = e => {
+    e.preventDefault();
+    // dropdownMenuRef.current.style = "visibility: hidden;";
+    history.push('/users/addfriend');
+  }  
+
   function DropdownMenu() {
     return (
       <div className="dropdown-menu" ref={dropdownMenuRef}>
@@ -36,6 +42,14 @@ export default function ProfileButton({ user }) {
             Create Spot
           </button>
         </div>
+        <div className="dropdown-menu-item">
+          <button
+            className="button button-Send"
+            onClick={addAUser}
+          >
+            Add A User
+          </button>
+        </div>        
         <hr className="hr" />
         <div className="dropdown-menu-item">
           <button

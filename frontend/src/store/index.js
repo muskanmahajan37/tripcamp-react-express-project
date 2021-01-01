@@ -11,6 +11,8 @@ import reviewReducer from './review';
 import ratingReducer from './rating';
 import mediumReducer from './media';
 import searchReducer from './search';
+import friendReducer from './user';
+import relationshipReducer from './relationship';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -19,7 +21,9 @@ const rootReducer = combineReducers({
   reviews: reviewReducer,
   ratings: ratingReducer,
   media: mediumReducer,
-  searchs: searchReducer
+  searchs: searchReducer,
+  friends: friendReducer,
+  relationships: relationshipReducer
 });
 
 let enhancer;
