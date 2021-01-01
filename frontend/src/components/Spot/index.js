@@ -76,20 +76,20 @@ export default function Spot() {
 
   return (
     <div className='single-spot-and-maps'>
-      <button className="button"
-        onClick={e => {
-          e.preventDefault();
-          dispatch(spotActions.removeCurrentSpot());
-          history.push('/');
-        }}
-      >
-        All Spots
-      </button>
       {spot &&
         <>
           <div key={spot.name} className="single-spot-main-view">
             <div className='single-spot-name-div'>
               <h3>{spot.name}</h3>
+              <button className="button button3"
+                onClick={e => {
+                  e.preventDefault();
+                  dispatch(spotActions.removeCurrentSpot());
+                  history.push('/');
+                }}
+              >
+                All Spots
+              </button>
             </div>
             <div className='single-spot-media-display'>
               <div className='slide-container'>
@@ -152,20 +152,20 @@ export default function Spot() {
             </div>
             <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
             <div className="buttons-and-address">
-                  <div className="book-and-more-div">
-                    <button  id={spot.id + "-" + nanoid()}>Book Now</button>
-                    <button  id={spot.id + "-" + nanoid()}>Review</button>
-                  </div>
-                  <div className='spot-address'>
-                    <p style={{ maxWidth: '210px', fontSize: '16px' }}>
-                      {spot.streetAddress}
-                    </p>
-                    <p >
-                      {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
-                    </p>
-                  </div>
-                </div>
-            <p className='spot-description hide-scollbar'>
+              <div className="book-and-more-div">
+                <button id={spot.id + "-" + nanoid()}>Book Now</button>
+                <button id={spot.id + "-" + nanoid()}>Review</button>
+              </div>
+              <div className='spot-address'>
+                <p style={{ maxWidth: '210px', fontSize: '16px' }}>
+                  {spot.streetAddress}
+                </p>
+                <p >
+                  {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
+                </p>
+              </div>
+            </div>
+            <p className='spot-description-single-page hide-scollbar'>
               {spot.description}
             </p>
           </div>
