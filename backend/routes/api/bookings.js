@@ -9,9 +9,18 @@ const { User, Booking, Spots } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', asyncHandler(async (reg, res) => {
-  res.json("All bookings - to be implemented");
-}));
+router.get('/',
+  requireAuth,
+  asyncHandler(async (reg, res) => {
+    try {
+      let bookings = [];
+      bookings = await Booking.findAll(); //Todo: filter only relevant bookings, not all
+      res.json({ bookings });
+    } catch (e) {
+      res.status(401).json({ error: "no bookings found" });
+    }
+  })
+);
 
 router.post('/',
   requireAuth,
@@ -22,7 +31,7 @@ router.post('/',
     }
     bookingDataObj.status = 0;
     //TODO: implement backend booking validation before attempting to create a row in database
-    try{
+    try {
       const booking = await Booking.create(bookingDataObj);
       res.json({ booking });
     } catch (error) {

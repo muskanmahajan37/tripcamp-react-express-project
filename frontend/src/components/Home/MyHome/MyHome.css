@@ -32,15 +32,17 @@
   border-radius: 10px;
 }
 .myhome-booking-div{
-  width: 55%;
+  width: 100%;
   margin-bottom: 30px;
   margin-top: 20px;
   background-color: rgba(211, 211, 211, 0.301);
   min-height: 100vh;
   height: fit-content;
   border: 1px solid rgba(182, 182, 182, 0.349);
-  border-radius: 10px;  
+  border-radius: 10px;
+  padding: 20px;
 }
 .myhome-side-info{
   display: flex;
+  width: 55%;
 }
