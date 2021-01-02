@@ -71,7 +71,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
         dispatch(spotActions.addReviewToSpot(res.data.review));
         if (reviewModalRef.current)
           reviewModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -82,7 +82,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
   return (

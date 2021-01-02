@@ -88,7 +88,7 @@ export default function Spot() {
                 onClick={e => {
                   e.preventDefault();
                   dispatch(spotActions.removeCurrentSpot());
-                  history.push('/');
+                  history.push('/allspots');
                 }}
               >
                 All Spots
@@ -381,7 +381,7 @@ export function SpotFormModal() {
       .then(res => {
         if (spotModalRef.current)
           spotModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -392,7 +392,7 @@ export function SpotFormModal() {
     e.preventDefault();
     if (spotModalRef.current)
       spotModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
   function parseAddress(textValue) {

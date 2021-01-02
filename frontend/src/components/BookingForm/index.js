@@ -54,7 +54,7 @@ export default function BookingFormModal() {
       .then(res => {
         if (bookingModalRef.current)
           bookingModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -65,7 +65,7 @@ export default function BookingFormModal() {
     e.preventDefault();
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
   return (

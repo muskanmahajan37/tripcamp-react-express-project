@@ -31,23 +31,10 @@ function App() {
         <Route path='/spots/:spotId(\d+)' >
           <Spot />
         </Route>
-        <Route path="/allspots">
+        <Route path="/(allspots|users/addfriend|spots/create|search|bookings/spots|reviews/spots)">
           <Spots />
         </Route>
-        <Route path='/search'>
-          <Spots />
-        </Route>        
-        {/* <Route path='/spots/create'>
-          <Spots />
-        </Route>         */}
-        <Route exact path={
-          '/login' |
-          '/signup' |
-          '/users/addfriend' |
-          '/bookings/spots/(\d+)' |
-          '/reviews/spots/(\d+)' |        
-          '/'
-        } >
+        <Route exact path='/(login|signup|)' >
           <GlampHome />
         </Route>
         <Route >
