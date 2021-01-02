@@ -86,7 +86,7 @@ nav {
 .main-footer{
   overflow: hidden;
   background-color: rgba(150, 180, 90, 0.5);
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   z-index: 2;

@@ -13,33 +13,37 @@
   max-width: 960px;
   width: 90vw;
   margin-top: 2.5vh;
-  margin-bottom: 2.5vh;
-  
+  margin-bottom: 2.5vh;  
+}
+.glam-camp-main-div{
+  margin-top: 7.5vh;
 }
 
 .glam-camp-indidual-div {
-  width: 46%;
+  width: 48%;
   display: flex;
+  border-radius: 30px;  
 }
 
 .bemofa-indidual-div {
   width: 30%;
   display: flex;
+  border-radius: 20px;  
 }
 
 .glam-camp-indidual-div, .bemofa-indidual-div {
   /* padding-top: 2.5vh; */
   position: relative;
-  border-radius: 10px;
   justify-content: center;
   align-items: center;  
+  overflow: hidden;
 }
 
 .glam-camp-img {
   width: 100%;
   height: 300px;
   margin-top: 0px;
-  border-radius: 10px;
+  /* border-radius: 30px; */
   /* object-fit: cover; */
 }
 
@@ -52,7 +56,7 @@
   width: 100%;
   height: 400px;
   margin-top: 0px;
-  border-radius: 10px;
+  /* border-radius: 30px; */
   object-fit: cover;
 }
 
@@ -98,7 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px 10px 0px 0px;
+  /* border-radius: 30px 30px 0px 0px; */
   padding: 0px 0px;
   margin: 0px 0px;
   opacity: 0.8;
@@ -124,7 +128,6 @@
   }
   .glam-camp-img {
     margin-top: 0px;
-    border-radius: 10px;
     object-fit: cover;
   }
 }

@@ -54,7 +54,6 @@ function App() {
           <h4>404 not found. Sorry!</h4>
         </Route>
       </Switch>
-
       <Footer />
     </div>
   );
