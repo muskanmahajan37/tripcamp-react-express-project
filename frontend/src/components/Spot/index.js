@@ -224,11 +224,11 @@ export function AllSpots({ searchTerm = null }) {
 
   useEffect(() => {
     setHighlighting(searchText);
-    if (!searchText) history.push('/');
+    if (!searchText) history.push('/allspots');
   }, [searchText])
 
   useEffect(() => {
-    if (location.pathname === '/') setSearchText(undefined);
+    if (location.pathname === '/allspots') setSearchText(undefined);
   }, [location.pathname]);
 
   function handleBookNowClick(e) {

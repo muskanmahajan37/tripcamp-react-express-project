@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Spot from './components/Spot';
 import Navigation from './components/Navigation';
-import Home from './components/Home';
+import { Home as Spots, GlampHome } from './components/Home';
 import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
@@ -31,17 +31,24 @@ function App() {
         <Route path='/spots/:spotId(\d+)' >
           <Spot />
         </Route>
+        <Route path="/allspots">
+          <Spots />
+        </Route>
+        <Route path='/search'>
+          <Spots />
+        </Route>        
+        {/* <Route path='/spots/create'>
+          <Spots />
+        </Route>         */}
         <Route exact path={
           '/login' |
           '/signup' |
-          '/spots/create' |
           '/users/addfriend' |
           '/bookings/spots/(\d+)' |
-          '/reviews/spots/(\d+)' |
-          '/search/(\w+)'|
+          '/reviews/spots/(\d+)' |        
           '/'
-          } >
-          <Home />
+        } >
+          <GlampHome />
         </Route>
         <Route >
           <h4>404 not found. Sorry!</h4>

@@ -33,7 +33,7 @@ function Navigation() {
   useEffect(() => {
     let path = location.pathname;
     const id = path.slice(path.lastIndexOf('/') + 1);
-    if(Number(id)) {
+    if (Number(id)) {
       path = path.slice(0, path.lastIndexOf('/') + 1);
     }
     switch (path) {
@@ -67,11 +67,17 @@ function Navigation() {
         <NavLink to={'/'} onClick={e => {
           e.preventDefault();
           dispatch(removeCurrentSpot());
-          console.log('removeCurrentSpot');
           history.push('/');
         }}>
           Home
-      </NavLink>
+        </NavLink>
+        <NavLink to={'/allspots'} onClick={e => {
+          e.preventDefault();
+          dispatch(removeCurrentSpot());
+          history.push('/allspots');
+        }}>
+          Spots
+        </NavLink>
         {sessionUser ?
           <>
             <NotificationBell user={sessionUser} />
