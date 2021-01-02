@@ -351,7 +351,7 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    console.log("handleSubmit media", media, " id", media && media[media.length - 1].id);
+    console.log("handleSubmit media", media, " id", media && media[media.length - 1] && media[media.length - 1].id);
 
     return dispatch(spotActions.createOneSpot({
       spot: {
@@ -360,7 +360,7 @@ export function SpotFormModal() {
         description,
         units,
         gpsLocation: [latitude, longitude],
-        mediaUrlIds: [media[media.length - 1].id],
+        mediaUrlIds: media[media.length - 1] && [media[media.length - 1].id],
         streetAddress,
         city,
         stateProvince,
