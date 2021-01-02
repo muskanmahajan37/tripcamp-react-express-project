@@ -14,13 +14,15 @@ router.get('/',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spots = await Spot.findAll();
-    for(let k = 0; k < spots.length; k++){
+    for (let k = 0; k < spots.length; k++) {
+      if (!spots[k].mediaUrlIds) continue;
       const urls = [];
       for (let i = 0; i < spots[k].mediaUrlIds.length; i++) {
+        if (!spots[k].mediaUrlIds[i]) continue;
         const medium = await Medium.findByPk(spots[k].mediaUrlIds[i]);
-        if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
+        if (medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
         urls.push(medium.url);
-      }      
+      }
       spots[k].dataValues.urls = urls;
     }
     res.json({ spots });
@@ -33,13 +35,15 @@ router.get('/reviews',
     const spots = await Spot.findAll({
       include: Review
     });
-    for(let k = 0; k < spots.length; k++){
+    for (let k = 0; k < spots.length; k++) {
+      if (!spots[k].mediaUrlIds) continue;
       const urls = [];
       for (let i = 0; i < spots[k].mediaUrlIds.length; i++) {
+        if (!spots[k].mediaUrlIds[i]) continue;
         const medium = await Medium.findByPk(spots[k].mediaUrlIds[i]);
-        if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
+        if (medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
         urls.push(medium.url);
-      }      
+      }
       spots[k].dataValues.urls = urls;
     }
     res.json({ spots });
@@ -52,8 +56,9 @@ router.get('/:id',
     const spot = await Spot.findByPk(id);
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {
+      if (!spots.mediaUrlIds[i]) continue;
       const medium = await Medium.findByPk(spot.mediaUrlIds[i]);
-      if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
+      if (medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
       urls.push(medium.url);
     }
     spot.dataValues.urls = urls;
@@ -68,8 +73,9 @@ router.get('/:id/Reviews',
     });
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {
+      if (!spots.mediaUrlIds[i]) continue;
       const medium = await Medium.findByPk(spot.mediaUrlIds[i]);
-      if(medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
+      if (medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
       urls.push(medium.url);
     }
     spot.dataValues.urls = urls;
@@ -88,9 +94,9 @@ router.post('/',
     delete spotDataObj.userId;
     // spotDataObj.status = 0;
     //TODO: implement backend spot validation before attempting to create a row in database
-    try{
+    try {
       const spot = await Spot.create(spotDataObj);
-      res.json({ spot: spotDataObj });
+      res.json({ spot });
     } catch (error) {
       return res.status(401).json({ error });
     }

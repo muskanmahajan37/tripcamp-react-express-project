@@ -60,7 +60,7 @@ router.post('/',
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
       const relationship = await Relationship.create(relationshipDataObj);
-      res.json({ relationship: relationship });
+      res.json({ relationship });
     } catch (error) {
       return res.status(401).json({ error });
     }

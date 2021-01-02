@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import * as reviewActions from '../../store/review';
+import * as spotActions from '../../store/spot';
 
 import Rating from '../Rating';
 
@@ -53,7 +54,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     setErrors([]);
 
-    console.log('realtimeRating', realtimeRating, 'ratings[ratings.length - 1]', ratings[ratings.length - 1]);
+    // console.log('realtimeRating', realtimeRating, 'ratings[ratings.length - 1]', ratings[ratings.length - 1]);
     if (!ratings[ratings.length - 1])
       return setErrors(["Select a rating"]);
 
@@ -67,6 +68,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
       }
     }))
       .then(res => {
+        dispatch(spotActions.addReviewToSpot(res.data.review));
         if (reviewModalRef.current)
           reviewModalRef.current.style.display = "none";
         history.push('/');

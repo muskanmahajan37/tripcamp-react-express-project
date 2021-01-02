@@ -26,7 +26,7 @@ router.post('/',
     //TODO: implement backend review validation before attempting to create a row in database
     try{
       const review = await Review.create(reviewDataObj);
-      res.json({ review: reviewDataObj });
+      res.json({ review });
     } catch (error) {
       return res.status(401).json({ error });
     }

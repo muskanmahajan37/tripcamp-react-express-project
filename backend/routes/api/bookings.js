@@ -24,7 +24,7 @@ router.post('/',
     //TODO: implement backend booking validation before attempting to create a row in database
     try{
       const booking = await Booking.create(bookingDataObj);
-      res.json({ booking: bookingDataObj });
+      res.json({ booking });
     } catch (error) {
       return res.status(401).json({ error });
     }

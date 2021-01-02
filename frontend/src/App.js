@@ -13,7 +13,7 @@ import * as spotActions from './store/spot';
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
+  // const sessionUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     const withReviews = true;

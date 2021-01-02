@@ -344,13 +344,13 @@ export function SpotFormModal() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("35 media", media);
-  }, [media])
+    parseAddress(fullAddress);
+  }, [fullAddress]);
 
   if (!sessionUser) {
     if (spotModalRef.current)
       spotModalRef.current.style.display = "none";
-    console.log('spot', history);
+    // console.log('spot', history);
     return <Redirect to='/login' />;
   }
 
@@ -359,8 +359,7 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
-
+    // console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
     return dispatch(spotActions.createOneSpot({
       spot: {
         userId: sessionUser.id,
@@ -396,14 +395,13 @@ export function SpotFormModal() {
     history.push('/');
   }
 
-  const parseAddress = (textValue) => {
+  function parseAddress(textValue) {
     const values = textValue.split(',')
     setStreetAddress(values[0]);
     setCity(values[1]);
     setStateProvince(values[2]);
     setZipcode(values[3]);
     setCountry(values[4]);
-    console.log(streetAddress, city, stateProvince, zipCode, country);
   };
 
   return (
@@ -442,7 +440,7 @@ export function SpotFormModal() {
               required
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Number of Units</label>
             <input
               className='input-number'
@@ -492,13 +490,13 @@ export function SpotFormModal() {
               className='input'
               type='text'
               value={fullAddress}
-              onChange={e => { setFullAddress(e.target.value); parseAddress(e.target.value) }}
+              onChange={e => { setFullAddress(e.target.value) }}
               required
               rows={3}
               placeholder="Street address first line,&#10;City, State/Provice, Zipcode&#10;Country"
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Rate Per Night ($USD)</label>
             <input
               className='input-number'
@@ -508,7 +506,7 @@ export function SpotFormModal() {
               onChange={e => setPerNightRate(Number(e.target.value))}
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Accommodation Type</label>
             <input
               className='input-number'
