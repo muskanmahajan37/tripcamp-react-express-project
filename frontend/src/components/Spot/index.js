@@ -34,19 +34,19 @@ function calculateRatingFunction(spot) {
 export default function Spot() {
   // const dispatch = useDispatch();
   const reduxSpots = useSelector(state => state.spots.allSpots);
-  const currentSpot = useSelector(state => state.spots.currentSpot);
+  // const currentSpot = useSelector(state => state.spots.currentSpot);
   const [spot, setSpot] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const [calculatedRating, setCalculatedRating] = useState(undefined);
   const [noOfReviews, setNoOfReviews] = useState(undefined);
-  const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
+  // const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log('currentSpot', currentSpot);
+  console.log('params', params);
 
   useEffect(() => {
     if (params && reduxSpots) {
@@ -189,7 +189,6 @@ export function AllSpots({ searchTerm = null }) {
   const reduxSpots = useSelector(state => state.spots.allSpots);
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
-  const [showReviewForm, setShowReviewForm] = useState(false);
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState(undefined);
   const [highlighting, setHighlighting] = useState(searchText);
@@ -234,10 +233,8 @@ export function AllSpots({ searchTerm = null }) {
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
-    // return <BookingFormModal spot={spot}/>
   }
   function handleReviewClick(e) {
-    setShowReviewForm(true)
     history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
   }
 
@@ -354,7 +351,7 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    console.log("handleSubmit media", media, " id", media && media[media.length - 1].id);
+    console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
 
     return dispatch(spotActions.createOneSpot({
       spot: {
@@ -363,7 +360,7 @@ export function SpotFormModal() {
         description,
         units,
         gpsLocation: [latitude, longitude],
-        mediaUrlIds: [media[media.length - 1].id],
+        mediaUrlIds: media[media.length - 1] && [media[media.length - 1].id],
         streetAddress,
         city,
         stateProvince,
@@ -500,7 +497,7 @@ export function SpotFormModal() {
               type='number'
               value={perNightRate}
               min={0}
-              onChange={e => setPerNightRate(e.target.value)}
+              onChange={e => setPerNightRate(Number(e.target.value))}
             />
           </div>
           <div className="input-div">
@@ -510,7 +507,7 @@ export function SpotFormModal() {
               type='number'
               value={accommodationType}
               min={0}
-              onChange={e => setAccommodationType(e.target.value)}
+              onChange={e => setAccommodationType(Number(e.target.value))}
             />
           </div>
           <div className="input-div">

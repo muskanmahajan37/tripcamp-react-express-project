@@ -27,12 +27,20 @@ function App() {
   return isLoaded && (
     <div className='mainbody'>
       <Navigation />
-      {/* <Home /> */}
       <Switch>
-        <Route path='/spots/:spotId' >
+        <Route path='/spots/:spotId(\d+)' >
           <Spot />
         </Route>
-        <Route path='/' >
+        <Route exact path={
+          '/login' |
+          '/signup' |
+          '/spots/create' |
+          '/users/addfriend' |
+          '/bookings/spots/(\d+)' |
+          '/reviews/spots/(\d+)' |
+          '/search/(\w+)'|
+          '/'
+          } >
           <Home />
         </Route>
         <Route >

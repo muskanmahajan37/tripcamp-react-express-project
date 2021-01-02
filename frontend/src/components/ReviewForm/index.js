@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import * as reviewActions from '../../store/review';
 
@@ -21,17 +21,19 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const [errors, setErrors] = useState([]);
   const reviewModalRef = useRef(null);
   const history = useHistory();
-  const params = useParams();
   const [enableSubmit, setEnableSubmit] = useState(false);
   let realtimeRating;
   const [spot, setSpot] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    if (params && spots) {
-      setSpot(spots.find(spot => spot.id === Number(params.spotId)));
+    console.log("review", spots, location.pathname);
+    if (location.pathname && spots) {
+      const path = location.pathname;
+      setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/')+1))));
       realtimeRating = undefined;
     }
-  }, [params]);
+  }, [location.pathname]);
 
   useEffect(() => {
     realtimeRating = ratings[ratings.length - 1];
