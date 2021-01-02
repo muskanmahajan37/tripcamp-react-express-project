@@ -23,8 +23,8 @@
 .bemofa-indidual-div {
   width: 30%;
 }
-.glam-camp-indidual-div,
-.bemofa-indidual-div {
+
+.glam-camp-indidual-div, .bemofa-indidual-div {
   /* padding-top: 2.5vh; */
   position: relative;
   border-radius: 10px;
@@ -35,12 +35,12 @@
   height: 300px;
   margin-top: 0px;
   border-radius: 10px;
-  object-fit: cover;
+  /* object-fit: cover; */
 }
-.glam-camp-indidual-div:hover,
-.bemofa-indidual-div:hover {
+
+.glam-camp-indidual-div:hover, .bemofa-indidual-div:hover {
   transform: translateY(-6px);
-  box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .bemofa-img {
@@ -50,39 +50,40 @@
   border-radius: 10px;
   object-fit: cover;
 }
-.glam-camp-indidual-div,
-.bemofa-indidual-div  {
-  transition: transform 0.2s;
+
+.glam-camp-indidual-div, .bemofa-indidual-div {
+  transition: ease 0.2s;
 }
 
-.glam-camp-text-div{
+.glam-camp-text-div {
   background-color: rgba(200, 200, 200, 0.5);
   position: absolute;
   top: 15%;
   left: 8%;
-  height: fit-content;
+  height: 70px;
   display: flex;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 0px 0px;
+  margin: 0px 0px;
 }
 
-.glam-camp-text{
+.glam-camp-text {
   font-size: 30px;
   padding: 0px 10px;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: rgb(66, 66, 66);
 }
-
 
 @media screen and (max-width: 900px) {
   .glam-camp-main-div, .bemofa-main-div {
     flex-direction: column;
     align-items: center;
   }
-  .glam-camp-indidual-div {
+  .glam-camp-indidual-div, .bemofa-indidual-div {
     width: 100%;
-  }
-  .bemofa-indidual-div {
-    width: 100%;
+    margin-bottom: 2.5vh;
   }
   .glam-camp-img {
     margin-top: 0px;
