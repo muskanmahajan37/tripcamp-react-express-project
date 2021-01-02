@@ -371,3 +371,23 @@ img {
     display: none;
   }
 }
+
+.nothing-found-div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nothing-found-div>img {
+  opacity: 0.5;
+}
+
+.nothing-found-div>p {
+  position: absolute;
+  font-size: 30px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}

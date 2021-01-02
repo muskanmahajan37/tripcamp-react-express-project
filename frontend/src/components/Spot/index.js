@@ -298,7 +298,15 @@ export function AllSpots({ searchTerm = null }) {
               </div>
             </div>
           )}
-      </div>}
+      </div>
+      }
+      {
+        !spots.length && searchText &&
+        <div className='nothing-found-div'>
+          <img src='https://image.cnbcfm.com/api/v1/image/105737338-1550085597458ap_19043627548529.jpg?v=1550085650&w=678&h=381' alt='mars' />
+          <p>No spot found for search criteria: {searchText}</p>
+        </div>
+      }
       {/* <div className='home-side-map'>
         {
           spots && spots.length && <MapWithMarkerClusterer
