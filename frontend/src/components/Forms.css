@@ -100,7 +100,7 @@ button:disabled, button[disabled] {
   display: flex;
   justify-content: space-between;
   padding: 3px 0px;
-  width: 462px;
+  width: 80%;
 }
 
 .input {

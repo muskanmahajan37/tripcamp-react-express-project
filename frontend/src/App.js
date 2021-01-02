@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Spot from './components/Spot';
 import Navigation from './components/Navigation';
@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 
 import * as sessionActions from "./store/session";
 import * as spotActions from './store/spot';
+import MyHome from './components/Home/MyHome';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,6 +31,9 @@ function App() {
       <Switch>
         <Route path='/spots/:spotId(\d+)' >
           <Spot />
+        </Route>
+        <Route path='/myHome'>
+          <MyHome />
         </Route>
         <Route path="/(allspots|users/addfriend|spots/create|search|bookings/spots|reviews/spots)">
           <Spots />

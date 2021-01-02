@@ -185,16 +185,24 @@ export default function Spot() {
     </div>
   );
 }
-export function AllSpots({ searchTerm = null }) {
-  const reduxSpots = useSelector(state => state.spots.allSpots);
+export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-grid', spotMapClass='spots-and-maps'}) {
+  const originalReduxSpots = useSelector(state => state.spots.allSpots);
+  const sessionUser = useSelector(state => state.session.user);
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState(undefined);
   const [highlighting, setHighlighting] = useState(searchText);
   const location = useLocation();
-
+  const [reduxSpots, setReduxSpots] = useState(originalReduxSpots);
   const [spots, setSpots] = useState(reduxSpots);
+
+  useEffect(() => {
+    if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
+      spot.Users[0] && spot.Users[0].id === sessionUser.id
+    ));
+    else setReduxSpots(originalReduxSpots);
+  }, [onlyMine, originalReduxSpots]);
 
   useEffect(() => {
     if (searchTerms[searchTerms.length - 1]) {
@@ -218,13 +226,17 @@ export function AllSpots({ searchTerm = null }) {
         spot.rated = rated;
         return spot;
       }));
+      // console.log('reduxSpots', reduxSpots);
       // history.push('/');
     }
   }, [searchText, reduxSpots]);
 
   useEffect(() => {
     setHighlighting(searchText);
-    if (!searchText) history.push('/allspots');
+    if (!searchText && !onlyMine) {
+      if(location.pathname.includes('/search'))
+        history.push('/allspots');
+    }
   }, [searchText])
 
   useEffect(() => {
@@ -254,8 +266,8 @@ export function AllSpots({ searchTerm = null }) {
   };
 
   return (
-    <div className='spots-and-maps'>
-      {spots && <div className="spots-home-display-grid">
+    <div className={spotMapClass}>
+      {spots && <div className={mainGridClass}>
         {
           spots.map(spot =>
             <div key={nanoid()} >
@@ -279,10 +291,12 @@ export function AllSpots({ searchTerm = null }) {
               </div>
               <div className='buttons-address-description'>
                 <div className="buttons-and-address">
-                  <div className="book-and-more-div">
-                    <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
-                    <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
-                  </div>
+                  {
+                    !onlyMine && <div className="book-and-more-div">
+                      <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                      <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
+                    </div>
+                  }
                   <div className='spot-address'>
                     <p style={{ maxWidth: '210px', fontSize: '16px' }}>
                       {spot.streetAddress}

@@ -1,4 +1,4 @@
-import React,{ useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 export default function GithubLink({ user }) {
@@ -11,7 +11,7 @@ export default function GithubLink({ user }) {
       <div className=" dropdown-menu" ref={dropdownMenuRef}>
         <div className="dropdown-menu-item">
           <a className="github-a" href='https://github.com/suasllc'>Tony Ngo</a>
-          </div>
+        </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
           <a className="github-a" href='https://github.com/suasllc/fullstack-authenticate-me'>Github Repo</a>
@@ -24,7 +24,7 @@ export default function GithubLink({ user }) {
     <>
       <span
         className="dropdown-menu-parent"
-        style={{marginRight: '20px'}}
+        style={{ marginRight: '20px' }}
       >
         <button className="fab fa-github icon-span" />
         {

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 
@@ -15,11 +15,11 @@ export default function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
   };
-  const createSpot = e => {
-    e.preventDefault();
-    // dropdownMenuRef.current.style = "visibility: hidden;";
-    history.push('/spots/create');
-  }
+  // const createSpot = e => {
+  //   e.preventDefault();
+  //   // dropdownMenuRef.current.style = "visibility: hidden;";
+  //   history.push('/spots/create');
+  // }
 
   const addAUser = e => {
     e.preventDefault();
@@ -35,13 +35,19 @@ export default function ProfileButton({ user }) {
         <div className="dropdown-menu-item">{user.email}</div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <button
+          <Link to='/myhome' >My home </Link>
+        </div>
+        <hr className="hr" />
+        <div className="dropdown-menu-item">
+          {/* <button
             className="button button-Send"
             onClick={createSpot}
           >
             Create Spot
-          </button>
+          </button> */}
+          <Link to='/spots/create'>Create a Spot</Link>
         </div>
+        <hr className="hr" />
         <div className="dropdown-menu-item">
           <button
             className="button button-Send"

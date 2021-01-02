@@ -193,6 +193,26 @@ img {
   border-radius: 5px;
 }
 
+.spots-myhome-display-grid>div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+  font-size: 30px;
+  width: auto;
+}
+
+.spots-myhome-display-grid {
+  display: grid;
+  grid-template-columns: 47% 47%;
+  grid-gap: 0% 6%;
+  background-color: white;
+  width: 100%;
+  justify-items: center;
+  /* #2196F3; */
+  /* padding: 10px; */
+  /* width: 60%; */
+}
 .spots-home-display-grid>div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
@@ -340,6 +360,20 @@ img {
   /* width: 100%; */
   margin-bottom: 30px;
   margin-top: 20px;
+}
+.myspots-div {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: center; */
+  /* max-width: 940px; */
+  /* width: 90%; */
+  /* align-items: center; */
+  /* width: 100%; */
+  width: 50%;
+  /* margin-bottom: 30px;
+  margin-top: 20px; */
+  margin: 0px;
+  padding: 0px;
 }
 
 .single-spot-and-maps {

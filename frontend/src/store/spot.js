@@ -5,6 +5,7 @@ import fetch from './csrf';
 const SET_ONE_SPOT = 'spot/SET_ONE_SPOT';
 const REMOVE_CURRENT_SPOT = 'spot/REMOVE_CURRENT_SPOT';
 const SET_ALL_SPOTS = 'spot/SET_ALL_SPOTS';
+const SET_ALL_MY_SPOTS = 'spot/SET_ALL_MY_SPOTS';
 const ADD_REVIEW_TO_SPOT = 'spot/ADD_REVIEW_TO_SPOT';
 // const REMOVE_ALL_SPOT = 'spot/REMOVE_ALL_SPOT';
 
@@ -14,6 +15,10 @@ export const setSpotPOJO = (spot) => ({
 });
 export const setAllSpotsPOJO = (spots) => ({
   type: SET_ALL_SPOTS,
+  spots
+});
+export const setAllMySpotsPOJO = (spots) => ({
+  type: SET_ALL_MY_SPOTS,
   spots
 });
 export const removeCurrentSpot = () => ({
@@ -77,6 +82,10 @@ const spotReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       delete newState.currentSpot;
       newState.allSpots = [...newState.allSpots, ...action.spots];
+      return newState;
+    case SET_ALL_MY_SPOTS:
+      newState = Object.assign({}, state);      
+      newState.allMySpots = [...action.spots];
       return newState;
     case REMOVE_CURRENT_SPOT:
       newState = Object.assign({}, state);

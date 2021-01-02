@@ -1,0 +1,46 @@
+.myhome-main-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.myhome-main-div::after {
+  content: "";
+  background-image: url(https://www.pngkey.com/png/full/137-1379429_under-construction-work-in-progress.png);
+  opacity: 0.05;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+.myspots-div {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: center; */
+  /* max-width: 940px; */
+  /* width: 90%; */
+  /* align-items: center; */
+  /* width: 100%; */
+  width: 45%;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  /* margin: 0px; */
+  padding: 0px;
+  /* background-color: rgba(144, 238, 144, 0.24); */
+  border: 1px solid rgb(129, 185, 129);
+  border-radius: 10px;
+}
+.myhome-booking-div{
+  width: 55%;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  background-color: rgba(211, 211, 211, 0.301);
+  min-height: 100vh;
+  height: fit-content;
+  border: 1px solid rgba(182, 182, 182, 0.349);
+  border-radius: 10px;  
+}
+.myhome-side-info{
+  display: flex;
+}
