@@ -27,10 +27,9 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const location = useLocation();
 
   useEffect(() => {
-    console.log("review", spots, location.pathname);
     if (location.pathname && spots) {
       const path = location.pathname;
-      setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/')+1))));
+      setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
       realtimeRating = undefined;
     }
   }, [location.pathname]);
@@ -40,7 +39,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   }, [ratings]);
 
   useEffect(() => {
-    if(realtimeRating && title && body) setEnableSubmit(true);
+    if (realtimeRating && title && body) setEnableSubmit(true);
     else setEnableSubmit(false);
   }, [ratings])
 

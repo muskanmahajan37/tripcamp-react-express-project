@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import * as sessionActions from '../../store/session';
 import * as bookingActions from '../../store/booking';
@@ -20,7 +20,15 @@ export default function BookingFormModal() {
   const [errors, setErrors] = useState([]);
   const bookingModalRef = useRef(null);
   const history = useHistory();
-  const params = useParams();
+  const location = useLocation();
+  const [spot, setSpot] = useState(null);
+
+  useEffect(() => {
+    if (location.pathname && spots) {
+      const path = location.pathname;
+      setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
+    }
+  }, [location.pathname]);
 
   if (!sessionUser) {
     if (bookingModalRef.current)
@@ -28,20 +36,6 @@ export default function BookingFormModal() {
     console.log('booking', history);
     return <Redirect to='/login' />;
   }
-
-  let spot;
-  let spotInfo = <></>;
-
-  //TODO: make this useEffect work so it won't reload spot data everytime user types a key
-  // useEffect(() => {
-  if (params && spots) spot = spots.find(spot => spot.id === Number(params.spotId));
-  // console.log("spot", spot, params);
-  spotInfo = spot && <>
-    <p>Spot:</p>
-    <p>{spot.name}</p>
-    <p>{spot.streetAddress}</p>
-  </>
-  // });
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -83,7 +77,11 @@ export default function BookingFormModal() {
         <h3>Booking Form</h3>
         <div>
           {
-            spotInfo
+            spot && <>
+              <p>Spot:</p>
+              <p>{spot.name}</p>
+              <p>{spot.streetAddress}</p>
+            </>
           }
         </div>
         <ul className='error-messages'>
@@ -128,7 +126,7 @@ export default function BookingFormModal() {
               type='text'
               value={specialRequest}
               onChange={e => setSpecialRequest(e.target.value)}
-              // required // this is NOT required
+            // required // this is NOT required
             />
           </div>
         </div>
