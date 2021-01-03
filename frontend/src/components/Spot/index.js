@@ -285,6 +285,17 @@ export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-g
                   :
                   <></>
                 }
+                {!(spot.urls && spot.urls[0])&&
+                  <img
+                    key={nanoid()}
+                    src={'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/camp-badges-and-icons-vector.jpg'}
+                    alt={spot.name}
+                    id={spot.id + "-" + nanoid()}
+                    className='spot-default-image'
+                    style={{opacity: '0.4'}}
+                    onClick={handleSpotSelection}
+                  />
+                }
                 <div className="start-rating-on-top-of-image">
                   <Rating rated={spot.rated} />
                 </div>

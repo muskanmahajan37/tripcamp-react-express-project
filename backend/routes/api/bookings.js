@@ -78,7 +78,7 @@ router.patch('/',
 router.delete('/:bookingId',
   requireAuth,
   asyncHandler(async (req, res) => {
-    console.log('bookingid', req.params.bookingId);
+    // console.log('bookingid', req.params.bookingId);
     const bookingInDatabase = await Booking.findByPk(req.params.bookingId);
     console.log('booking to destroy', bookingInDatabase);
     if (!bookingInDatabase || req.user.id !== bookingInDatabase.userId) {

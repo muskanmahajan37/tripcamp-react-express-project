@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
+import * as relationshipActions from '../../../store/relationship';
 import './MyHome.css';
 import { nanoid } from 'nanoid';
 
@@ -13,6 +14,8 @@ export default function MyHome() {
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
+  const [relationships, setRelationships] = useState([[], [], [], []]);
+
   useEffect(() => {
     dispatch(bookingActions.getAllBookings())
       .then(res => setBookings(res.data.bookings))
@@ -25,6 +28,21 @@ export default function MyHome() {
       setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
     }
   }, [bookings.length])
+
+  useEffect(() => {
+    dispatch(relationshipActions.getAllRelationships(sessionUser.id))
+      .then(res => setRelationships([
+        [res.data.myRequests],
+        [res.data.myFriends],
+        [res.data.myFollowers],
+        [res.data.myFollowings],
+      ]))
+      .catch(e => { });
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log('relationships', relationships);
+  }, [relationships])
 
   const acceptBooking = (e) => {
     e.preventDefault();
@@ -107,7 +125,7 @@ export default function MyHome() {
                 <li key={nanoid()}>
                   <p>Booking ID: {bk.id}</p>
                   <p>SpotID: {spots.find(spot => spot.id === bk.spotId) && spots.find(spot => spot.id === bk.spotId).name}</p>
-                  <p>From: { bk.User && (bk.User.username)  }</p>
+                  <p>From: {bk.User && (bk.User.username)}</p>
                   <p>Start Date: {bk.startDate.slice(0, 10)}</p>
                   <p>End Date: {bk.endDate.slice(0, 10)}</p>
                   <p>Status: {bookingTextStatus(bk.status)}</p>
@@ -140,6 +158,32 @@ export default function MyHome() {
                 </li>)
             }
           </ul>
+        </div>
+        <div className='myhome-people-div'>
+          <h3>People</h3>
+          <div>
+            <p>My friend request list</p>
+            <ul>
+              {
+                relationships[0].length && relationships[0].map(rel => 
+                  <li key={nanoid()}>
+                    <p>
+                      {/* <span>rel.User</span> */}
+                    </p>
+                  </li>
+                  )
+              }
+            </ul>
+          </div>
+          <div>
+            <p>My friend list</p>
+          </div>
+          <div>
+            <p>My follower list</p>
+          </div>
+          <div>
+            <p>My following list</p>
+          </div>
         </div>
       </div>
     </div>

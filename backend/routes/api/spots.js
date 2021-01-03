@@ -14,7 +14,8 @@ router.get('/',
   asyncHandler(async (req, res) => {
     // const userId = req.user.id;
     const spots = await Spot.findAll({
-      include: {model: User, through: Ownership}
+      include: {model: User, through: Ownership},
+      order: ['id', 'ASC']
     });
     for (let k = 0; k < spots.length; k++) {
       // if(userId){
@@ -47,7 +48,8 @@ router.get('/reviews',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spots = await Spot.findAll({
-      include: [{model: Review}, {model: User, through: Ownership}]
+      include: [{model: Review}, {model: User, through: Ownership}],
+      order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
       if (!spots[k].mediaUrlIds) continue;

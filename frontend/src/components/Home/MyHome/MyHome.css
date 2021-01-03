@@ -1,8 +1,9 @@
-.myhome-main-div{
+.myhome-main-div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .myhome-main-div::after {
   content: "";
   background-image: url(https://www.pngkey.com/png/full/137-1379429_under-construction-work-in-progress.png);
@@ -12,8 +13,10 @@
   bottom: 0;
   right: 0;
   position: absolute;
-  z-index: -1;   
+  z-index: -1;
+  overflow: hidden;
 }
+
 .myspots-div {
   /* display: flex;
   flex-direction: row;
@@ -23,6 +26,7 @@
   /* align-items: center; */
   /* width: 100%; */
   width: 45%;
+  height: 100vh;
   margin-bottom: 30px;
   margin-top: 20px;
   /* margin: 0px; */
@@ -30,19 +34,36 @@
   /* background-color: rgba(144, 238, 144, 0.24); */
   border: 1px solid rgb(129, 185, 129);
   border-radius: 10px;
+  overflow: scroll;
 }
-.myhome-booking-div{
-  width: 100%;
+
+.myhome-booking-div {
+  width: 60%;
   margin-bottom: 30px;
   margin-top: 20px;
   background-color: rgba(211, 211, 211, 0.301);
   min-height: 100vh;
-  height: fit-content;
+  height: 100vh;
   border: 1px solid rgba(182, 182, 182, 0.349);
   border-radius: 10px;
   padding: 20px;
+  overflow: scroll;
 }
-.myhome-side-info{
+
+.myhome-side-info {
   display: flex;
   width: 55%;
+}
+
+.myhome-people-div {
+  width: 40%;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  background-color: rgba(151, 197, 162, 0.301);
+  min-height: 100vh;
+  height: 100vh;
+  border: 1px solid rgba(182, 182, 182, 0.349);
+  border-radius: 10px;
+  padding: 20px;
+  overflow: scroll;
 }

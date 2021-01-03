@@ -2,16 +2,132 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
+const { Op } = require("sequelize");
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Relationship } = require('../../db/models');
+const { User, Relationship, UserProfile } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', asyncHandler(async (reg, res) => {
+router.get('/', asyncHandler(async (req, res) => {
   res.json("All relationships - to be implemented");
 }));
+
+router.get('/users/:userId',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const myUserId = Number(req.params.userId);
+    if (req.user.id !== myUserId) {
+      console.log(req.user.id, myUserId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    try {
+      const myRequests = await Relationship.findAll({
+        where: {
+          lastActionUserId: myUserId,
+          status: 0
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
+      const myFriends = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { user1Id: myUserId },
+            { user2Id: myUserId }
+          ],
+          status: 1
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
+      const myFollowers = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { followingship: 1 },
+            {
+              [Op.or]: [{
+                user1Id: myUserId,
+                followingship: 21
+              }, {
+                user2Id: myUserId,
+                followingship: 12
+              }]
+            }
+          ]
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+      const myFollowings = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { followingship: 1 },
+            {
+              [Op.or]: [{
+                user1Id: myUserId,
+                followingship: 12
+              }, {
+                user2Id: myUserId,
+                followingship: 21
+              }]
+            }
+          ]
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+      const relationships = [...myRequests, ...myFriends, ...myFollowers, ...myFollowings];
+      res.json({ relationships, myRequests, myFriends, myFollowers, myFollowings });
+    } catch (e) {
+      console.log("Some error finding the relationships");
+      res.status(401).json({ error: "Some error finding the relationships" });
+    }
+  })
+);
 
 router.post('/',
   requireAuth,
@@ -41,7 +157,7 @@ router.post('/',
       });
     }
 
-    if(!user) {
+    if (!user) {
       return res.status(401).json({ error: "User not found!" });
     }
 
