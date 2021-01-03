@@ -15,13 +15,17 @@
   z-index: 2;
 }
 
+.search-over-banner-div:hover {
+  background-color: rgb(255, 255, 255);
+}
+.search-box-home-fixed{
+  position: absolute;
+  top: 10px;
+}
+
 .search-spots-page{
   top: 0px;
   background-color: rgba(200, 200, 200, 0.5);
-}
-
-.search-over-banner-div:hover {
-  background-color: rgb(255, 255, 255);
 }
 
 .main-search-bar {

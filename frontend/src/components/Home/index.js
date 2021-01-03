@@ -31,9 +31,9 @@ export function Home() {
 export function GlampHome(){
 
   return (
-    <div className="main-home-view">
+    <div className="main-home-view-glampcamp">
       <div className='banner-and-search-div'>
-        <MainSearchBar />
+        <MainSearchBar className='search-over-banner-div search-box-home-fixed'/>
         <Banner />
       </div>
       {/* <div className="main-home-view-spots" > */}

@@ -8,13 +8,19 @@ export default function GithubLink({ user }) {
 
   function DropdownMenu() {
     return (
-      <div className=" dropdown-menu" ref={dropdownMenuRef}>
+      <div className=" dropdown-menu" ref={dropdownMenuRef} style={{width: '200px'}}>
         <div className="dropdown-menu-item">
-          <a className="github-a" href='https://github.com/suasllc'>Tony Ngo</a>
+          <p className="github-a">About the Author</p>
         </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <a className="github-a" href='https://github.com/suasllc/fullstack-authenticate-me'>Github Repo</a>
+          <a className="github-a" target="_blank" href='https://github.com/suasllc'>Tony Ngo</a>
+        </div>
+        <div className="dropdown-menu-item">
+          <a className="github-a" target="_blank" href='https://github.com/suasllc/fullstack-authenticate-me'>Github Repo</a>
+        </div>
+        <div className="dropdown-menu-item">
+          <a className="github-a" target="_blank" href='https://appacademy.io'>Student at App Academy</a>
         </div>
       </div>
     );

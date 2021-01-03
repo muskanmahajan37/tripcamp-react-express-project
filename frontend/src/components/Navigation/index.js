@@ -13,6 +13,8 @@ import { AddFriendsModal } from '../AddFriends';
 import BookingFormModal from '../BookingForm';
 import ReviewFormModal from '../ReviewForm';
 
+import './Navigation.css';
+
 
 function Navigation() {
   const sessionUser = useSelector(state => state.session.user);
@@ -64,32 +66,41 @@ function Navigation() {
   return (
     <div>
       <nav className="main-navbar">
-        <NavLink to={'/'} onClick={e => {
-          e.preventDefault();
-          dispatch(removeCurrentSpot());
-          history.push('/');
-        }}>
-          Home
+        <img
+          className='logo-img'
+          // src='https://tripcamp.s3.amazonaws.com/resources/images/official/logos/tripcamp3_200x60.png'
+          // src='https://tripcamp.s3.amazonaws.com/resources/images/official/logos/tripcamp5-200x60.png'
+          src='https://tripcamp.s3.amazonaws.com/resources/images/official/logos/tripcamp6-200x60.png'
+          alt='TripCamp Logo'
+        />
+        <div>
+          <NavLink to={'/'} onClick={e => {
+            e.preventDefault();
+            dispatch(removeCurrentSpot());
+            history.push('/');
+          }}>
+            Home
         </NavLink>
-        <NavLink to={'/allspots'} onClick={e => {
-          e.preventDefault();
-          dispatch(removeCurrentSpot());
-          history.push('/allspots');
-        }}>
-          Spots
+          <NavLink to={'/allspots'} onClick={e => {
+            e.preventDefault();
+            dispatch(removeCurrentSpot());
+            history.push('/allspots');
+          }}>
+            Spots
         </NavLink>
-        {sessionUser ?
-          <>
-            <NotificationBell user={sessionUser} />
-            <ProfileButton user={sessionUser} />
-          </>
-          :
-          <>
-            <NavLink to="/login">Login</NavLink>
-            <NavLink to="/signup">Signup</NavLink>
-            <GithubLink />
-          </>
-        }
+          {sessionUser ?
+            <>
+              <NotificationBell user={sessionUser} />
+              <ProfileButton user={sessionUser} />
+            </>
+            :
+            <>
+              <NavLink to="/login">Log in</NavLink>
+              <NavLink to="/signup">Sign up</NavLink>
+              <GithubLink />
+            </>
+          }
+        </div>
       </nav>
       {showForms.map((show, i) => show && Forms[i])}
     </div>

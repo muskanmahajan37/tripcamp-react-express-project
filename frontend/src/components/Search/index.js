@@ -6,7 +6,9 @@ import * as searchActions from '../../store/search';
 
 import './Search.css';
 
-export default function MainSearchBar({ className = 'search-over-banner-div' }) {
+export default function MainSearchBar({ 
+    className = 'search-over-banner-div'
+  }) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
 
