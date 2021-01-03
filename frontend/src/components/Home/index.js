@@ -6,6 +6,7 @@ import Banner from './Banner';
 import MainSearchBar from '../Search';
 import GlamCamp from './GlamCamp';
 import BeMoFa from './BeMoFa';
+import HomeSlogan from './HomeSlogan';
 
 import './Home.css';
 
@@ -32,6 +33,7 @@ export function GlampHome(){
 
   return (
     <div className="main-home-view-glampcamp">
+      <HomeSlogan />
       <div className='banner-and-search-div'>
         <MainSearchBar className='search-over-banner-div search-box-home-fixed'/>
         <Banner />

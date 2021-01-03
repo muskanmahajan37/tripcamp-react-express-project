@@ -49,5 +49,24 @@ router.post('/',
     }
   })
 );
+router.patch('/:id',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const messageDataObj = req.body.message;
+    // console.log('messageDataObj', messageDataObj);
+    if (req.user.id !== messageDataObj.senderId) {
+      // console.log(req.user.id, messageDataObj.senderId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    //TODO: implement backend message validation before attempting to create a row in database
+    try {
+      const message = await Message.findByPk(Number(req.params.id));
+      message.update({ status: 1 });
+      res.json({ message });
+    } catch (error) {
+      return res.status(401).json({ error: "Error in posting the message" });
+    }
+  })
+);
 
 module.exports = router;

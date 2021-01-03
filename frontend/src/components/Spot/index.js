@@ -185,7 +185,7 @@ export default function Spot() {
     </div>
   );
 }
-export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-grid', spotMapClass='spots-and-maps'}) {
+export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display-grid', spotMapClass = 'spots-and-maps' }) {
   const originalReduxSpots = useSelector(state => state.spots.allSpots);
   const sessionUser = useSelector(state => state.session.user);
   const searchTerms = useSelector(state => state.searchs);
@@ -196,6 +196,7 @@ export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-g
   const location = useLocation();
   const [reduxSpots, setReduxSpots] = useState(originalReduxSpots);
   const [spots, setSpots] = useState(reduxSpots);
+  const [showMap, setShowMap] = useState(false);
 
   useEffect(() => {
     if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
@@ -234,7 +235,7 @@ export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-g
   useEffect(() => {
     setHighlighting(searchText);
     if (!searchText && !onlyMine) {
-      if(location.pathname.includes('/search'))
+      if (location.pathname.includes('/search'))
         history.push('/allspots');
     }
   }, [searchText])
@@ -285,14 +286,14 @@ export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-g
                   :
                   <></>
                 }
-                {!(spot.urls && spot.urls[0])&&
+                {!(spot.urls && spot.urls[0]) &&
                   <img
                     key={nanoid()}
                     src={'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/camp-badges-and-icons-vector.jpg'}
                     alt={spot.name}
                     id={spot.id + "-" + nanoid()}
                     className='spot-default-image'
-                    style={{opacity: '0.4'}}
+                    style={{ opacity: '0.4' }}
                     onClick={handleSpotSelection}
                   />
                 }
@@ -332,14 +333,16 @@ export function AllSpots({ onlyMine = false, mainGridClass='spots-home-display-g
           <p>No spot found for search criteria: {searchText}</p>
         </div>
       }
-      {/* <div className='home-side-map'>
-        {
-          spots && spots.length && <MapWithMarkerClusterer
-            center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
-            zoom={5}
-            spots={spots} />
-        }
-      </div> */}
+      {
+        showMap && <div className='home-side-map'>
+          {
+            spots && spots.length && <MapWithMarkerClusterer
+              center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
+              zoom={5}
+              spots={spots} />
+          }
+        </div>
+      }
     </div>
   );
 }

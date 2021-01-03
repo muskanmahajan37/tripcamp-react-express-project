@@ -1,0 +1,32 @@
+.main-slogan-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Calibre', Helvetica, Arial, sans-serif;
+  height: 220px;
+  background-color: rgb(243, 242, 239);
+}
+
+.bigger-slogan{
+  font-size: 50px;
+  font-weight: bold;
+  /* color: rgb(8, 142, 151); */
+  color: rgba(3, 164, 192, 0.57);
+  
+}
+.smaller-slogan{
+  /* color: rgb(8, 142, 151); */
+  /* color: rgba(3, 164, 192, 0.57); */
+  color: rgb(21, 186, 198);
+  margin-top: 20px;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.smaller-slogan> p{
+  padding: 2px;
+  margin: 0px;
+}

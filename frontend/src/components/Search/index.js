@@ -34,7 +34,7 @@ export default function MainSearchBar({
       <input
         className='main-search-bar'
         type='text'
-        placeholder='Enter anything to search'
+        placeholder='Search spots to stay'
         value={searchValue}
         onChange={onInputChange}
       />

@@ -203,7 +203,7 @@ export default function MyHome() {
         <div className='myhome-people-div'>
           <h3>People</h3>
           <div>
-            <p>My friend list</p>
+            <p>My friends</p>
             <ul>
               {
                 relationships.myFriends.map(rel =>
@@ -219,7 +219,7 @@ export default function MyHome() {
             </ul>
           </div>
           <div>
-            <p>Pending friend request list</p>
+            <p>Pending friend requests</p>
             <ul>
               <li>
                 <p>I requested</p>
