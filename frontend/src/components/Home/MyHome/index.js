@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
 import './MyHome.css';
+import { nanoid } from 'nanoid';
 
 export default function MyHome() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const spots = useSelector(state => state.spots.allSpots)
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
@@ -24,7 +26,71 @@ export default function MyHome() {
     }
   }, [bookings.length])
 
-  console.log(bookings, myOwnBookings, bookingsForMyProps);
+  const acceptBooking = (e) => {
+    e.preventDefault();
+    const bookingId = Number(e.target.id.split('-')[0]);
+    const booking = bookingsForMyProps.find(bk => bk.id === bookingId);
+    booking.status = 1;
+    booking.myUserId = sessionUser.id;
+    console.log('booking', booking);    
+    return dispatch(bookingActions.modifyOneBooking(booking))
+      .then(res => {
+        //TODO implete this
+      })
+      .catch(res => {
+        //TODO implete this
+      });
+  }
+  const refuseBooking = (e) => {
+    e.preventDefault();
+    const bookingId = Number(e.target.id.split('-')[0]);
+    const booking = bookingsForMyProps.find(bk => bk.id === bookingId);
+    booking.status = 2;
+    booking.myUserId = sessionUser.id;
+
+    return dispatch(bookingActions.modifyOneBooking(booking))
+      .then(res => {
+        //TODO implete this
+      })
+      .catch(res => {
+        //TODO implete this
+      });    
+    // return dispatch(bookingActions.deleteOneBooking(bookingId))
+    //   .then(res => {
+    //     //TODO implete this
+    //   })
+    //   .catch(res => {
+    //     //TODO implete this
+    //   });
+  }
+  const cancelBooking = (e) => {
+    e.preventDefault();
+    const bookingId = Number(e.target.id.split('-')[0]);
+    return dispatch(bookingActions.deleteOneBooking(bookingId))
+      .then(res => {
+        //TODO implete this
+      })
+      .catch(res => {
+        //TODO implete this
+      });
+  }
+
+  function bookingTextStatus(status){
+    switch(status){
+      case 0:
+        return 'Pending';
+      case 1:
+        return 'Confirmed';
+      case 2:
+        return 'Refused';
+      case 3:
+        return 'Trip completed';
+      case 4:
+        return 'Deleted';
+      default:
+        return 'Unknown status';
+    }
+  }
 
   return (
     <div className="myhome-main-div">
@@ -34,28 +100,43 @@ export default function MyHome() {
       />
       <div className="myhome-side-info">
         <div className="myhome-booking-div">
-          <p>Bookings for My Properties</p>
+          <p>Bookings of My Properties</p>
           <ul>
             {
-              bookingsForMyProps && bookingsForMyProps.map(bk => <li>
-                <p>Booking ID: {bk.id}</p>
-                <p>SpotID {bk.spotId}</p>
-                <p>Start Date {bk.startDate}</p>
-                <p>End Date {bk.endDate}</p>
-                <p>Status {bk.status ? "Confirmed" : "Pending"}</p>
-              </li>)
+              bookingsForMyProps && bookingsForMyProps.map(bk =>
+                <li key={nanoid()}>
+                  <p>Booking ID: {bk.id}</p>
+                  <p>SpotID: {spots.find(spot => spot.id === bk.spotId) && spots.find(spot => spot.id === bk.spotId).name}</p>
+                  <p>Start Date: {bk.startDate.slice(0, 10)}</p>
+                  <p>End Date: {bk.endDate.slice(0, 10)}</p>
+                  <p>Status: {bookingTextStatus(bk.status)}</p>
+                  <p>Special Request: {bk.specialRequest}</p>
+                  <button className="button button-Send"
+                    onClick={acceptBooking}
+                    id={`${bk.id}-accept`}
+                  >Accept</button>
+                  <button className="button button-Reset"
+                    onClick={refuseBooking}
+                    id={`${bk.id}-refuse`}
+                  >Refuse</button>
+                </li>)
             }
           </ul>
-          <p>My Own Trip Bookings</p>
+          <p>My Upcoming Trips</p>
           <ul>
             {
-              myOwnBookings && myOwnBookings.map(bk => <li>
-                <p>Booking ID: {bk.id}</p>
-                <p>SpotID {bk.spotId}</p>
-                <p>Start Date {bk.startDate}</p>
-                <p>End Date {bk.endDate}</p>
-                <p>Status {bk.status ? "Confirmed" : "Pending"}</p>
-              </li>)
+              myOwnBookings && myOwnBookings.map(bk =>
+                <li key={nanoid()}>
+                  <p>Booking ID: {bk.id}</p>
+                  <p>SpotID: {spots.find(spot => spot.id === bk.spotId) && spots.find(spot => spot.id === bk.spotId).name}</p>
+                  <p>Start Date: {bk.startDate.slice(0, 10)}</p>
+                  <p>End Date: {bk.endDate.slice(0, 10)}</p>
+                  <p>Status: {bookingTextStatus(bk.status)}</p>
+                  <button className="button button-Reset"
+                    onClick={cancelBooking}
+                    id={`${bk.id}-cancel`}
+                  >Cancel</button>
+                </li>)
             }
           </ul>
         </div>

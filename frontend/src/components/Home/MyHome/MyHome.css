@@ -6,7 +6,7 @@
 .myhome-main-div::after {
   content: "";
   background-image: url(https://www.pngkey.com/png/full/137-1379429_under-construction-work-in-progress.png);
-  opacity: 0.05;
+  opacity: 0.1;
   top: 0;
   left: 0;
   bottom: 0;

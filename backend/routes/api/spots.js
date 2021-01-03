@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/',
   asyncHandler(async (req, res) => {
-    const userId = req.user.id;
+    // const userId = req.user.id;
     const spots = await Spot.findAll({
       include: {model: User, through: Ownership}
     });
