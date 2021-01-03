@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Relationship, UserProfile } = require('../../db/models');
+const { User, Relationship, UserProfile, Message } = require('../../db/models');
 
 const router = express.Router();
 
@@ -217,7 +217,6 @@ router.post('/',
     relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
     relationshipDataObj.status = 0;
     relationshipDataObj.followingship = 0;
-    delete relationshipDataObj.myUserId, relationshipDataObj.credential;
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
@@ -227,16 +226,29 @@ router.post('/',
           user2Id: relationshipDataObj.user2Id,
         }
       });
+      let message;
       if (relationship) {
-        if(relationship.status === 4 || relationship.status === 2) //cancelled by the requester
+        if (relationship.status === 4 || relationship.status === 2) { //cancelled by the requester
           relationship.update({ status: 0 })
-        else if(relationship.status === 3) //I'm being blocked
+          const message = await Message.create({
+            senderId: relationshipDataObj.myUserId,
+            recipientId: user.id,
+            body: relationshipDataObj.message
+          });
+        } else if (relationship.status === 3) //I'm being blocked
           return res.status(401).json({ error: "Cannot add this user as friend" });
-        else if(relationship.status === 1)
-        return res.status(401).json({ error: "You are already friends" });
+        else if (relationship.status === 1)
+          return res.status(401).json({ error: "You are already friends" });
+      } else {
+        const message = await Message.create({
+          senderId: relationshipDataObj.myUserId,
+          recipientId: user.id,
+          body: relationshipDataObj.message
+        });        
+        delete relationshipDataObj.myUserId, relationshipDataObj.credential;
+        relationship = await Relationship.create(relationshipDataObj);
       }
-      else relationship = await Relationship.create(relationshipDataObj);
-      res.json({ relationship });
+      res.json({ relationship, message });
     } catch (error) {
       return res.status(401).json({ error });
     }

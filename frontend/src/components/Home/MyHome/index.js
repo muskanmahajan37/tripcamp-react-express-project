@@ -203,6 +203,22 @@ export default function MyHome() {
         <div className='myhome-people-div'>
           <h3>People</h3>
           <div>
+            <p>My friend list</p>
+            <ul>
+              {
+                relationships.myFriends.map(rel =>
+                  <li key={nanoid()}>
+                    <div>
+                      <span className='tooltip'>
+                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                        <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                      </span>
+                    </div>
+                  </li>)
+              }
+            </ul>
+          </div>
+          <div>
             <p>Pending friend request list</p>
             <ul>
               <li>
@@ -216,7 +232,7 @@ export default function MyHome() {
                           <p className='tooltiptext'>To Implement Mini UserProfile</p>
                         </span>
                         <span>
-                          <button onClick={e => actOnRequest(e, 'cancel')}  id={`${i}-cancel`}>
+                          <button onClick={e => actOnRequest(e, 'cancel')} id={`${i}-cancel`}>
                             Cancel
                           </button>
                         </span>
@@ -241,9 +257,9 @@ export default function MyHome() {
                             Accept
                           </button>
                           <button onClick={e => actOnRequest(e, 'ignore')} id={`${i}-ignore`}>
-                            Ignore 
+                            Ignore
                           </button>
-                          <button onClick={e => actOnRequest(e, 'block')}  id={`${i}-block`}>
+                          <button onClick={e => actOnRequest(e, 'block')} id={`${i}-block`}>
                             Block
                           </button>
                         </span>
@@ -253,22 +269,6 @@ export default function MyHome() {
                   }
                 </ul>
               </li>
-            </ul>
-          </div>
-          <div>
-            <p>My friend list</p>
-            <ul>
-              {
-                relationships.myFriends.map(rel =>
-                  <li key={nanoid()}>
-                    <div>
-                      <span className='tooltip'>
-                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
-                        <p className='tooltiptext'>To Implement Mini UserProfile</p>
-                      </span>
-                    </div>
-                  </li>)
-              }
             </ul>
           </div>
           <div>
