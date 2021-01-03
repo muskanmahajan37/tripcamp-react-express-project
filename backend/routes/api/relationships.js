@@ -14,6 +14,28 @@ router.get('/', asyncHandler(async (req, res) => {
   res.json("All relationships - to be implemented");
 }));
 
+
+router.patch('/',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    console.log(req.body.relationship);
+    const myUserId = Number(req.body.relationship.myUserId);
+    if (req.user.id !== myUserId) {
+      console.log(req.user.id, myUserId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    try {
+      const relationshipId = Number(req.body.relationship.id);
+      const status = Number(req.body.relationship.status)
+      const relationship = await Relationship.findByPk(relationshipId);
+      await relationship.update({ status });
+      res.json(relationship);
+    } catch (e) {
+      res.status(401).json({ error: "Some error finding the relationships" });
+    }
+  })
+);
+
 router.get('/users/:userId',
   requireAuth,
   asyncHandler(async (req, res) => {
@@ -47,6 +69,10 @@ router.get('/users/:userId',
           lastActionUserId: {
             [Op.ne]: myUserId,
           },
+          [Op.or]: [
+            { user1Id: myUserId },
+            { user2Id: myUserId }
+          ],
           status: 0
         },
         include: [
@@ -144,7 +170,6 @@ router.get('/users/:userId',
       const relationships = [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings];
       res.json({ relationships, myRequests, theirRequests, myFriends, myFollowers, myFollowings });
     } catch (e) {
-      console.log("Some error finding the relationships");
       res.status(401).json({ error: "Some error finding the relationships" });
     }
   })
@@ -196,8 +221,21 @@ router.post('/',
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
-      //TODO: check if the relastionship exists. If so, send an error back to frondend
-      const relationship = await Relationship.create(relationshipDataObj);
+      let relationship = await Relationship.findOne({
+        where: {
+          user1Id: relationshipDataObj.user1Id,
+          user2Id: relationshipDataObj.user2Id,
+        }
+      });
+      if (relationship) {
+        if(relationship.status === 4 || relationship.status === 2) //cancelled by the requester
+          relationship.update({ status: 0 })
+        else if(relationship.status === 3) //I'm being blocked
+          return res.status(401).json({ error: "Cannot add this user as friend" });
+        else if(relationship.status === 1)
+        return res.status(401).json({ error: "You are already friends" });
+      }
+      else relationship = await Relationship.create(relationshipDataObj);
       res.json({ relationship });
     } catch (error) {
       return res.status(401).json({ error });

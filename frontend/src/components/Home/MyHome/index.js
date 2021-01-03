@@ -96,15 +96,43 @@ export default function MyHome() {
       });
   }
 
-  const actOnRequest = (e, actionText) => {
+  function actOnRequest(e, actionText) {
     e.preventDefault();
     let action;
-    switch(actionText.toLowerCase()){
+    let id = Number(e.target.id.split('-')[0]);
+    let relationshipId;
+    switch (actionText.toLowerCase()) {
+      case "accept":
+        action = 1;
+        relationshipId = relationships.theirRequests[id].id;
+        break;
+      case "ignore":
+        relationshipId = relationships.theirRequests[id].id;
+        action = 2;
+        break;
+      case "block":
+        relationshipId = relationships.theirRequests[id].id;
+        action = 3;
+        break;
       case "cancel":
-        
+        relationshipId = relationships.myRequests[id].id;
+        action = 4;
         break;
     }
-  };
+    const relationship = {
+      id: relationshipId,
+      myUserId: sessionUser.id,
+      status: action
+    }
+    console.log('\nrelationship', relationship);
+    dispatch(relationshipActions.modifyOneRelationship(relationship))
+      .then(res => {
+
+      })
+      .catch(err => {
+
+      });
+  }
 
   function bookingTextStatus(status) {
     switch (status) {
@@ -180,19 +208,19 @@ export default function MyHome() {
               <li>
                 <p>I requested</p>
                 <ul>
-                  {relationships.myRequests.map(rel =>
+                  {relationships.myRequests.map((rel, i) =>
                     <li key={nanoid()}>
-                      <p>
+                      <div>
                         <span className='tooltip'>
                           {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
                           <p className='tooltiptext'>To Implement Mini UserProfile</p>
                         </span>
                         <span>
-                          <button>
+                          <button onClick={e => actOnRequest(e, 'cancel')}  id={`${i}-cancel`}>
                             Cancel
                           </button>
                         </span>
-                      </p>
+                      </div>
                     </li>
                   )
                   }
@@ -201,25 +229,25 @@ export default function MyHome() {
               <li>
                 <p>People requested me</p>
                 <ul>
-                  {relationships.theirRequests.map(rel =>
+                  {relationships.theirRequests.map((rel, i) =>
                     <li key={nanoid()}>
-                      <p>
+                      <div>
                         <span className='tooltip'>
                           {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
                           <p className='tooltiptext'>To Implement Mini UserProfile</p>
                         </span>
                         <span>
-                          <button >
+                          <button onClick={e => actOnRequest(e, 'accept')} id={`${i}-accept`}>
                             Accept
                           </button>
-                          <button >
-                            Refuse
+                          <button onClick={e => actOnRequest(e, 'ignore')} id={`${i}-ignore`}>
+                            Ignore 
                           </button>
-                          <button >
+                          <button onClick={e => actOnRequest(e, 'block')}  id={`${i}-block`}>
                             Block
                           </button>
                         </span>
-                      </p>
+                      </div>
                     </li>
                   )
                   }
@@ -233,12 +261,12 @@ export default function MyHome() {
               {
                 relationships.myFriends.map(rel =>
                   <li key={nanoid()}>
-                    <p>
+                    <div>
                       <span className='tooltip'>
                         {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
                         <p className='tooltiptext'>To Implement Mini UserProfile</p>
                       </span>
-                    </p>
+                    </div>
                   </li>)
               }
             </ul>
@@ -249,12 +277,12 @@ export default function MyHome() {
               {
                 relationships.myFollowers.map(rel =>
                   <li key={nanoid()}>
-                    <p>
+                    <div>
                       <span className='tooltip'>
                         {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
                         <p className='tooltiptext'>To Implement Mini UserProfile</p>
                       </span>
-                    </p>
+                    </div>
                   </li>)
               }
             </ul>
@@ -265,9 +293,9 @@ export default function MyHome() {
               {
                 relationships.myFollowings.map(rel =>
                   <li key={nanoid()}>
-                    <p>
+                    <div>
                       <span>{rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}</span>
-                    </p>
+                    </div>
                   </li>)
               }
             </ul>
