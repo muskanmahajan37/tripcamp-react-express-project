@@ -22,12 +22,13 @@ router.get('/',
       const myTripBookings = await Booking.findAll({
         where: {
           userId,
-        }
+        },
       });
       const bookingsOfMyProps = await Booking.findAll({
         where: {
           spotId: spotIds
-        }
+        },
+        include: User
       });
       res.json({ bookings: [...myTripBookings, ...bookingsOfMyProps] });
     } catch (e) {

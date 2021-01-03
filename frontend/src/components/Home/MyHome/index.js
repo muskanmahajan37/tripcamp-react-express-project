@@ -32,7 +32,7 @@ export default function MyHome() {
     const booking = bookingsForMyProps.find(bk => bk.id === bookingId);
     booking.status = 1;
     booking.myUserId = sessionUser.id;
-    console.log('booking', booking);    
+    console.log('booking', booking);
     return dispatch(bookingActions.modifyOneBooking(booking))
       .then(res => {
         //TODO implete this
@@ -54,7 +54,7 @@ export default function MyHome() {
       })
       .catch(res => {
         //TODO implete this
-      });    
+      });
     // return dispatch(bookingActions.deleteOneBooking(bookingId))
     //   .then(res => {
     //     //TODO implete this
@@ -75,8 +75,8 @@ export default function MyHome() {
       });
   }
 
-  function bookingTextStatus(status){
-    switch(status){
+  function bookingTextStatus(status) {
+    switch (status) {
       case 0:
         return 'Pending';
       case 1:
@@ -107,6 +107,7 @@ export default function MyHome() {
                 <li key={nanoid()}>
                   <p>Booking ID: {bk.id}</p>
                   <p>SpotID: {spots.find(spot => spot.id === bk.spotId) && spots.find(spot => spot.id === bk.spotId).name}</p>
+                  <p>From: { bk.User && (bk.User.username)  }</p>
                   <p>Start Date: {bk.startDate.slice(0, 10)}</p>
                   <p>End Date: {bk.endDate.slice(0, 10)}</p>
                   <p>Status: {bookingTextStatus(bk.status)}</p>
