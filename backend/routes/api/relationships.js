@@ -42,6 +42,27 @@ router.get('/users/:userId',
         ]
       });
 
+      const theirRequests = await Relationship.findAll({
+        where: {
+          lastActionUserId: {
+            [Op.ne]: myUserId,
+          },
+          status: 0
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
       const myFriends = await Relationship.findAll({
         where: {
           [Op.or]: [
@@ -120,8 +141,8 @@ router.get('/users/:userId',
           }
         ]
       });
-      const relationships = [...myRequests, ...myFriends, ...myFollowers, ...myFollowings];
-      res.json({ relationships, myRequests, myFriends, myFollowers, myFollowings });
+      const relationships = [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings];
+      res.json({ relationships, myRequests, theirRequests, myFriends, myFollowers, myFollowings });
     } catch (e) {
       console.log("Some error finding the relationships");
       res.status(401).json({ error: "Some error finding the relationships" });
@@ -175,6 +196,7 @@ router.post('/',
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
+      //TODO: check if the relastionship exists. If so, send an error back to frondend
       const relationship = await Relationship.create(relationshipDataObj);
       res.json({ relationship });
     } catch (error) {

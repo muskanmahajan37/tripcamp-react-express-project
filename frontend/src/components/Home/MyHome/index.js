@@ -14,7 +14,13 @@ export default function MyHome() {
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
-  const [relationships, setRelationships] = useState([[], [], [], []]);
+  const [relationships, setRelationships] = useState({
+    myRequests: [],
+    theirRequests: [],
+    myFriends: [],
+    myFollowers: [],
+    myFollowings: []
+  });
 
   useEffect(() => {
     dispatch(bookingActions.getAllBookings())
@@ -31,18 +37,15 @@ export default function MyHome() {
 
   useEffect(() => {
     dispatch(relationshipActions.getAllRelationships(sessionUser.id))
-      .then(res => setRelationships([
-        [res.data.myRequests],
-        [res.data.myFriends],
-        [res.data.myFollowers],
-        [res.data.myFollowings],
-      ]))
+      .then(res => setRelationships({
+        myRequests: res.data.myRequests,
+        theirRequests: res.data.theirRequests,
+        myFriends: res.data.myFriends,
+        myFollowers: res.data.myFollowers,
+        myFollowings: res.data.myFollowings,
+      }))
       .catch(e => { });
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log('relationships', relationships);
-  }, [relationships])
 
   const acceptBooking = (e) => {
     e.preventDefault();
@@ -92,6 +95,16 @@ export default function MyHome() {
         //TODO implete this
       });
   }
+
+  const actOnRequest = (e, actionText) => {
+    e.preventDefault();
+    let action;
+    switch(actionText.toLowerCase()){
+      case "cancel":
+        
+        break;
+    }
+  };
 
   function bookingTextStatus(status) {
     switch (status) {
@@ -162,27 +175,102 @@ export default function MyHome() {
         <div className='myhome-people-div'>
           <h3>People</h3>
           <div>
-            <p>My friend request list</p>
+            <p>Pending friend request list</p>
             <ul>
-              {
-                relationships[0].length && relationships[0].map(rel => 
-                  <li key={nanoid()}>
-                    <p>
-                      {/* <span>rel.User</span> */}
-                    </p>
-                  </li>
+              <li>
+                <p>I requested</p>
+                <ul>
+                  {relationships.myRequests.map(rel =>
+                    <li key={nanoid()}>
+                      <p>
+                        <span className='tooltip'>
+                          {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                          <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                        </span>
+                        <span>
+                          <button>
+                            Cancel
+                          </button>
+                        </span>
+                      </p>
+                    </li>
                   )
-              }
+                  }
+                </ul>
+              </li>
+              <li>
+                <p>People requested me</p>
+                <ul>
+                  {relationships.theirRequests.map(rel =>
+                    <li key={nanoid()}>
+                      <p>
+                        <span className='tooltip'>
+                          {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                          <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                        </span>
+                        <span>
+                          <button >
+                            Accept
+                          </button>
+                          <button >
+                            Refuse
+                          </button>
+                          <button >
+                            Block
+                          </button>
+                        </span>
+                      </p>
+                    </li>
+                  )
+                  }
+                </ul>
+              </li>
             </ul>
           </div>
           <div>
             <p>My friend list</p>
+            <ul>
+              {
+                relationships.myFriends.map(rel =>
+                  <li key={nanoid()}>
+                    <p>
+                      <span className='tooltip'>
+                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                        <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                      </span>
+                    </p>
+                  </li>)
+              }
+            </ul>
           </div>
           <div>
             <p>My follower list</p>
+            <ul>
+              {
+                relationships.myFollowers.map(rel =>
+                  <li key={nanoid()}>
+                    <p>
+                      <span className='tooltip'>
+                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                        <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                      </span>
+                    </p>
+                  </li>)
+              }
+            </ul>
           </div>
           <div>
             <p>My following list</p>
+            <ul>
+              {
+                relationships.myFollowings.map(rel =>
+                  <li key={nanoid()}>
+                    <p>
+                      <span>{rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}</span>
+                    </p>
+                  </li>)
+              }
+            </ul>
           </div>
         </div>
       </div>
