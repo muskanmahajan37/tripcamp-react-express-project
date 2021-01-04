@@ -17,6 +17,14 @@
   align-items: center;
   justify-content: center;
   background-color: rgb(243, 242, 239);
+  overflow: hidden;
+  border-radius: 10px;
+}
+.spot-media-display:hover{
+  cursor: pointer;
+  transform: translateY(-6px);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);  
+  transition: ease 0.2s;
 }
 
 .single-spot-media-display {
