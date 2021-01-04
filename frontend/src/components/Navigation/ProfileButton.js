@@ -54,7 +54,7 @@ export default function ProfileButton({ user }) {
             className="button button-Send"
             onClick={addAUser}
           >
-            Add A User
+            Add A Friend
           </button>
         </div>        
         <hr className="hr" />
