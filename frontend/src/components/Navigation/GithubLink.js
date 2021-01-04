@@ -17,7 +17,7 @@ export default function GithubLink({ user }) {
           <a className="github-a" target="_blank" href='https://github.com/suasllc'>Tony Ngo</a>
         </div>
         <div className="dropdown-menu-item">
-          <a className="github-a" target="_blank" href='https://github.com/suasllc/fullstack-authenticate-me'>Github Repo</a>
+          <a className="github-a" target="_blank" href='https://github.com/suasllc/tripcamp-react-express-project'>Github Repo</a>
         </div>
         <div className="dropdown-menu-item">
           <a className="github-a" target="_blank" href='https://appacademy.io'>Student at App Academy</a>
