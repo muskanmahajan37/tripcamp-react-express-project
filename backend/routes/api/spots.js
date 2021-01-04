@@ -15,7 +15,7 @@ router.get('/',
     // const userId = req.user.id;
     const spots = await Spot.findAll({
       include: {model: User, through: Ownership},
-      order: ['id', 'ASC']
+      order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
       // if(userId){

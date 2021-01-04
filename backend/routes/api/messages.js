@@ -2,6 +2,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
+const { Op } = require("sequelize");
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
@@ -13,7 +14,9 @@ router.get('/',
   requireAuth,
   asyncHandler(async (req, res) => {
     const myId = req.user.id;
-    if (!myId) return res.status(401).json({ error: "Unauthorized user" }); //TODO: check this myId again the id sent by the user from frontend?
+    if (!myId) {
+      return res.status(401).json({ error: "Unauthorized user" }); //TODO: check this myId again the id sent by the user from frontend?
+    }
     try {
       const messages = await Message.findAll({
         where: {
@@ -21,12 +24,13 @@ router.get('/',
             { senderId: myId },
             { recipientId: myId }
           ],
-          order: ['createdAt', 'DESC']
-        }
+        },
+        order: [['createdAt', 'ASC']]
       })
       res.json({ messages });
     } catch (e) {
-      return res.status(401).json({ error: "Error in posting messages" });
+      console.log("Error in getting messages", req.user.id);
+      return res.status(401).json({ error: "Error in geting messages" });
     }
   })
 );
@@ -35,7 +39,7 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res) => {
     const messageDataObj = req.body.message;
-    // console.log('messageDataObj', messageDataObj);
+    console.log('messageDataObj', messageDataObj);
     if (req.user.id !== messageDataObj.senderId) {
       // console.log(req.user.id, messageDataObj.senderId, "Unauthorized user");
       return res.status(401).json({ error: "Unauthorized user" });

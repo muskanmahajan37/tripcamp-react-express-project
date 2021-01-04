@@ -196,7 +196,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   const location = useLocation();
   const [reduxSpots, setReduxSpots] = useState(originalReduxSpots);
   const [spots, setSpots] = useState(reduxSpots);
-  const [showMap, setShowMap] = useState(true);
+  const [showMap, setShowMap] = useState(false);
   const [style, setStyle] = useState({});
 
   useEffect(() => {

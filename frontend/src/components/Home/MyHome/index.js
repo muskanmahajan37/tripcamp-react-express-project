@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
 import * as relationshipActions from '../../../store/relationship';
+import * as messageActions from '../../../store/message';
 import './MyHome.css';
 import { nanoid } from 'nanoid';
+
 
 export default function MyHome() {
   const dispatch = useDispatch();
@@ -21,10 +23,16 @@ export default function MyHome() {
     myFollowers: [],
     myFollowings: []
   });
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     dispatch(bookingActions.getAllBookings())
       .then(res => setBookings(res.data.bookings))
+      .catch(e => { });
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(messageActions.getAllMessages())
+      .then(res => setMessages(res.data.messages))
       .catch(e => { });
   }, [dispatch]);
 
@@ -151,6 +159,61 @@ export default function MyHome() {
     }
   }
 
+  function FriendNameAndMessage({ name, friendId }) {
+    const [showChat, setShowChat] = useState(false);
+    const [messageBody, setMessageBody] = useState("");
+
+    function handleFriendClick(e) {
+      e.preventDefault();
+      setShowChat(!showChat);
+      // const friendId = Number(e.target.id.split('-')[0]);
+
+    }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      dispatch(messageActions.createOneMessage({
+        senderId: sessionUser.id,
+        recipientId: friendId,
+        body: messageBody
+      }))
+      .then(res => {
+
+      })
+      .catch(e => {
+
+      })
+    }
+    return (
+      <div>
+        <span className='tooltip' id={`${friendId}-friend`}
+          onClick={handleFriendClick}
+        >
+          {name}
+        </span>
+        {
+          showChat && <div>
+            <div>
+              {
+                messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id)
+                  .map(m => <div key={nanoid()}>
+                    {m.senderId === sessionUser.id ?
+                      <p><b>Me:</b> {m.body}</p> :
+                      <p><b>{name}:</b> {m.body}</p>
+                    }
+                  </div>)
+              }
+            </div>
+            <form type='submit' onSubmit={handleSubmit}>
+              <input type='text' value={messageBody} onChange={e=>setMessageBody(e.target.value)}></input>
+              <button>Send</button>
+            </form>
+          </div>
+        }
+      </div>
+    );
+  }
+
   return (
     <div className="myhome-main-div">
       <AllSpots searchTerm={""} onlyMine={true}
@@ -206,14 +269,11 @@ export default function MyHome() {
             <p>My friends</p>
             <ul>
               {
-                relationships.myFriends.map(rel =>
+                relationships.myFriends.map((rel, i) =>
                   <li key={nanoid()}>
-                    <div>
-                      <span className='tooltip'>
-                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
-                        <p className='tooltiptext'>To Implement Mini UserProfile</p>
-                      </span>
-                    </div>
+                    <FriendNameAndMessage
+                      name={rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                      friendId={rel.user1.id !== sessionUser.id ? rel.user1.id : rel.user2.id} />
                   </li>)
               }
             </ul>

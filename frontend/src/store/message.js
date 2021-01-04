@@ -40,7 +40,7 @@ export const getAllMessages = () => async dispatch => {
   return res;
 }
 
-export const createOneMessage = ({ message }) => async dispatch => {
+export const createOneMessage = (message) => async dispatch => {
   const res = await fetch(`/api/messages`, {
     method: 'POST',
     body: JSON.stringify({ message })
