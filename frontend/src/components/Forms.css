@@ -52,7 +52,8 @@ button:disabled, button[disabled] {
 /* Red */
 
 .button3 {
-  background-color: #c5d4b3;
+  /* background-color: #c5d4b3; */
+  background-color:#15bac648;
   color: black;
 }
 
@@ -98,8 +99,9 @@ button:disabled, button[disabled] {
 
 .input-div-number, .input-div-date {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 3px 0px;
+  width: 80%;
 }
 
 .input {
@@ -110,23 +112,28 @@ button:disabled, button[disabled] {
   width: 50px;
   margin-right: 188px;
 }
+.input-gps {
+  width: 162px;
+  /* margin-right: 188px; */
+}
 .input-date {
   width: fit-content;
   margin-right: 102px;
 }
 
 .dropdown-menu-item {
-  font-size: large;
+  font-size: 14px;
   padding: 0px 5px;
   margin: 0px 5px;
   width: 110%;
   color: black;
+  font-family: 'Calibre', Helvetica, Arial, sans-serif;
 }
 
 .dropdown-menu-item:hover {
-  font-size: large;
+  /* font-size: large; */
   padding: 0px 5px;
-  color: lightblue;
+  color: rgb(21, 186, 198);
 }
 
 .hr {
@@ -139,7 +146,7 @@ button:disabled, button[disabled] {
   background-color: Transparent;
   border: none;
   font-size: 22px;
-  color: #008CBA;
+  color: rgb(21, 186, 198);
 }
 
 .fa-bell:hover, .fa-atom:hover {
@@ -169,6 +176,7 @@ button:disabled, button[disabled] {
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.1s;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-family: 'Calibre', Helvetica, Arial, sans-serif;
 }
 
 .dropdown-menu-parent:focus .dropdown-menu, .dropdown-menu-parent:focus-within .dropdown-menu, .dropdown-menu-parent:hover .dropdown-menu {
@@ -214,7 +222,8 @@ button:disabled, button[disabled] {
   padding: 0px 4px;
   border-radius: 50%;
   border: none;
-  background: red;
+  /* background: red; */
+  background: rgb(235, 77, 151);
   color: white;
   font-size: small;
 }
@@ -400,7 +409,7 @@ h3 {
   /* margin-top: -10px; */
   /* border: 1px solid green; */
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
 }
 
 .login-signup-invite{

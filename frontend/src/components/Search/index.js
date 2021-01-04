@@ -1,41 +1,50 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import * as searchActions from '../../store/search';
 
 import './Search.css';
 
-export default function MainSearchBar() {
+export default function MainSearchBar({ 
+    className = 'search-over-banner-div'
+  }) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(searchActions.setSearchPOJO({ text: searchValue }));
+  }, [searchValue]);
 
   const onInputChange = e => {
     e.preventDefault();
     setSearchValue(e.target.value);
-    dispatch(searchActions.setSearchPOJO({text: e.target.value}));
-    console.log("search box value:", e.target.value);
+    // console.log("search box value:", e.target.value);
   }
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(searchActions.setSearchPOJO({text: searchValue}));
+    dispatch(searchActions.setSearchPOJO({ text: searchValue }));
     setSearchValue("");
   }
   return (
-    <form 
+    <form
       type='submit'
-      className='search-over-banner-div'
+      className={className}
       onSubmit={handleSubmit}
     >
       <i className="fas fa-search search-icon-class" ></i>
       <input
         className='main-search-bar'
         type='text'
-        placeholder='Enter anything to search'
+        placeholder='Search spots to stay'
         value={searchValue}
         onChange={onInputChange}
       />
+      <i className="fas fa-times search-icon-class" 
+        style={{color: 'lightgray'}}
+        onClick={e=>{e.preventDefault(); setSearchValue("")}}
+        />
     </form>
   );
 }

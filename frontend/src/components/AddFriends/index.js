@@ -44,7 +44,7 @@ export function AddFriendsModal() {
       .then(res => {
         if (addFriendModalRef.current)
           addFriendModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -55,7 +55,7 @@ export function AddFriendsModal() {
     e.preventDefault();
     if (addFriendModalRef.current)
       addFriendModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
   return (

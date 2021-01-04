@@ -3,10 +3,10 @@
   position: sticky;
   margin-top: 0px;
   top: 30vh;
-  width: 30vw;
-  left: 34vw;
+  width: 40vw;
+  left: 30vw;
   height: 5vh;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 1.5);
   border: 1px solid rgba(255, 255, 255, 0.0);
   border-radius: 2.5vh;
   display: flex;
@@ -17,6 +17,15 @@
 
 .search-over-banner-div:hover {
   background-color: rgb(255, 255, 255);
+}
+.search-box-home-fixed{
+  position: absolute;
+  top: -20px;
+}
+
+.search-spots-page{
+  top: 0px;
+  background-color: rgba(200, 200, 200, 0.5);
 }
 
 .main-search-bar {

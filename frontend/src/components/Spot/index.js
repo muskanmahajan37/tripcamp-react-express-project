@@ -34,16 +34,19 @@ function calculateRatingFunction(spot) {
 export default function Spot() {
   // const dispatch = useDispatch();
   const reduxSpots = useSelector(state => state.spots.allSpots);
+  // const currentSpot = useSelector(state => state.spots.currentSpot);
   const [spot, setSpot] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
   const [videoUrls, setVideoUrls] = useState([]);
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const [calculatedRating, setCalculatedRating] = useState(undefined);
   const [noOfReviews, setNoOfReviews] = useState(undefined);
-  const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
+  // const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+
+  console.log('params', params);
 
   useEffect(() => {
     if (params && reduxSpots) {
@@ -85,7 +88,7 @@ export default function Spot() {
                 onClick={e => {
                   e.preventDefault();
                   dispatch(spotActions.removeCurrentSpot());
-                  history.push('/');
+                  history.push('/allspots');
                 }}
               >
                 All Spots
@@ -182,17 +185,26 @@ export default function Spot() {
     </div>
   );
 }
-export function AllSpots({ searchTerm = null }) {
-  const reduxSpots = useSelector(state => state.spots.allSpots);
+export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display-grid', spotMapClass = 'spots-and-maps' }) {
+  const originalReduxSpots = useSelector(state => state.spots.allSpots);
+  const sessionUser = useSelector(state => state.session.user);
   const searchTerms = useSelector(state => state.searchs);
   const history = useHistory();
-  const [showReviewForm, setShowReviewForm] = useState(false);
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState(undefined);
   const [highlighting, setHighlighting] = useState(searchText);
   const location = useLocation();
-
+  const [reduxSpots, setReduxSpots] = useState(originalReduxSpots);
   const [spots, setSpots] = useState(reduxSpots);
+  const [showMap, setShowMap] = useState(true);
+  const [style, setStyle] = useState({});
+
+  useEffect(() => {
+    if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
+      spot.Users[0] && spot.Users[0].id === sessionUser.id
+    ));
+    else setReduxSpots(originalReduxSpots);
+  }, [onlyMine, originalReduxSpots]);
 
   useEffect(() => {
     if (searchTerms[searchTerms.length - 1]) {
@@ -216,25 +228,33 @@ export function AllSpots({ searchTerm = null }) {
         spot.rated = rated;
         return spot;
       }));
+      // console.log('reduxSpots', reduxSpots);
       // history.push('/');
     }
   }, [searchText, reduxSpots]);
 
   useEffect(() => {
     setHighlighting(searchText);
-    if (!searchText) history.push('/');
+    if (!searchText && !onlyMine) {
+      if (location.pathname.includes('/search'))
+        history.push('/allspots');
+    }
   }, [searchText])
 
   useEffect(() => {
-    if (location.pathname === '/') setSearchText(undefined);
+    if (location.pathname === '/allspots') setSearchText(undefined);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if(onlyMine) return;
+    if(showMap) setStyle({maxWidth: '90vw', width: '90vw'});
+    else setStyle({maxWidth: '940px', width: '90%'});
+  }, [showMap, onlyMine]);
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
-    // return <BookingFormModal spot={spot}/>
   }
   function handleReviewClick(e) {
-    setShowReviewForm(true)
     history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
   }
 
@@ -254,8 +274,8 @@ export function AllSpots({ searchTerm = null }) {
   };
 
   return (
-    <div className='spots-and-maps'>
-      {spots && <div className="spots-home-display-grid">
+    <div className={spotMapClass} style={style}>
+      {spots && <div className={mainGridClass}>
         {
           spots.map(spot =>
             <div key={nanoid()} >
@@ -273,16 +293,29 @@ export function AllSpots({ searchTerm = null }) {
                   :
                   <></>
                 }
+                {!(spot.urls && spot.urls[0]) &&
+                  <img
+                    key={nanoid()}
+                    src={'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/camp-badges-and-icons-vector.jpg'}
+                    alt={spot.name}
+                    id={spot.id + "-" + nanoid()}
+                    className='spot-default-image'
+                    style={{ opacity: '0.4' }}
+                    onClick={handleSpotSelection}
+                  />
+                }
                 <div className="start-rating-on-top-of-image">
                   <Rating rated={spot.rated} />
                 </div>
               </div>
               <div className='buttons-address-description'>
                 <div className="buttons-and-address">
-                  <div className="book-and-more-div">
-                    <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
-                    <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
-                  </div>
+                  {
+                    !onlyMine && <div className="book-and-more-div">
+                      <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                      <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
+                    </div>
+                  }
                   <div className='spot-address'>
                     <p style={{ maxWidth: '210px', fontSize: '16px' }}>
                       {spot.streetAddress}
@@ -298,15 +331,25 @@ export function AllSpots({ searchTerm = null }) {
               </div>
             </div>
           )}
-      </div>}
-      {/* <div className='home-side-map'>
-        {
-          spots && spots.length && <MapWithMarkerClusterer
-            center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
-            zoom={5}
-            spots={spots} />
-        }
-      </div> */}
+      </div>
+      }
+      {
+        !spots.length && searchText &&
+        <div className='nothing-found-div'>
+          <img src='https://image.cnbcfm.com/api/v1/image/105737338-1550085597458ap_19043627548529.jpg?v=1550085650&w=678&h=381' alt='mars' />
+          <p>No spot found for search criteria: {searchText}</p>
+        </div>
+      }
+      {
+        !onlyMine && showMap && <div className='home-side-map-all-spots'>
+          {
+            spots && spots.length && <MapWithMarkerClusterer
+              center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
+              zoom={5}
+              spots={spots} />
+          }
+        </div>
+      }
     </div>
   );
 }
@@ -336,13 +379,13 @@ export function SpotFormModal() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log("35 media", media);
-  }, [media])
+    parseAddress(fullAddress);
+  }, [fullAddress]);
 
   if (!sessionUser) {
     if (spotModalRef.current)
       spotModalRef.current.style.display = "none";
-    console.log('spot', history);
+    // console.log('spot', history);
     return <Redirect to='/login' />;
   }
 
@@ -351,8 +394,7 @@ export function SpotFormModal() {
     e.preventDefault();
     setErrors([]);
 
-    console.log("handleSubmit media", media, " id", media && media[media.length - 1] && media[media.length - 1].id);
-
+    // console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
     return dispatch(spotActions.createOneSpot({
       spot: {
         userId: sessionUser.id,
@@ -374,7 +416,7 @@ export function SpotFormModal() {
       .then(res => {
         if (spotModalRef.current)
           spotModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -385,17 +427,16 @@ export function SpotFormModal() {
     e.preventDefault();
     if (spotModalRef.current)
       spotModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
-  const parseAddress = (textValue) => {
+  function parseAddress(textValue) {
     const values = textValue.split(',')
     setStreetAddress(values[0]);
     setCity(values[1]);
     setStateProvince(values[2]);
     setZipcode(values[3]);
     setCountry(values[4]);
-    console.log(streetAddress, city, stateProvince, zipCode, country);
   };
 
   return (
@@ -434,7 +475,7 @@ export function SpotFormModal() {
               required
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Number of Units</label>
             <input
               className='input-number'
@@ -484,30 +525,30 @@ export function SpotFormModal() {
               className='input'
               type='text'
               value={fullAddress}
-              onChange={e => { setFullAddress(e.target.value); parseAddress(e.target.value) }}
+              onChange={e => { setFullAddress(e.target.value) }}
               required
               rows={3}
               placeholder="Street address first line,&#10;City, State/Provice, Zipcode&#10;Country"
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Rate Per Night ($USD)</label>
             <input
               className='input-number'
               type='number'
               value={perNightRate}
               min={0}
-              onChange={e => setPerNightRate(e.target.value)}
+              onChange={e => setPerNightRate(Number(e.target.value))}
             />
           </div>
-          <div className="input-div">
+          <div className="input-div-number">
             <label>Accommodation Type</label>
             <input
               className='input-number'
               type='number'
               value={accommodationType}
               min={0}
-              onChange={e => setAccommodationType(e.target.value)}
+              onChange={e => setAccommodationType(Number(e.target.value))}
             />
           </div>
           <div className="input-div">

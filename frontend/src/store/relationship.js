@@ -29,8 +29,10 @@ export const getOneRelationship = (id) => async dispatch => {
   return res;
 }
 
-export const getAllRelationships = () => async dispatch => {
-  const res = await fetch(`/api/relationships`, {
+export const getAllRelationships = (myUserId = undefined) => async dispatch => {
+  let link = '/api/relationships';
+  if (myUserId) link += `/users/${myUserId}`
+  const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
     const fedback_relationships = res.data.relationships; //we need this user back from backend, NOT the provided
@@ -41,6 +43,18 @@ export const getAllRelationships = () => async dispatch => {
 export const createOneRelationship = ({ relationship }) => async dispatch => {
   const res = await fetch(`/api/relationships`, {
     method: 'POST',
+    body: JSON.stringify({ relationship })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_relationship = res.data.relationship;
+    dispatch(setRelationshipPOJO(fedback_relationship));
+  }
+  return res;
+}
+
+export const modifyOneRelationship = (relationship) => async dispatch => {
+  const res = await fetch(`/api/relationships`, {
+    method: 'PATCH',
     body: JSON.stringify({ relationship })
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {

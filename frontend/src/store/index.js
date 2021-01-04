@@ -13,6 +13,7 @@ import mediumReducer from './media';
 import searchReducer from './search';
 import friendReducer from './user';
 import relationshipReducer from './relationship';
+import messageReducer from './message';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   media: mediumReducer,
   searchs: searchReducer,
   friends: friendReducer,
-  relationships: relationshipReducer
+  relationships: relationshipReducer,
+  messages: messageReducer
 });
 
 let enhancer;

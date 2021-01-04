@@ -1,9 +1,133 @@
-
-.banner-and-search-div{
+.banner-and-search-div {
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.glam-camp-main-div, .bemofa-main-div {
+  display: flex;
+  justify-content: space-between;
+  max-width: 960px;
+  width: 90vw;
+  margin-top: 2.5vh;
+  margin-bottom: 2.5vh;  
+}
+.glam-camp-main-div{
+  margin-top: 7.5vh;
+}
+
+.glam-camp-indidual-div {
+  width: 48%;
+  display: flex;
+  border-radius: 30px;  
+}
+
+.bemofa-indidual-div {
+  width: 30%;
+  display: flex;
+  border-radius: 20px;  
+}
+
+.glam-camp-indidual-div, .bemofa-indidual-div {
+  /* padding-top: 2.5vh; */
+  position: relative;
+  justify-content: center;
+  align-items: center;  
+  overflow: hidden;
+}
+
+.glam-camp-img {
+  width: 100%;
+  height: 300px;
+  margin-top: 0px;
+  /* border-radius: 30px; */
+  /* object-fit: cover; */
+}
+
+.glam-camp-indidual-div:hover, .bemofa-indidual-div:hover {
+  transform: translateY(-6px);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.bemofa-img {
+  width: 100%;
+  height: 400px;
+  margin-top: 0px;
+  /* border-radius: 30px; */
+  object-fit: cover;
+}
+
+.glam-camp-indidual-div, .bemofa-indidual-div {
+  transition: ease 0.2s;
+}
+
+.glam-camp-text-div {
+  /* background-color: #66CAF2; */
+  /* rgba(200, 200, 200, 0.5); */
+  position: absolute;
+  /* top: 0%; */
+  /* bottom: 10%; */
+  /* left: 0%; */
+  height: 50px;
+  width: 67%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px 25px 25px 25px;
+  padding: 0px 0px;
+  margin: 0px 0px;
+  opacity: 0.8;
+}
+
+.glam-camp-text {
+  font-size: 25px;
+  padding: 0px 30px;
+  font-weight: bold;
+  font-family: 'Calibre', Helvetica, Arial, sans-serif;
+  color: rgb(255, 255, 255);
+}
+
+.bemofa-text-div {
+  /* background-color: #66CAF2; */
+  /* rgba(200, 200, 200, 0.5); */
+  position: absolute;
+  /* bottom: 10%; */
+  top: 0%;
+  /* left: 8%; */
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 30px 30px 0px 0px; */
+  padding: 0px 0px;
+  margin: 0px 0px;
+  opacity: 0.8;
+}
+
+.bemofa-text {
+  font-size: 25px;
+  padding: 0px 10px;
+  font-weight: bold;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  /* color: rgb(66, 66, 66); */
+  color: white;
+}
+
+@media screen and (max-width: 900px) {
+  .glam-camp-main-div, .bemofa-main-div {
+    flex-direction: column;
+    align-items: center;
+  }
+  .glam-camp-indidual-div, .bemofa-indidual-div {
+    width: 100%;
+    margin-bottom: 2.5vh;
+  }
+  .glam-camp-img {
+    margin-top: 0px;
+    object-fit: cover;
+  }
 }

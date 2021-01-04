@@ -2,9 +2,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 import * as reviewActions from '../../store/review';
+import * as spotActions from '../../store/spot';
 
 import Rating from '../Rating';
 
@@ -21,24 +22,25 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const [errors, setErrors] = useState([]);
   const reviewModalRef = useRef(null);
   const history = useHistory();
-  const params = useParams();
   const [enableSubmit, setEnableSubmit] = useState(false);
   let realtimeRating;
   const [spot, setSpot] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
-    if (params && spots) {
-      setSpot(spots.find(spot => spot.id === Number(params.spotId)));
+    if (location.pathname && spots) {
+      const path = location.pathname;
+      setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
       realtimeRating = undefined;
     }
-  }, [params]);
+  }, [location.pathname]);
 
   useEffect(() => {
     realtimeRating = ratings[ratings.length - 1];
   }, [ratings]);
 
   useEffect(() => {
-    if(realtimeRating && title && body) setEnableSubmit(true);
+    if (realtimeRating && title && body) setEnableSubmit(true);
     else setEnableSubmit(false);
   }, [ratings])
 
@@ -52,7 +54,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     setErrors([]);
 
-    console.log('realtimeRating', realtimeRating, 'ratings[ratings.length - 1]', ratings[ratings.length - 1]);
+    // console.log('realtimeRating', realtimeRating, 'ratings[ratings.length - 1]', ratings[ratings.length - 1]);
     if (!ratings[ratings.length - 1])
       return setErrors(["Select a rating"]);
 
@@ -66,9 +68,10 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
       }
     }))
       .then(res => {
+        dispatch(spotActions.addReviewToSpot(res.data.review));
         if (reviewModalRef.current)
           reviewModalRef.current.style.display = "none";
-        history.push('/');
+        history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -79,7 +82,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
-    history.push('/');
+    history.push('/allspots');
   }
 
   return (

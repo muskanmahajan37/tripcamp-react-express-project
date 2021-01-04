@@ -14,8 +14,9 @@ const setAllBookingsPOJO = (bookings) => ({
   type: SET_ALL_BOOKINGS,
   bookings
 });
-const removeBookingPOJO = () => ({
-  type: REMOVE_ONE_BOOKING
+const removeBookingPOJO = (bookingId) => ({
+  type: REMOVE_ONE_BOOKING,
+  bookingId
 });
 
 
@@ -49,6 +50,28 @@ export const createOneBooking = ({ booking }) => async dispatch => {
   }
   return res;
 }
+export const modifyOneBooking = ( booking ) => async dispatch => {
+  const res = await fetch(`/api/bookings`, {
+    method: 'PATCH',
+    body: JSON.stringify({ booking })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_booking = res.data.booking;
+    dispatch(setBookingPOJO(fedback_booking));
+  }
+  return res.data.booking;
+}
+
+export const deleteOneBooking = ( bookingId ) => async dispatch => {
+  const res = await fetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE',
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_bookingId = res.data.bookingId;
+    dispatch(removeBookingPOJO(fedback_bookingId));
+  }
+  return res.data.bookingId;
+}
 
 const initialState = [];
 
@@ -61,6 +84,11 @@ const bookingReducer = (state = initialState, action) => {
       return newState;
     case SET_ALL_BOOKINGS:
       newState = JSON.parse(JSON.stringify([...state, ...action.bookings]));
+      return newState;
+    case REMOVE_ONE_BOOKING:
+      newState = JSON.parse(JSON.stringify(state.filter(booking =>
+        booking.id !== action.bookingId
+      )));
       return newState;
     default:
       return state;

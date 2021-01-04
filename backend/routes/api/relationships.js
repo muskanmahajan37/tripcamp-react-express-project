@@ -2,16 +2,178 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
+const { Op } = require("sequelize");
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Relationship } = require('../../db/models');
+const { User, Relationship, UserProfile, Message } = require('../../db/models');
 
 const router = express.Router();
 
-router.get('/', asyncHandler(async (reg, res) => {
+router.get('/', asyncHandler(async (req, res) => {
   res.json("All relationships - to be implemented");
 }));
+
+
+router.patch('/',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    console.log(req.body.relationship);
+    const myUserId = Number(req.body.relationship.myUserId);
+    if (req.user.id !== myUserId) {
+      console.log(req.user.id, myUserId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    try {
+      const relationshipId = Number(req.body.relationship.id);
+      const status = Number(req.body.relationship.status)
+      const relationship = await Relationship.findByPk(relationshipId);
+      await relationship.update({ status });
+      res.json(relationship);
+    } catch (e) {
+      res.status(401).json({ error: "Some error finding the relationships" });
+    }
+  })
+);
+
+router.get('/users/:userId',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const myUserId = Number(req.params.userId);
+    if (req.user.id !== myUserId) {
+      console.log(req.user.id, myUserId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    try {
+      const myRequests = await Relationship.findAll({
+        where: {
+          lastActionUserId: myUserId,
+          status: 0
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
+      const theirRequests = await Relationship.findAll({
+        where: {
+          lastActionUserId: {
+            [Op.ne]: myUserId,
+          },
+          [Op.or]: [
+            { user1Id: myUserId },
+            { user2Id: myUserId }
+          ],
+          status: 0
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
+      const myFriends = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { user1Id: myUserId },
+            { user2Id: myUserId }
+          ],
+          status: 1
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+
+      const myFollowers = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { followingship: 1 },
+            {
+              [Op.or]: [{
+                user1Id: myUserId,
+                followingship: 21
+              }, {
+                user2Id: myUserId,
+                followingship: 12
+              }]
+            }
+          ]
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+      const myFollowings = await Relationship.findAll({
+        where: {
+          [Op.or]: [
+            { followingship: 1 },
+            {
+              [Op.or]: [{
+                user1Id: myUserId,
+                followingship: 12
+              }, {
+                user2Id: myUserId,
+                followingship: 21
+              }]
+            }
+          ]
+        },
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
+      const relationships = [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings];
+      res.json({ relationships, myRequests, theirRequests, myFriends, myFollowers, myFollowings });
+    } catch (e) {
+      res.status(401).json({ error: "Some error finding the relationships" });
+    }
+  })
+);
 
 router.post('/',
   requireAuth,
@@ -41,7 +203,7 @@ router.post('/',
       });
     }
 
-    if(!user) {
+    if (!user) {
       return res.status(401).json({ error: "User not found!" });
     }
 
@@ -55,12 +217,38 @@ router.post('/',
     relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
     relationshipDataObj.status = 0;
     relationshipDataObj.followingship = 0;
-    delete relationshipDataObj.myUserId, relationshipDataObj.credential;
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
-      const relationship = await Relationship.create(relationshipDataObj);
-      res.json({ relationship: relationship });
+      let relationship = await Relationship.findOne({
+        where: {
+          user1Id: relationshipDataObj.user1Id,
+          user2Id: relationshipDataObj.user2Id,
+        }
+      });
+      let message;
+      if (relationship) {
+        if (relationship.status === 4 || relationship.status === 2) { //cancelled by the requester
+          relationship.update({ status: 0 })
+          const message = await Message.create({
+            senderId: relationshipDataObj.myUserId,
+            recipientId: user.id,
+            body: relationshipDataObj.message
+          });
+        } else if (relationship.status === 3) //I'm being blocked
+          return res.status(401).json({ error: "Cannot add this user as friend" });
+        else if (relationship.status === 1)
+          return res.status(401).json({ error: "You are already friends" });
+      } else {
+        const message = await Message.create({
+          senderId: relationshipDataObj.myUserId,
+          recipientId: user.id,
+          body: relationshipDataObj.message
+        });        
+        delete relationshipDataObj.myUserId, relationshipDataObj.credential;
+        relationship = await Relationship.create(relationshipDataObj);
+      }
+      res.json({ relationship, message });
     } catch (error) {
       return res.status(401).json({ error });
     }
