@@ -15,8 +15,8 @@ module.exports = {
     return queryInterface.bulkInsert('Ownerships', [
       { userId: 1, spotId: 1, status: 0 },
       { userId: 1, spotId: 3, status: 0 },
-      { userId: 1, spotId: 6, status: 0 },
-      { userId: 4, spotId: 5, status: 0 },
+      // { userId: 1, spotId: 6, status: 0 },
+      // { userId: 4, spotId: 5, status: 0 },
     ]);
   },
 

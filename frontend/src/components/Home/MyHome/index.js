@@ -166,7 +166,7 @@ export default function MyHome() {
     const [unreadMessages, setUnreadMessages] = useState([]);
 
     useEffect(() => {
-      if(messageBody) setSubmitted(false);
+      if (messageBody) setSubmitted(false);
     }, [messageBody]);
 
     // useEffect(async () => {
@@ -186,20 +186,20 @@ export default function MyHome() {
       setShowChat(!showChat);
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
       e.preventDefault();
       dispatch(messageActions.createOneMessage({
         senderId: sessionUser.id,
         recipientId: friendId,
         body: messageBody
       }))
-      .then(res => {
-        setMessageBody("");
-        setSubmitted(true);
-      })
-      .catch(e => {
+        .then(res => {
+          setMessageBody("");
+          setSubmitted(true);
+        })
+        .catch(e => {
 
-      })
+        })
     }
     return (
       <div>
@@ -215,8 +215,12 @@ export default function MyHome() {
                 messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id)
                   .map(m => <div key={nanoid()}>
                     {m.senderId === sessionUser.id ?
-                      <p><b>Me:</b> {m.body}</p> :
-                      <p><b>{name}:</b> {m.body}</p>
+                      (m.recipientId === friendId?
+                      <p><b>Me:</b> {m.body}</p> : <></>)
+                      :
+                      (m.senderId === friendId ?
+                        <p><b>{name}:</b> {m.body}</p> :
+                        <></>)
                     }
                   </div>)
               }
@@ -225,7 +229,7 @@ export default function MyHome() {
               }
             </div>
             <form type='submit' onSubmit={handleSubmit}>
-              <input type='text' value={messageBody} onChange={e=>setMessageBody(e.target.value)}></input>
+              <input type='text' value={messageBody} onChange={e => setMessageBody(e.target.value)}></input>
               <button>Send</button>
             </form>
           </div>
