@@ -246,9 +246,9 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   }, [location.pathname]);
 
   useEffect(() => {
-    if(onlyMine) return;
-    if(showMap) setStyle({maxWidth: '90vw', width: '90vw'});
-    else setStyle({maxWidth: '940px', width: '90%'});
+    if (onlyMine) return;
+    if (showMap) setStyle({ maxWidth: '90vw', width: '90vw' });
+    else setStyle({ maxWidth: '940px', width: '90%' });
   }, [showMap, onlyMine]);
 
   function handleBookNowClick(e) {
@@ -273,8 +273,17 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     history.push(`/spots/${e.target.id.split("-")[0]}`);
   };
 
+  const ShowMapButton =
+    <span className='fa fa-bars showmap-button'
+      onClick={e => { e.preventDefault(); setShowMap(!showMap) }}
+    />
+
+
   return (
     <div className={spotMapClass} style={style}>
+      {
+        !onlyMine && ShowMapButton
+      }
       {spots && <div className={mainGridClass}>
         {
           spots.map(spot =>
