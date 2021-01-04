@@ -174,6 +174,7 @@ export default function Spot() {
                 spot.Reviews.map(review => <li key={nanoid()}>
                   <p>{review.title}</p>
                   <p>{review.body}</p>
+                  <p>{review.User && review.User.username}</p>
                   <Rating rated={review.rating} userChangeable={false} />
                 </li>)
               }

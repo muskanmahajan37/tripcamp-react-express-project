@@ -14,7 +14,7 @@ router.get('/',
   asyncHandler(async (req, res) => {
     // const userId = req.user.id;
     const spots = await Spot.findAll({
-      include: [{model: User, through: Ownership}, {model: Category, through: CategorySpot}],
+      include: [{ model: User, through: Ownership }, { model: Category, through: CategorySpot }],
       order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
@@ -48,7 +48,11 @@ router.get('/reviews',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spots = await Spot.findAll({
-      include: [{model: Review}, {model: User, through: Ownership}, {model: Category, through: CategorySpot}],
+      include: [
+        { model: Review, include: {model: User} },
+        { model: User, through: Ownership },
+        { model: Category, through: CategorySpot }
+      ],
       order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
@@ -81,11 +85,15 @@ router.get('/:id',
     res.json({ spot });
   })
 );
-router.get('/:id/Reviews',
+router.get('/:id/reviews',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spot = await Spot.findByPk(id, {
-      include: [{model: Review}, {model: User, through: Ownership}, {model: Category, through: CategorySpot}]
+      include: [
+        { model: Review, include: {model: User} },
+        { model: User, through: Ownership },
+        { model: Category, through: CategorySpot }
+      ],
     });
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {
