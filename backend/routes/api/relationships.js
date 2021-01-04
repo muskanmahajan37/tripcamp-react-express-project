@@ -216,7 +216,7 @@ router.post('/',
     }
     relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
     relationshipDataObj.status = 0;
-    relationshipDataObj.followingship = 0;
+    if(!relationshipDataObj.followingship) relationshipDataObj.followingship = 0;
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {

@@ -15,6 +15,7 @@ export function AddFriendsModal() {
   const sessionUser = useSelector(state => state.session.user);
   const [credential, setCredential] = useState('');
   const [message, setMessage] = useState('');
+  const [following, setFollowing] = useState(false);
   const [errors, setErrors] = useState([]);
   const addFriendModalRef = useRef(null);
   const submitButtonRef = useRef(null);
@@ -38,7 +39,8 @@ export function AddFriendsModal() {
       relationship: {
         myUserId: sessionUser.id,
         credential,
-        message
+        message,
+        followingship: (following? 12: 0)
       }
     }))
       .then(res => {
@@ -88,6 +90,16 @@ export function AddFriendsModal() {
               type='message'
               value={message}
               onChange={e => setMessage(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
+            <label>Follow them?</label>
+            <input
+              className='input-number'
+              type='checkbox'
+              // value={following}
+              checked={following}
+              onChange={e => setFollowing(e.target.checked)}
             />
           </div>
         </div>
