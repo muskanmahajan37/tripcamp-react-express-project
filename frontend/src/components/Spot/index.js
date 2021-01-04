@@ -253,7 +253,12 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     const path = location.pathname;
     if (path.includes('/allspots')) setSearchText(undefined);
     const categoryFromPath = path.slice(path.lastIndexOf('/') + 1);
-    if(categoryFromPath.includes('/allspots')) {
+    //TODO: get these from real database categories
+    if(categoryFromPath.includes('/allspots') || 
+      path.includes('users') ||
+      path.includes('reviews') ||
+      path.includes('bookings')
+      ) {
       setCategory("all");
     } else {
       setCategory(categoryFromPath);
