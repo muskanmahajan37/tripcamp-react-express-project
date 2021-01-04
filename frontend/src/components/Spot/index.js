@@ -168,6 +168,17 @@ export default function Spot() {
                 </p>
               </div>
             </div>
+            {spot.Reviews && <ul>
+              <h3>Reviews</h3>
+              {
+                spot.Reviews.map(review => <li key={nanoid()}>
+                  <p>{review.title}</p>
+                  <p>{review.body}</p>
+                  <Rating rated={review.rating} userChangeable={false} />
+                </li>)
+              }
+            </ul>
+            }
             <p className='spot-description-single-page hide-scollbar'>
               {spot.description}
             </p>
@@ -205,7 +216,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
       spot.Users[0] && spot.Users[0].id === sessionUser.id
     ));
     else {
-      if(category === "all" || category === 'allspots')
+      if (category === "all" || category === 'allspots')
         setReduxSpots(originalReduxSpots);
       else setReduxSpots(originalReduxSpots.filter(spot =>
         spot.Categories.find(cat => cat.name === category)
@@ -254,11 +265,12 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     if (path.includes('/allspots')) setSearchText(undefined);
     const categoryFromPath = path.slice(path.lastIndexOf('/') + 1);
     //TODO: get these from real database categories
-    if(categoryFromPath.includes('/allspots') || 
+    if (categoryFromPath.includes('/allspots') ||
       path.includes('users') ||
       path.includes('reviews') ||
-      path.includes('bookings')
-      ) {
+      path.includes('bookings') ||
+      path.includes('/spots')
+    ) {
       setCategory("all");
     } else {
       setCategory(categoryFromPath);
