@@ -196,7 +196,8 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   const location = useLocation();
   const [reduxSpots, setReduxSpots] = useState(originalReduxSpots);
   const [spots, setSpots] = useState(reduxSpots);
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(true);
+  const [style, setStyle] = useState({});
 
   useEffect(() => {
     if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
@@ -244,6 +245,12 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     if (location.pathname === '/allspots') setSearchText(undefined);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if(onlyMine) return;
+    if(showMap) setStyle({maxWidth: '90vw', width: '90vw'});
+    else setStyle({maxWidth: '940px', width: '90%'});
+  }, [showMap, onlyMine]);
+
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
   }
@@ -267,7 +274,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   };
 
   return (
-    <div className={spotMapClass}>
+    <div className={spotMapClass} style={style}>
       {spots && <div className={mainGridClass}>
         {
           spots.map(spot =>
@@ -334,7 +341,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
         </div>
       }
       {
-        showMap && <div className='home-side-map'>
+        !onlyMine && showMap && <div className='home-side-map-all-spots'>
           {
             spots && spots.length && <MapWithMarkerClusterer
               center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}

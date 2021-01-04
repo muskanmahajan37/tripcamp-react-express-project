@@ -397,6 +397,18 @@ img {
   margin-right: 0px;
   z-index: 0;
 }
+.home-side-map-all-spots {
+  height: 100%;
+  /* width: 10%; */
+  position: sticky;
+  right: 0px;
+  top: 90px;
+  margin-top: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+  margin-left: 20px;
+  z-index: 0;
+}
 
 @media screen and (max-width: 900px) {
   .home-side-map {
@@ -406,6 +418,8 @@ img {
 
 .nothing-found-div {
   position: relative;
+  margin-right: 22vw;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;

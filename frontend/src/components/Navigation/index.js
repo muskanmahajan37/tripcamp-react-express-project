@@ -72,6 +72,7 @@ function Navigation() {
           // src='https://tripcamp.s3.amazonaws.com/resources/images/official/logos/tripcamp5-200x60.png'
           src='https://tripcamp.s3.amazonaws.com/resources/images/official/logos/tripcamp6-200x60.png'
           alt='TripCamp Logo'
+          onClick={e=>{e.preventDefault(); history.push('/')}}
         />
         <div>
           <NavLink to={'/'} onClick={e => {

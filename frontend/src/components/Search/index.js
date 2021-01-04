@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import * as searchActions from '../../store/search';
@@ -12,11 +12,14 @@ export default function MainSearchBar({
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(searchActions.setSearchPOJO({ text: searchValue }));
+  }, [searchValue]);
+
   const onInputChange = e => {
     e.preventDefault();
     setSearchValue(e.target.value);
-    dispatch(searchActions.setSearchPOJO({ text: e.target.value }));
-    console.log("search box value:", e.target.value);
+    // console.log("search box value:", e.target.value);
   }
 
   const handleSubmit = e => {
@@ -38,6 +41,10 @@ export default function MainSearchBar({
         value={searchValue}
         onChange={onInputChange}
       />
+      <i className="fas fa-times search-icon-class" 
+        style={{color: 'lightgray'}}
+        onClick={e=>{e.preventDefault(); setSearchValue("")}}
+        />
     </form>
   );
 }

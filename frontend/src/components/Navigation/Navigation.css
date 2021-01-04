@@ -7,6 +7,9 @@
   margin-bottom: -4px;
   height: 70px;
 }
+.logo-img:hover{
+  cursor: pointer;
+}
 .main-navbar{
   /* overflow: hidden; */
   /* background-color: #333; */
