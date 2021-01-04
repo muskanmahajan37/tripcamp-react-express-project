@@ -162,12 +162,28 @@ export default function MyHome() {
   function FriendNameAndMessage({ name, friendId }) {
     const [showChat, setShowChat] = useState(false);
     const [messageBody, setMessageBody] = useState("");
+    const [submitted, setSubmitted] = useState(false);
+    const [unreadMessages, setUnreadMessages] = useState([]);
+
+    useEffect(() => {
+      if(messageBody) setSubmitted(false);
+    }, [messageBody]);
+
+    // useEffect(async () => {
+    //   if(showChat) {
+    //     setUnreadMessages(messages.filter(m => m.status === 0));
+    //     for(let i = 0; i < unreadMessages.length; i++){
+    //       const m = unreadMessages[i];
+    //       useDispatch(messageActions.readOneMessage(m.id))
+    //         .then(res => {})
+    //         .catch(e => {});
+    //     }
+    //   }
+    // }, [showChat]);
 
     function handleFriendClick(e) {
       e.preventDefault();
       setShowChat(!showChat);
-      // const friendId = Number(e.target.id.split('-')[0]);
-
     }
 
     function handleSubmit(e){
@@ -178,7 +194,8 @@ export default function MyHome() {
         body: messageBody
       }))
       .then(res => {
-
+        setMessageBody("");
+        setSubmitted(true);
       })
       .catch(e => {
 
@@ -202,6 +219,9 @@ export default function MyHome() {
                       <p><b>{name}:</b> {m.body}</p>
                     }
                   </div>)
+              }
+              {
+                submitted && <></>
               }
             </div>
             <form type='submit' onSubmit={handleSubmit}>

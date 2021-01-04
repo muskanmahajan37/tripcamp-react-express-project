@@ -9,9 +9,11 @@ export default function NotificationBell({ user }) {
   function DropdownMenu() {
     return (
       <div className=" dropdown-menu" ref={dropdownMenuRef}>
-        <div className="dropdown-menu-item">{user.username}</div>
+        <div className="dropdown-menu-item">{2} friend requests</div>
         <hr className="hr" />
-        <div className="dropdown-menu-item">{user.email}</div>
+        <div className="dropdown-menu-item">{3} unread messages</div>
+        <hr className="hr" />
+        <div className="dropdown-menu-item">{4} confirmed trips</div>
       </div>
     );
   }

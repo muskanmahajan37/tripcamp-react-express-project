@@ -51,6 +51,17 @@ export const createOneMessage = (message) => async dispatch => {
   }
   return res;
 }
+export const readOneMessage = (messageId) => async dispatch => {
+  const res = await fetch(`/api/messages/${messageId}`, {
+    method: 'PATCH',
+    // body: JSON.stringify({ messageId })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_message = res.data.message;
+    dispatch(setMessagePOJO(fedback_message));
+  }
+  return res;
+}
 
 const initialState = [];
 
