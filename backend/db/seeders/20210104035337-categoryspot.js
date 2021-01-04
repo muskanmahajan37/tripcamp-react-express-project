@@ -13,14 +13,14 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('CategorySpots', [
-      {spotId: 10, categoryId: 1},
+      // {spotId: 10, categoryId: 1},
       {spotId: 7, categoryId: 1},
       {spotId: 1, categoryId: 2},
       {spotId: 4, categoryId: 2},
       {spotId: 2, categoryId: 3},
-      {spotId: 10, categoryId: 3},
+      // {spotId: 10, categoryId: 3},
       {spotId: 2, categoryId: 3},
-      {spotId: 10, categoryId: 4},
+      // {spotId: 10, categoryId: 4},
       {spotId: 7, categoryId: 4},
       {spotId: 6, categoryId: 4},
       {spotId: 3, categoryId: 4},
