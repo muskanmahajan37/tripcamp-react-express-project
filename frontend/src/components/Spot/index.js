@@ -205,12 +205,13 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
       spot.Users[0] && spot.Users[0].id === sessionUser.id
     ));
     else {
-      if(category === "all")
+      if(category === "all" || category === 'allspots')
         setReduxSpots(originalReduxSpots);
       else setReduxSpots(originalReduxSpots.filter(spot =>
         spot.Categories.find(cat => cat.name === category)
       ));
     }
+    console.log('category', category);
   }, [onlyMine, originalReduxSpots, category]);
 
   useEffect(() => {
@@ -228,16 +229,16 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
         return spot.name.toLowerCase().includes(searchText)
           || spot.description.toLowerCase().includes(searchText);
       }));
-      history.push(`/search/${searchText}`);
+      // history.push(`/search/${searchText}`);
     } else {
       setSpots(reduxSpots.map(spot => {
         const { rated } = calculateRatingFunction(spot);
         spot.rated = rated;
         return spot;
       }));
-      // console.log('reduxSpots', reduxSpots);
       // history.push('/');
     }
+    console.log('reduxSpots', reduxSpots);
   }, [searchText, reduxSpots]);
 
   useEffect(() => {
@@ -252,10 +253,10 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     const path = location.pathname;
     if (path.includes('/allspots')) setSearchText(undefined);
     const categoryFromPath = path.slice(path.lastIndexOf('/') + 1);
-    if(!categoryFromPath.includes('/allspots')) {
-      setCategory(categoryFromPath);
-    } else {
+    if(categoryFromPath.includes('/allspots')) {
       setCategory("all");
+    } else {
+      setCategory(categoryFromPath);
     }
   }, [location.pathname]);
 
@@ -264,6 +265,8 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     if (showMap) setStyle({ maxWidth: '90vw', width: '90vw' });
     else setStyle({ maxWidth: '940px', width: '90%' });
   }, [showMap, onlyMine]);
+
+  console.log('searchText', searchText);
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
