@@ -92,7 +92,7 @@ nav {
 }
 body{
   background-color: rgb(243, 242, 239);
-
+  /* min-width:600px;  */
 }
 
 .footerdiv {
