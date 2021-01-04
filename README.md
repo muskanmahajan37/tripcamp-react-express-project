@@ -22,7 +22,7 @@ To a technical person, this is a full-stack application that serves and presents
 
 ## Database Schema
 My database schema is as in the image. The core feature is in the middle, with extra (bonus) features on the periphery.
-![Database Schema](https://tripcamp.s3.amazonaws.com/resources/images/database_schema.png)
+![Database Schema](https://tripcamp.s3.amazonaws.com/resources/images/official/tripcampdatabaseschema.png)
 
 ## Project WIKI
   More details on [Project wiki](https://github.com/suasllc/tripcamp-react-express-project/wiki)
