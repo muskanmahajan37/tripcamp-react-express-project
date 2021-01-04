@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Spot, Medium, Review, Ownership, User } = require('../../db/models');
+const { Spot, Medium, Review, Ownership, User, Category, CategorySpot } = require('../../db/models');
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.get('/',
   asyncHandler(async (req, res) => {
     // const userId = req.user.id;
     const spots = await Spot.findAll({
-      include: {model: User, through: Ownership},
+      include: [{model: User, through: Ownership}, {model: Category, through: CategorySpot}],
       order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
@@ -48,7 +48,7 @@ router.get('/reviews',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spots = await Spot.findAll({
-      include: [{model: Review}, {model: User, through: Ownership}],
+      include: [{model: Review}, {model: User, through: Ownership}, {model: Category, through: CategorySpot}],
       order: [['id', 'ASC']]
     });
     for (let k = 0; k < spots.length; k++) {
@@ -85,7 +85,7 @@ router.get('/:id/Reviews',
   asyncHandler(async (req, res) => {
     const id = req.params.id;
     const spot = await Spot.findByPk(id, {
-      include: [{model: Review}, {model: User, through: Ownership}]
+      include: [{model: Review}, {model: User, through: Ownership}, {model: Category, through: CategorySpot}]
     });
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {

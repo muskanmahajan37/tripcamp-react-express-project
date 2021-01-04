@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 
 export default function HomepagePicPanel({
   divClass = "glam-camp-indidual-div",
@@ -7,11 +8,13 @@ export default function HomepagePicPanel({
   text="",
   img = "",
   imgFolder = "https://tripcamp.s3.amazonaws.com/resources/images/official/spots/glamping/smalls/",
-  backgroundColor = "rgba(200, 200, 200, 0.5)"
+  backgroundColor = "rgba(200, 200, 200, 0.5)",
+  onclick=null
 }) {
-  console.log('backgroundColor', backgroundColor);
+  const history = useHistory();
+  // console.log('backgroundColor', backgroundColor);
   return (
-    <div className={divClass}>
+    <div className={divClass} onClick={e=> {if(onclick) history.push(`/allspots/${onclick}`)}}>
       <img className={imgClass} src={imgFolder + img} alt={img} />
       <div className={textDivClass} style={{backgroundColor: backgroundColor}}>
         <p className={textClass}>{text}</p>

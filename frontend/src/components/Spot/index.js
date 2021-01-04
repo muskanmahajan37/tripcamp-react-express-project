@@ -198,13 +198,20 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   const [spots, setSpots] = useState(reduxSpots);
   const [showMap, setShowMap] = useState(false);
   const [style, setStyle] = useState({});
+  const [category, setCategory] = useState("all");
 
   useEffect(() => {
     if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
       spot.Users[0] && spot.Users[0].id === sessionUser.id
     ));
-    else setReduxSpots(originalReduxSpots);
-  }, [onlyMine, originalReduxSpots]);
+    else {
+      if(category === "all")
+        setReduxSpots(originalReduxSpots);
+      else setReduxSpots(originalReduxSpots.filter(spot =>
+        spot.Categories.find(cat => cat.name === category)
+      ));
+    }
+  }, [onlyMine, originalReduxSpots, category]);
 
   useEffect(() => {
     if (searchTerms[searchTerms.length - 1]) {
@@ -242,7 +249,14 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   }, [searchText])
 
   useEffect(() => {
-    if (location.pathname === '/allspots') setSearchText(undefined);
+    const path = location.pathname;
+    if (path.includes('/allspots')) setSearchText(undefined);
+    const categoryFromPath = path.slice(path.lastIndexOf('/') + 1);
+    if(!categoryFromPath.includes('/allspots')) {
+      setCategory(categoryFromPath);
+    } else {
+      setCategory("all");
+    }
   }, [location.pathname]);
 
   useEffect(() => {

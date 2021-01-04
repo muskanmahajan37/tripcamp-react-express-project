@@ -8,11 +8,13 @@ export default function GlamCamp() {
         img='Beach+camping+w+dog.jpg'
         text="Camping"
         backgroundColor='#B9A897'
+        onclick="Camping"
       />
       <HomepagePicPanel
         img='Beach+glamping.jpg'
         text="Glamping"
         backgroundColor='#15BAC6'
+        onclick="Glamping"
       />
     </div>
   );

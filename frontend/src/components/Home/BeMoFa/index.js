@@ -17,6 +17,7 @@ export default function BeMoFa() {
         imgClass="bemofa-img"
         // img='Maldive3.jpeg' 
         img='Pangkor Laut Resort, Malaysia.jpeg' 
+        onclick="BeachLake"
         />
       <HomepagePicPanel 
         text="Mountain & Valley" 
@@ -27,7 +28,9 @@ export default function BeMoFa() {
         // backgroundColor='#BBCEDE'
         backgroundColor='#D93814'
         imgClass="bemofa-img" 
-        img='Monument Valley, UT.jpg' />
+        img='Monument Valley, UT.jpg' 
+        onclick='MountainValley'
+        />
       <HomepagePicPanel
         text="Farm & Vineyard"
         divClass='bemofa-indidual-div'
@@ -36,7 +39,9 @@ export default function BeMoFa() {
         // backgroundColor='#222B14'
         backgroundColor='#282613'
         imgClass="bemofa-img" 
-        img='Vineyard Ukraine.jpg' />
+        img='Vineyard Ukraine.jpg' 
+        onclick='FarmVineyard'
+        />
       {/* <HomepagePicPanel img='ocean coast beach camping in Alentejo, Portugal.jpg'/> */}
     </div>
   );
