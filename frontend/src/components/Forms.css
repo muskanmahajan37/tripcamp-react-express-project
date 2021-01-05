@@ -125,7 +125,8 @@ button:disabled, button[disabled] {
   font-size: 14px;
   padding: 0px 5px;
   margin: 0px 5px;
-  width: 110%;
+  width: 100%;
+  min-width: fit-content;
   color: black;
   font-family: 'Calibre', Helvetica, Arial, sans-serif;
 }
@@ -344,7 +345,7 @@ button:disabled, button[disabled] {
   border-radius: 2px;
 }
 
-.github-a {
+.github-dropdownmenu-section-title {
   margin: 0 0px;
   padding: 5px;
   color: black;
@@ -352,6 +353,17 @@ button:disabled, button[disabled] {
   /* text-decoration: none; */
   /* border: none; */
   width: 130px;
+  font-size: 14px;
+  font-weight: bold;
+}
+.github-a {
+  margin: 0 0px;
+  padding: 5px;
+  color: black;
+  /* background-color: white; */
+  /* text-decoration: none; */
+  /* border: none; */
+  width: fit-content;
   font-size: 14px;
 }
 

@@ -8,19 +8,33 @@ export default function GithubLink({ user }) {
 
   function DropdownMenu() {
     return (
-      <div className=" dropdown-menu" ref={dropdownMenuRef} style={{width: '200px'}}>
+      <div className=" dropdown-menu" ref={dropdownMenuRef} style={{ width: '200px' }}>
         <div className="dropdown-menu-item">
-          <p className="github-a">About the Author</p>
+          <p className="github-dropdownmenu-section-title ">About the Project</p>
+        </div>
+        {/* <hr className="hr" /> */}
+        <div className="dropdown-menu-item">
+          <p className="github-a">Student Project</p>
+          <p className="github-a">Clone of HipCamp</p>
+        </div>
+        <div className="dropdown-menu-item">
+          <p className="github-a">
+            <a target="_blank" href='https://github.com/suasllc/tripcamp-react-express-project'>Github Repo</a>
+          </p>
         </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <a className="github-a" target="_blank" href='https://github.com/suasllc'>Tony Ngo</a>
+          <p className="github-dropdownmenu-section-title ">About the Author</p>
         </div>
         <div className="dropdown-menu-item">
-          <a className="github-a" target="_blank" href='https://github.com/suasllc/tripcamp-react-express-project'>Github Repo</a>
+          <p className="github-a">
+            <a target="_blank" href='https://github.com/suasllc'>Tony Ngo</a>
+          </p>
         </div>
         <div className="dropdown-menu-item">
-          <a className="github-a" target="_blank" href='https://appacademy.io'>Student at App Academy</a>
+          <p className="github-a">
+            <a target="_blank" href='https://appacademy.io'>App Academy Student</a>
+          </p>
         </div>
       </div>
     );
