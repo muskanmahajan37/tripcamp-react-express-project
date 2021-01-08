@@ -35,7 +35,7 @@ router.get('/',
   })
 );
 
-router.get('/:friendId',
+router.get('/friends/:friendId',
   requireAuth,
   asyncHandler(async (req, res) => {
     const myId = req.user.id;

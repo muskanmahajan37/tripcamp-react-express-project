@@ -23,13 +23,13 @@ export default function MyHome() {
     myFollowers: [],
     myFollowings: []
   });
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    dispatch(messageActions.getAllMessages())
-      .then(res => setMessages(res.data.messages))
-      .catch(e => { });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(messageActions.getAllMessages())
+  //     .then(res => setMessages(res.data.messages))
+  //     .catch(e => { });
+  // }, [dispatch]);
   useEffect(() => {
     dispatch(bookingActions.getAllBookings())
       .then(res => setBookings(res.data.bookings))
@@ -161,8 +161,15 @@ export default function MyHome() {
   function FriendNameAndMessage({ name, friendId }) {
     const [showChat, setShowChat] = useState(false);
     const [messageBody, setMessageBody] = useState("");
-    const [thisFriendMessages, setThisFriendMessages] = useState(messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id));
+    // const [thisFriendMessages, setThisFriendMessages] = useState(messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id));
+    const [thisFriendMessages, setThisFriendMessages] = useState([]);
     const chatboxRef = useRef(null);
+
+    useEffect(() => {
+      dispatch(messageActions.getAllMessages(friendId))
+        .then(res => setThisFriendMessages(res.data.messages))
+        .catch(e => { });
+    }, [dispatch]);    
 
     useEffect(() => {
       if(chatboxRef.current) chatboxRef.current.scrollIntoView(false, { behavior: "smooth" });

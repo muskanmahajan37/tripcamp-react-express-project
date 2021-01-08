@@ -30,8 +30,10 @@ export const getOneMessage = (id) => async dispatch => {
   return res;
 }
 
-export const getAllMessages = () => async dispatch => {
-  const res = await fetch(`/api/messages`, {
+export const getAllMessages = (friendId = undefined) => async dispatch => {
+  let link = '/api/messages';
+  if(friendId) link += `/friends/${friendId}`;
+  const res = await fetch(link, {
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
     const fedback_messages = res.data.messages; //we need this user back from backend, NOT the provided
