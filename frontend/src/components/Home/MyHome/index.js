@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
@@ -26,13 +26,13 @@ export default function MyHome() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    dispatch(bookingActions.getAllBookings())
-      .then(res => setBookings(res.data.bookings))
+    dispatch(messageActions.getAllMessages())
+      .then(res => setMessages(res.data.messages))
       .catch(e => { });
   }, [dispatch]);
   useEffect(() => {
-    dispatch(messageActions.getAllMessages())
-      .then(res => setMessages(res.data.messages))
+    dispatch(bookingActions.getAllBookings())
+      .then(res => setBookings(res.data.bookings))
       .catch(e => { });
   }, [dispatch]);
 
@@ -132,7 +132,6 @@ export default function MyHome() {
       myUserId: sessionUser.id,
       status: action
     }
-    console.log('\nrelationship', relationship);
     dispatch(relationshipActions.modifyOneRelationship(relationship))
       .then(res => {
 
@@ -162,12 +161,15 @@ export default function MyHome() {
   function FriendNameAndMessage({ name, friendId }) {
     const [showChat, setShowChat] = useState(false);
     const [messageBody, setMessageBody] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [unreadMessages, setUnreadMessages] = useState([]);
+    const [thisFriendMessages, setThisFriendMessages] = useState(messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id));
+    const chatboxRef = useRef(null);
 
     useEffect(() => {
-      if (messageBody) setSubmitted(false);
-    }, [messageBody]);
+      console.log(chatboxRef.current);
+      if(chatboxRef.current) chatboxRef.current.scrollIntoView({ behavior: "smooth" });
+    }, [thisFriendMessages]);
+
+    // const [unreadMessages, setUnreadMessages] = useState([]);
 
     // useEffect(async () => {
     //   if(showChat) {
@@ -195,7 +197,8 @@ export default function MyHome() {
       }))
         .then(res => {
           setMessageBody("");
-          setSubmitted(true);
+          setShowChat(true);
+          setThisFriendMessages([...thisFriendMessages, res.data.message]);
         })
         .catch(e => {
 
@@ -210,23 +213,20 @@ export default function MyHome() {
         </span>
         {
           showChat && <div>
-            <div>
+            <div className='chat-box' >
               {
-                messages.filter(m => m.senderId === sessionUser.id || m.recipientId === sessionUser.id)
-                  .map(m => <div key={nanoid()}>
-                    {m.senderId === sessionUser.id ?
-                      (m.recipientId === friendId?
-                      <p><b>Me:</b> {m.body}</p> : <></>)
-                      :
-                      (m.senderId === friendId ?
-                        <p><b>{name}:</b> {m.body}</p> :
-                        <></>)
-                    }
-                  </div>)
+                thisFriendMessages.map(m => <div key={nanoid()}>
+                  {m.senderId === sessionUser.id ?
+                    (m.recipientId === friendId ?
+                      <p className="my-message">{m.body}<b>{':Me'}</b></p> : <></>)
+                    :
+                    (m.senderId === friendId ?
+                      <p><b>{name}:</b> {m.body}</p> :
+                      <></>)
+                  }
+                </div>)
               }
-              {
-                submitted && <></>
-              }
+              <div ref={chatboxRef}/>
             </div>
             <form type='submit' onSubmit={handleSubmit}>
               <input type='text' value={messageBody} onChange={e => setMessageBody(e.target.value)}></input>

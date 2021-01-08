@@ -35,6 +35,32 @@ router.get('/',
   })
 );
 
+router.get('/:friendId',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const myId = req.user.id;
+    const friendId = req.params.friendId;
+    if (!myId) {
+      return res.status(401).json({ error: "Unauthorized user" }); //TODO: check this myId again the id sent by the user from frontend?
+    }
+    try {
+      const messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            { senderId: myId, recipientId: friendId},
+            { senderId: friendId, recipientId: myId }
+          ],
+        },
+        order: [['createdAt', 'ASC']]
+      })
+      res.json({ messages });
+    } catch (e) {
+      console.log("Error in getting messages", req.user.id);
+      return res.status(401).json({ error: "Error in geting messages" });
+    }
+  })
+);
+
 router.post('/',
   requireAuth,
   asyncHandler(async (req, res) => {
