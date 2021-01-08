@@ -165,9 +165,8 @@ export default function MyHome() {
     const chatboxRef = useRef(null);
 
     useEffect(() => {
-      console.log(chatboxRef.current);
-      if(chatboxRef.current) chatboxRef.current.scrollIntoView({ behavior: "smooth" });
-    }, [thisFriendMessages]);
+      if(chatboxRef.current) chatboxRef.current.scrollIntoView(false, { behavior: "smooth" });
+    }, [thisFriendMessages, showChat]);
 
     // const [unreadMessages, setUnreadMessages] = useState([]);
 
@@ -218,7 +217,7 @@ export default function MyHome() {
                 thisFriendMessages.map(m => <div key={nanoid()}>
                   {m.senderId === sessionUser.id ?
                     (m.recipientId === friendId ?
-                      <p className="my-message">{m.body}<b>{':Me'}</b></p> : <></>)
+                      <p className="my-message">{m.body}<b>{' Me'}</b></p> : <></>)
                     :
                     (m.senderId === friendId ?
                       <p><b>{name}:</b> {m.body}</p> :
