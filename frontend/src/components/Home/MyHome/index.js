@@ -7,7 +7,7 @@ import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
 import * as relationshipActions from '../../../store/relationship';
 import * as messageActions from '../../../store/message';
-import * as profileActions from '../../../store/user'
+import * as profileActions from '../../../store/userProfile'
 import UploadForm from '../../UploadForm';
 
 import './MyHome.css';
@@ -280,6 +280,7 @@ export default function MyHome() {
         }
       }))
         .then(res => {
+          setShowEditProfile(false);
         })
         .catch(res => {
           if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -288,6 +289,7 @@ export default function MyHome() {
 
     const handleCancelClick = e => {
       e.preventDefault();
+      setShowEditProfile(false);
     }
     const EditMyProfile =
       <form

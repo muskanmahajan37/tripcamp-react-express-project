@@ -47,14 +47,18 @@ router.post(
 
 router.post('/:userId/userProfile',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const userId = Number(req.params.userId);
     const userProfileDataObj = req.body.userProfile;
     console.log('userProfileDataObj', userProfileDataObj);
     console.log('req.user.id', req.user.id, 'userId', userId)
     if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
       console.log(req.user.id, userProfileDataObj.userId, "Unauthorized user");
-      return res.status(401).json({ error: "Unauthorized user" });
+      const err = new Error('Profile Updating failed');
+      err.status = 401;
+      err.title = 'Profile Updating failed';
+      err.errors = ["Unauthorized user"];
+      return next(err);      
     }
     userProfileDataObj.type = 3;
     //TODO: implement backend userProfile validation before attempting to create a row in database
@@ -62,7 +66,11 @@ router.post('/:userId/userProfile',
       const userProfile = await UserProfile.create(userProfileDataObj);
       res.json({ userProfile });
     } catch (error) {
-      return res.status(401).json({ error });
+      const err = new Error('Profile Updating failed');
+      err.status = 401;
+      err.title = 'Profile Updating failed';
+      err.errors = ["Profile already exists"];
+      return next(err);         
     }
   })
 );

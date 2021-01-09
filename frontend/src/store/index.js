@@ -11,7 +11,7 @@ import reviewReducer from './review';
 import ratingReducer from './rating';
 import mediumReducer from './media';
 import searchReducer from './search';
-import userReducer from './user';
+import userProfileReducer from './userProfile';
 import relationshipReducer from './relationship';
 import messageReducer from './message';
 
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   ratings: ratingReducer,
   media: mediumReducer,
   searchs: searchReducer,
-  users: userReducer,
+  userProfiles: userProfileReducer,
   relationships: relationshipReducer,
   messages: messageReducer
 });

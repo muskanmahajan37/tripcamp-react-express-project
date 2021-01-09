@@ -177,7 +177,7 @@ router.get('/users/:userId',
 
 router.post('/',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const relationshipDataObj = req.body.relationship;
     console.log('relationshipDataObj', relationshipDataObj);
     if (req.user.id !== relationshipDataObj.myUserId) {
@@ -216,7 +216,7 @@ router.post('/',
     }
     relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
     relationshipDataObj.status = 0;
-    if(!relationshipDataObj.followingship) relationshipDataObj.followingship = 0;
+    if (!relationshipDataObj.followingship) relationshipDataObj.followingship = 0;
     //TODO: to send the 'user' found the relationshipDataObj.message
     //TODO: implement backend relationship validation before attempting to create a row in database
     try {
@@ -236,21 +236,27 @@ router.post('/',
             body: relationshipDataObj.message
           });
         } else if (relationship.status === 3) //I'm being blocked
-          return res.status(401).json({ error: "Cannot add this user as friend" });
-        else if (relationship.status === 1)
-          return res.status(401).json({ error: "You are already friends" });
+          return res.status(401).json({ data: { errors: ["Cannot add this user as friend"] } });
+        else if (relationship.status === 1) {
+          // return res.status(401).json({data: { errors: ["You are already friends"] }});
+          const err = new Error('Adding Friend failed');
+          err.status = 401;
+          err.title = 'Adding Friend failed';
+          err.errors = ["You are already friends"];
+          return next(err);
+        }
       } else {
         const message = await Message.create({
           senderId: relationshipDataObj.myUserId,
           recipientId: user.id,
           body: relationshipDataObj.message
-        });        
+        });
         delete relationshipDataObj.myUserId, relationshipDataObj.credential;
         relationship = await Relationship.create(relationshipDataObj);
       }
       res.json({ relationship, message });
     } catch (error) {
-      return res.status(401).json({ error });
+      return res.status(401).json({ data: { errors: [error] } });
     }
   })
 );
