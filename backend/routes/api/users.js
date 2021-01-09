@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, UserProfile } = require('../../db/models');
 
 const router = express.Router();
 
@@ -43,6 +43,27 @@ router.post(
       user,
     });
   }),
+);
+
+router.post('/:userId/userProfile',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const userProfileDataObj = req.body.userProfile;
+    // console.log('userProfileDataObj', userProfileDataObj);
+    if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
+      console.log(req.user.id, userProfileDataObj.userId, "Unauthorized user");
+      return res.status(401).json({ error: "Unauthorized user" });
+    }
+    userProfileDataObj.type = 3;
+    //TODO: implement backend userProfile validation before attempting to create a row in database
+    try{
+      const userProfile = await UserProfile.create(userProfileDataObj);
+      res.json({ userProfile });
+    } catch (error) {
+      return res.status(401).json({ error });
+    }
+  })
 );
 
 module.exports = router;

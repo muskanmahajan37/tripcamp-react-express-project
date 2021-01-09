@@ -5,6 +5,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    firstName: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },    
     mediaUrlIds: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,

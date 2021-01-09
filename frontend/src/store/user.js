@@ -1,10 +1,11 @@
-// frontend/src/store/friend.js
+// frontend/src/store/user.js
 
 import fetch from './csrf';
 
-const SET_ONE_FRIEND = 'session/SET_ONE_FRIEND';
-const SET_ALL_FRIENDS = 'session/SET_ALL_FRIENDS';
-const REMOVE_ONE_FRIEND = 'session/REMOVE_ONE_FRIEND';
+const SET_ONE_FRIEND = 'user/SET_ONE_FRIEND';
+const SET_ALL_FRIENDS = 'user/SET_ALL_FRIENDS';
+const REMOVE_ONE_FRIEND = 'user/REMOVE_ONE_FRIEND';
+const UPDATE_PROFILE = 'user/UPDATE_PROFILE';
 
 const setFriendPOJO = (friend) => ({
   type: SET_ONE_FRIEND,
@@ -14,10 +15,14 @@ const setAllFriendsPOJO = (friends) => ({
   type: SET_ALL_FRIENDS,
   friends
 });
-const removeFriendPOJO = () => ({
-  type: REMOVE_ONE_FRIEND
-});
+// const removeFriendPOJO = () => ({
+//   type: REMOVE_ONE_FRIEND
+// });
 
+const updateProfilePOJO = (userProfile) => ({
+  type: UPDATE_PROFILE,
+  userProfile
+});
 
 export const getOneFriend = (id) => async dispatch => {
   const res = await fetch(`/api/friends/${id}`, {
@@ -50,9 +55,21 @@ export const requestOneFriend = ({ friend }) => async dispatch => {
   return res;
 }
 
+export const updateProfile = ( userProfile ) => async dispatch => {
+  const res = await fetch(`/api/users/${userProfile.userId}/userProfiles`, {
+    method: 'POST',
+    body: JSON.stringify({ userProfile })
+  }); //This fetch is a modified fetch, which already returns data after res.json()
+  if (res.ok) {
+    const fedback_userProfile = res.data.userProfile;
+    dispatch(updateProfilePOJO(fedback_userProfile));
+  }
+  return res;
+}
+
 const initialState = [];
 
-const friendReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SET_ONE_FRIEND:
@@ -62,9 +79,14 @@ const friendReducer = (state = initialState, action) => {
     case SET_ALL_FRIENDS:
       newState = JSON.parse(JSON.stringify([...state, ...action.friends]));
       return newState;
+    case UPDATE_PROFILE:
+      newState = JSON.parse(JSON.stringify(state));
+      const user = newState.find(user => user.id === action.userProfile.userId);
+      user.userProfile = action.userProfile;
+      return newState;
     default:
       return state;
   }
 };
 
-export default friendReducer;
+export default userReducer;

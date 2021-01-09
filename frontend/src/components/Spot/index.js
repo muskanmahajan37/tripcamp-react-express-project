@@ -413,7 +413,7 @@ export function SpotFormModal() {
   const [city, setCity] = useState("");
   const [stateProvince, setStateProvince] = useState("");
   const [zipCode, setZipcode] = useState(undefined);
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("USA");
   const [perNightRate, setPerNightRate] = useState(undefined);
   const [accommodationType, setAccommodationType] = useState(undefined);
   const [website, setWebsite] = useState("");

@@ -13,6 +13,14 @@ module.exports = {
         allowNull: false,
         references: { model: 'Users', key: 'id'}
       },
+      firstName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      lastName: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
       mediaUrlIds: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
         allowNull: true,

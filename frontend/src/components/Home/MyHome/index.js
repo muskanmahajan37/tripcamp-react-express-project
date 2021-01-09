@@ -1,13 +1,16 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
+
 import { AllSpots } from '../../Spot';
 import * as bookingActions from '../../../store/booking';
 import * as relationshipActions from '../../../store/relationship';
 import * as messageActions from '../../../store/message';
-import './MyHome.css';
-import { nanoid } from 'nanoid';
+import * as profileActions from '../../../store/user'
+import UploadForm from '../../UploadForm';
 
+import './MyHome.css';
 
 export default function MyHome() {
   const dispatch = useDispatch();
@@ -169,10 +172,10 @@ export default function MyHome() {
       dispatch(messageActions.getAllMessages(friendId))
         .then(res => setThisFriendMessages(res.data.messages))
         .catch(e => { });
-    }, [dispatch]);    
+    }, [dispatch]);
 
     useEffect(() => {
-      if(chatboxRef.current) chatboxRef.current.scrollIntoView(false, { behavior: "smooth" });
+      if (chatboxRef.current) chatboxRef.current.scrollIntoView(false, { behavior: "smooth" });
     }, [thisFriendMessages, showChat]);
 
     // const [unreadMessages, setUnreadMessages] = useState([]);
@@ -232,13 +235,164 @@ export default function MyHome() {
                   }
                 </div>)
               }
-              <div ref={chatboxRef}/>
+              <div ref={chatboxRef} />
             </div>
             <form type='submit' onSubmit={handleSubmit}>
               <input type='text' value={messageBody} onChange={e => setMessageBody(e.target.value)}></input>
               <button>Send</button>
             </form>
           </div>
+        }
+      </div>
+    );
+  }
+
+  function MyProfile() {
+    const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);    
+    const media = useSelector(state => state.media);
+
+    const [showEditProfile, setShowEditProfile] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [stateProvince, setStateProvince] = useState('');
+    const [country, setCountry] = useState('US');
+    const [showUploadForm, setShowUploadForm] = useState(false);
+    const [errors, setErrors] = useState([]);
+
+
+    const handleSubmit = e => {
+      e.preventDefault();
+      setErrors([]);
+
+      // console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
+      return dispatch(profileActions.updateProfile({
+        userProfile: {
+          userId: sessionUser.id,
+          firstName,
+          lastName,
+          mediaUrlIds: media[media.length - 1] && [media[media.length - 1].id],
+          streetAddress,
+          city,
+          stateProvince,
+          country,
+        }
+      }))
+        .then(res => {
+        })
+        .catch(res => {
+          if (res.data && res.data.errors) setErrors(res.data.errors);
+        });
+    };
+
+    const handleCancelClick = e => {
+      e.preventDefault();
+    }
+    function EditMyProfile() {
+
+      return (
+        <form
+          onSubmit={handleSubmit}
+        >
+          <ul className='error-messages'>
+            {errors.map((error, index) => <li key={index}>{error}</li>)}
+          </ul>
+          <div className="inputs-div">
+            <div className="input-div">
+              <label>First Name</label>
+              <input
+                className="input"
+                type='text'
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+                required
+                autoFocus={true}
+              />
+            </div>
+            <div className="input-div">
+              <label>Last Name</label>
+              <input
+                className="input"
+                type='text'
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-div">
+              <label>Street</label>
+              <input
+                className="input"
+                type='text'
+                value={streetAddress}
+                onChange={e => setStreetAddress(e.target.value)}
+              />
+            </div>
+            <div className="input-div">
+              <label>City</label>
+              <input
+                className="input"
+                type='text'
+                value={city}
+                onChange={e => setCity(e.target.value)}
+              />
+            </div>
+            <div className="input-div">
+              <label>State/Prov</label>
+              <input
+                className="input"
+                type='text'
+                value={stateProvince}
+                onChange={e => setStateProvince(e.target.value)}
+              />
+            </div>
+            <div className="input-div">
+              <label>Country</label>
+              <input
+                className="input"
+                type='text'
+                value={country}
+                onChange={e => setCountry(e.target.value)}
+              />
+            </div>
+            <div className="input-div">
+              <button
+                className='button button-small button-Send'
+                onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
+              >Upload Pic/Vid</button>
+              {
+                showUploadForm && <UploadForm
+                  link="official/spots"
+                  divClass="side-modal"
+                  redirectHome={false}
+                  displayed="block"
+                />
+              }
+            </div>
+            <div className="buttons-div">
+              <button
+                className='button'
+                type='submit'
+              >Save</button>
+              <button
+                className='button button-Reset'
+                onClick={handleCancelClick}
+              > Cancel </button>
+            </div>
+          </div>
+        </form>
+      );
+    }
+
+    return (
+      <div className='myhome-people-div'>
+        <h3>My Profile</h3>
+        <button onClick={e => { e.preventDefault(); setShowEditProfile(!showEditProfile) }}>
+          Edit Profile</button>
+        {
+          showEditProfile && <EditMyProfile />
         }
       </div>
     );
@@ -391,6 +545,7 @@ export default function MyHome() {
             </ul>
           </div>
         </div>
+        <MyProfile />
       </div>
     </div>
   );
