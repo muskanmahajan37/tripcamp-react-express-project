@@ -109,10 +109,14 @@ router.get('/:id/reviews',
 
 router.post('/',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const spotDataObj = req.body.spot;
     if (req.user.id !== spotDataObj.userId) {
-      return res.status(401).json({ error: "Unauthorized user" });
+      const err = new Error('Ownership creating failed');
+      err.status = 401;
+      err.title = 'Ownership creating failed';
+      err.errors = ["Unauthorized user"];
+      return next(err);         
     }
     delete spotDataObj.userId;
     // spotDataObj.status = 0;
@@ -124,14 +128,22 @@ router.post('/',
       try {
         ownership = await Ownership.create({ userId: req.user.id, spotId: spot.id });
       } catch (e) {
-        err = "Could not create ownership";
+        const err = new Error('Ownership creating failed');
+        err.status = 401;
+        err.title = 'Ownership creating failed';
+        err.errors = ["Could not create ownership"];
+        return next(err);          
       }
       let returnJson = { spot };
       if (ownership) returnJson.ownership = ownership;
       if (err) returnJson.error = err;
       res.json(returnJson);
     } catch (error) {
-      return res.status(401).json({ error });
+      const err = new Error('Ownership creating failed');
+      err.status = 401;
+      err.title = 'Ownership creating failed';
+      err.errors = ["Could not create ownership", error];
+      return next(err);       
     }
   })
 );

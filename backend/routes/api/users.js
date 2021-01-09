@@ -53,7 +53,6 @@ router.post('/:userId/userProfile',
     console.log('userProfileDataObj', userProfileDataObj);
     console.log('req.user.id', req.user.id, 'userId', userId)
     if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
-      console.log(req.user.id, userProfileDataObj.userId, "Unauthorized user");
       const err = new Error('Profile Updating failed');
       err.status = 401;
       err.title = 'Profile Updating failed';
@@ -63,7 +62,13 @@ router.post('/:userId/userProfile',
     userProfileDataObj.type = 3;
     //TODO: implement backend userProfile validation before attempting to create a row in database
     try{
-      const userProfile = await UserProfile.create(userProfileDataObj);
+      let userProfile = await UserProfile.findOne({
+        where: {
+          userId
+        }
+      })
+      if(!userProfile) userProfile = await UserProfile.create(userProfileDataObj);
+      else userProfile.update(userProfileDataObj);
       res.json({ userProfile });
     } catch (error) {
       const err = new Error('Profile Updating failed');

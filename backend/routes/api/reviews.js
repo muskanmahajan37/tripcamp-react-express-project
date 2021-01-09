@@ -15,12 +15,15 @@ router.get('/', asyncHandler(async (reg, res) => {
 
 router.post('/',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const reviewDataObj = req.body.review;
     console.log('reviewDataObj', reviewDataObj);
     if (req.user.id !== reviewDataObj.userId) {
-      console.log(req.user.id, reviewDataObj.userId, "Unauthorized user");
-      return res.status(401).json({ error: "Unauthorized user" });
+      const err = new Error('Review creating failed');
+      err.status = 401;
+      err.title = 'Review creating failed';
+      err.errors = ["Unauthorized user"];
+      return next(err);       
     }
     reviewDataObj.type = 0;
     //TODO: implement backend review validation before attempting to create a row in database
@@ -28,7 +31,11 @@ router.post('/',
       const review = await Review.create(reviewDataObj);
       res.json({ review });
     } catch (error) {
-      return res.status(401).json({ error });
+      const err = new Error('Review creating failed');
+      err.status = 401;
+      err.title = 'Review creating failed';
+      err.errors = ["Could not create review", error];
+      return next(err);        
     }
   })
 );
