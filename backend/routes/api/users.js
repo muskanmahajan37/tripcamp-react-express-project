@@ -48,9 +48,10 @@ router.post(
 router.post('/:userId/userProfile',
   requireAuth,
   asyncHandler(async (req, res) => {
-    const userId = req.params.userId;
+    const userId = Number(req.params.userId);
     const userProfileDataObj = req.body.userProfile;
-    // console.log('userProfileDataObj', userProfileDataObj);
+    console.log('userProfileDataObj', userProfileDataObj);
+    console.log('req.user.id', req.user.id, 'userId', userId)
     if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
       console.log(req.user.id, userProfileDataObj.userId, "Unauthorized user");
       return res.status(401).json({ error: "Unauthorized user" });
