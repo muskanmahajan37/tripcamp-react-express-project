@@ -249,7 +249,6 @@ export default function MyHome() {
 
   function MyProfile() {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);    
     const media = useSelector(state => state.media);
 
     const [showEditProfile, setShowEditProfile] = useState(false);
@@ -308,7 +307,7 @@ export default function MyHome() {
                 value={firstName}
                 onChange={e => setFirstName(e.target.value)}
                 required
-                autoFocus={true}
+              // autoFocus={true}
               />
             </div>
             <div className="input-div">

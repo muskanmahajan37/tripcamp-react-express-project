@@ -55,8 +55,8 @@ export const requestOneFriend = ({ friend }) => async dispatch => {
   return res;
 }
 
-export const updateProfile = ( userProfile ) => async dispatch => {
-  const res = await fetch(`/api/users/${userProfile.userId}/userProfiles`, {
+export const updateProfile = ({ userProfile }) => async dispatch => {
+  const res = await fetch(`/api/users/${userProfile.userId}/userProfile`, {
     method: 'POST',
     body: JSON.stringify({ userProfile })
   }); //This fetch is a modified fetch, which already returns data after res.json()
