@@ -257,7 +257,7 @@ export default function MyHome() {
     const [streetAddress, setStreetAddress] = useState('');
     const [city, setCity] = useState('');
     const [stateProvince, setStateProvince] = useState('');
-    const [country, setCountry] = useState('US');
+    const [country, setCountry] = useState('');
     const [showUploadForm, setShowUploadForm] = useState(false);
     const [errors, setErrors] = useState([]);
 
@@ -266,7 +266,7 @@ export default function MyHome() {
       e.preventDefault();
       setErrors([]);
 
-      // console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
+      console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
       return dispatch(profileActions.updateProfile({
         userProfile: {
           userId: sessionUser.id,
@@ -289,101 +289,102 @@ export default function MyHome() {
     const handleCancelClick = e => {
       e.preventDefault();
     }
-    function EditMyProfile() {
-
-      return (
-        <form
-          onSubmit={handleSubmit}
-        >
-          <ul className='error-messages'>
-            {errors.map((error, index) => <li key={index}>{error}</li>)}
-          </ul>
-          <div className="inputs-div">
-            <div className="input-div">
-              <label>First Name</label>
-              <input
-                className="input"
-                type='text'
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
-                required
-              // autoFocus={true}
-              />
-            </div>
-            <div className="input-div">
-              <label>Last Name</label>
-              <input
-                className="input"
-                type='text'
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-div">
-              <label>Street</label>
-              <input
-                className="input"
-                type='text'
-                value={streetAddress}
-                onChange={e => setStreetAddress(e.target.value)}
-              />
-            </div>
-            <div className="input-div">
-              <label>City</label>
-              <input
-                className="input"
-                type='text'
-                value={city}
-                onChange={e => setCity(e.target.value)}
-              />
-            </div>
-            <div className="input-div">
-              <label>State/Prov</label>
-              <input
-                className="input"
-                type='text'
-                value={stateProvince}
-                onChange={e => setStateProvince(e.target.value)}
-              />
-            </div>
-            <div className="input-div">
-              <label>Country</label>
-              <input
-                className="input"
-                type='text'
-                value={country}
-                onChange={e => setCountry(e.target.value)}
-              />
-            </div>
-            <div className="input-div">
-              <button
-                className='button button-small button-Send'
-                onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
-              >Upload Pic/Vid</button>
-              {
-                showUploadForm && <UploadForm
-                  link="official/spots"
-                  divClass="side-modal"
-                  redirectHome={false}
-                  displayed="block"
-                />
-              }
-            </div>
-            <div className="buttons-div">
-              <button
-                className='button'
-                type='submit'
-              >Save</button>
-              <button
-                className='button button-Reset'
-                onClick={handleCancelClick}
-              > Cancel </button>
-            </div>
+    const EditMyProfile =
+      <form
+        onSubmit={handleSubmit}
+      >
+        <ul className='error-messages'>
+          {errors.map((error, index) => <li key={index}>{error}</li>)}
+        </ul>
+        <div className="inputs-div">
+          <div className="input-div">
+            <label>First Name</label>
+            <input
+              className="input"
+              type='text'
+              value={firstName}
+              onChange={e => {
+                setFirstName(e.target.value);
+                e.target.focus();
+                console.log(e.target)
+              }}
+              required
+            // autoFocus={true}
+            />
           </div>
-        </form>
-      );
-    }
+          <div className="input-div">
+            <label>Last Name</label>
+            <input
+              className="input"
+              type='text'
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-div">
+            <label>Street</label>
+            <input
+              className="input"
+              type='text'
+              value={streetAddress}
+              onChange={e => setStreetAddress(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
+            <label>City</label>
+            <input
+              className="input"
+              type='text'
+              value={city}
+              onChange={e => setCity(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
+            <label>State/Prov</label>
+            <input
+              className="input"
+              type='text'
+              value={stateProvince}
+              onChange={e => setStateProvince(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
+            <label>Country</label>
+            <input
+              className="input"
+              type='text'
+              value={country}
+              onChange={e => setCountry(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
+            <button
+              className='button button-small button-Send'
+              onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
+            >Upload Pic/Vid</button>
+            {
+              showUploadForm && <UploadForm
+                link="official/spots"
+                divClass="side-modal"
+                redirectHome={false}
+                displayed="block"
+              />
+            }
+          </div>
+          <div className="buttons-div">
+            <button
+              className='button'
+              type='submit'
+            >Save</button>
+            <button
+              className='button button-Reset'
+              onClick={handleCancelClick}
+            > Cancel </button>
+          </div>
+        </div>
+      </form>
+
 
     return (
       <div className='myhome-people-div'>
@@ -391,7 +392,7 @@ export default function MyHome() {
         <button onClick={e => { e.preventDefault(); setShowEditProfile(!showEditProfile) }}>
           Edit Profile</button>
         {
-          showEditProfile && <EditMyProfile />
+          showEditProfile && EditMyProfile
         }
       </div>
     );

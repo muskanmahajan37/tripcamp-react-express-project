@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const UserProfile = sequelize.define('UserProfile', {
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     firstName: {
       type: DataTypes.STRING(50),
