@@ -395,14 +395,6 @@ export default function MyHome() {
               className='button button-small button-Send'
               onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
             >Upload Pic/Vid</button>
-            {
-              showUploadForm && <UploadForm
-                link="official/spots"
-                divClass="side-modal"
-                redirectHome={false}
-                displayed="block"
-              />
-            }
           </div>
           <div className="buttons-div">
             <button
@@ -445,7 +437,14 @@ export default function MyHome() {
         {
           showEditProfile && EditMyProfile
         }
-
+        {
+          showUploadForm && <UploadForm
+            link={`users/id${sessionUser.id}/profile`}
+            divClass="side-modal"
+            redirectHome={false}
+            displayed="block"
+          />
+        }
       </div>
     );
   }

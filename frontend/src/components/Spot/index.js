@@ -610,14 +610,6 @@ export function SpotFormModal() {
               className='button button-small button-Send'
               onClick={e => { e.preventDefault(); setShowUploadForm(!showUploadForm) }}
             >Upload Pic/Vid</button>
-            {
-              showUploadForm && <UploadForm
-                link="official/spots"
-                divClass="side-modal"
-                redirectHome={false}
-                displayed="block"
-              />
-            }
           </div>
         </div>
         <div className="buttons-div">
@@ -631,6 +623,14 @@ export function SpotFormModal() {
           > Cancel </button>
         </div>
       </form>
+      {
+        showUploadForm && <UploadForm
+          link="official/spots"
+          divClass="side-modal"
+          redirectHome={false}
+          displayed="block"
+        />
+      }
     </div>
   );
 }
