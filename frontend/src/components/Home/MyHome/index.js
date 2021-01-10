@@ -418,7 +418,7 @@ export default function MyHome() {
           />
         </div>
         <div className="input-div">
-          <label>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</label>
+          <label><b>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</b></label>
         </div>
         <div className="input-div">
           <label>{`${myUserProfile.streetAddress}`}</label>
@@ -445,7 +445,11 @@ export default function MyHome() {
         }
         {
           showUploadForm && <UploadForm
-            link={`users/id${sessionUser.id}/profile`}
+            link={
+              window.location.origin.includes('localhost')?
+              `local/users/id${sessionUser.id}/profile`:
+              `users/id${sessionUser.id}/profile`
+            }
             divClass="side-modal"
             redirectHome={false}
             displayed="block"

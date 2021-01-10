@@ -625,7 +625,11 @@ export function SpotFormModal() {
       </form>
       {
         showUploadForm && <UploadForm
-          link="official/spots"
+          link={
+            window.location.origin.includes('localhost')?
+            `local/official/spots`:
+            `official/spots`
+          }
           divClass="side-modal"
           redirectHome={false}
           displayed="block"
