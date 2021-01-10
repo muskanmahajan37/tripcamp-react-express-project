@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, UserProfile } = require('../../db/models');
+const { User, UserProfile, Medium } = require('../../db/models');
 
 const router = express.Router();
 
@@ -62,6 +62,14 @@ router.get('/:userId/userProfile',
           userId
         }
       })
+      const urls = [];
+      if(userProfile.mediaUrlIds){
+        for(let i = 0; i < userProfile.mediaUrlIds.length; i++) {
+          const medium = await Medium.findByPk(userProfile.mediaUrlIds[i]);
+          urls.push(medium.url);
+        }
+      }
+      userProfile.dataValues.urls = urls;
       res.json({ userProfile });
     } catch (error) {
       const err = new Error('Error getting userProfile');
@@ -94,6 +102,16 @@ router.post('/:userId/userProfile',
       })
       if(!userProfile) userProfile = await UserProfile.create(userProfileDataObj);
       else userProfile.update(userProfileDataObj);
+      if(userProfile.mediaUrlIds.length){
+        const urls = [];
+        if(userProfile.mediaUrlIds){
+          for(let i = 0; i < userProfile.mediaUrlIds.length; i++) {
+            const medium = await Medium.findByPk(userProfile.mediaUrlIds[i]);
+            urls.push(medium.url);
+          }
+        }
+        userProfile.dataValues.urls = urls;
+      }
       res.json({ userProfile });
     } catch (error) {
       const err = new Error('Profile Updating failed');

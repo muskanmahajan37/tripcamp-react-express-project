@@ -267,7 +267,6 @@ export default function MyHome() {
       dispatch(profileActions.getUserProfile(sessionUser.id))
         .then(res => {
           setMyUserProfile(res.data.userProfile);
-          console.log('res.data.userProfile', res.data, res.data.userProfile);
         })
         .catch(err => {
 
@@ -411,6 +410,13 @@ export default function MyHome() {
 
     const MyProfile = myUserProfile ?
       <div className="inputs-div">
+        <div>
+          <img
+            src={myUserProfile.urls ? myUserProfile.urls[0] : null}
+            alt="User Profile Img"
+            style={{ width: '180px', height: '150px', objectFit: 'cover' }}
+          />
+        </div>
         <div className="input-div">
           <label>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</label>
         </div>

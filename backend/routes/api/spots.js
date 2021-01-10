@@ -38,7 +38,7 @@ router.get('/',
         urls.push(medium.url);
       }
       spots[k].dataValues.urls = urls;
-      console.log(spots[k].dataValues);
+      // console.log(spots[k].dataValues);
     }
     res.json({ spots });
   })
