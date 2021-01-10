@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, UserProfile } = require('../../db/models');
 
 const router = express.Router();
 
@@ -58,11 +58,18 @@ router.delete(
 router.get(
   '/',
   restoreUser,
-  (req, res) => {
+  async (req, res) => {
     const { user } = req;
     if (user) {
+      const userProfile = await UserProfile.findOne({
+        where: {userId: user.id}
+      })
+      const safeUserObject = user.toSafeObject();
+      console.log('\n\n\n\nuserProfile', userProfile);
+      if(userProfile)
+        safeUserObject.userProfile = userProfile;
       return res.json({
-        user: user.toSafeObject()
+        user: safeUserObject
       });
     } else return res.json({});
   }

@@ -28,12 +28,22 @@ export default function ProfileButton({ user }) {
     history.push('/users/addfriend');
   }  
 
+  const userFullName = (user) => {
+    let fullname = "";
+    if(user && user.userProfile){
+      if(user.userProfile.firstName)
+        fullname += user.userProfile.firstName;
+      if(user.userProfile.lastName)
+        fullname += " " + user.userProfile.lastName;
+    }
+
+    return fullname;
+  }
+
   function DropdownMenu() {
     return (
       <div className="dropdown-menu" ref={dropdownMenuRef}>
-        <div className="dropdown-menu-item">{user.username}</div>
-        <hr className="hr" />
-        <div className="dropdown-menu-item">{user.email}</div>
+        <div className="dropdown-menu-item"><b>{userFullName(user)}</b></div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
           <Link to='/myhome' >My home </Link>

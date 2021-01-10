@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { errorToSend } = require('../../utils/senderror');
 const { User, Relationship, UserProfile, Message } = require('../../db/models');
 
 const router = express.Router();
@@ -181,8 +182,7 @@ router.post('/',
     const relationshipDataObj = req.body.relationship;
     console.log('relationshipDataObj', relationshipDataObj);
     if (req.user.id !== relationshipDataObj.myUserId) {
-      console.log(req.user.id, relationshipDataObj.myUserId, "Unauthorized user");
-      return res.status(401).json({ error: "Unauthorized user" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["Unauthorized user"]));
     }
 
     let email, username;
@@ -204,7 +204,7 @@ router.post('/',
     }
 
     if (!user) {
-      return res.status(401).json({ error: "User not found!" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["User not found!"]));
     }
 
     if (relationshipDataObj.myUserId < user.id) {
@@ -229,21 +229,16 @@ router.post('/',
       let message;
       if (relationship) {
         if (relationship.status === 4 || relationship.status === 2) { //cancelled by the requester
-          relationship.update({ status: 0 })
+          relationship.update({ status: 0, lastActionUserId: relationshipDataObj.myUserId})
           const message = await Message.create({
             senderId: relationshipDataObj.myUserId,
             recipientId: user.id,
             body: relationshipDataObj.message
           });
-        } else if (relationship.status === 3) //I'm being blocked
-          return res.status(401).json({ data: { errors: ["Cannot add this user as friend"] } });
-        else if (relationship.status === 1) {
-          // return res.status(401).json({data: { errors: ["You are already friends"] }});
-          const err = new Error('Adding Friend failed');
-          err.status = 401;
-          err.title = 'Adding Friend failed';
-          err.errors = ["You are already friends"];
-          return next(err);
+        } else if (relationship.status === 3) {//I'm being blocked
+          return next(errorToSend(401, 'Add/Follow friend failed', ["Cannot add this user as friend"]));
+        } else if (relationship.status === 1) {
+          return next(errorToSend(401, 'Add/Follow friend failed', ["You are already friends"]));
         }
       } else {
         const message = await Message.create({
@@ -256,7 +251,7 @@ router.post('/',
       }
       res.json({ relationship, message });
     } catch (error) {
-      return res.status(401).json({ data: { errors: [error] } });
+      return next(errorToSend(401, 'Add/Follow friend failed', [error]));
     }
   })
 );

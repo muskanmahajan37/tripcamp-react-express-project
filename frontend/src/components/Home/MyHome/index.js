@@ -408,7 +408,7 @@ export default function MyHome() {
         </div>
       </form>
 
-    const MyProfile = myUserProfile ?
+    const MyProfile = () => 
       <div className="inputs-div">
         <div>
           <img
@@ -421,6 +421,9 @@ export default function MyHome() {
           <label><b>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</b></label>
         </div>
         <div className="input-div">
+          <label>{sessionUser.email}</label>
+        </div>
+        <div className="input-div">
           <label>{`${myUserProfile.streetAddress}`}</label>
         </div>
         <div className="input-div">
@@ -430,13 +433,12 @@ export default function MyHome() {
           <label>{`${myUserProfile.zipCode ? myUserProfile.zipCode : ""}, ${myUserProfile.country}`}</label>
         </div>
       </div>
-      : <></>
 
     return (
       <div className='myhome-profile-div'>
         <h3>My Profile</h3>
         {
-          myUserProfile && MyProfile
+          myUserProfile && <MyProfile />
         }
         <button onClick={e => { e.preventDefault(); setShowEditProfile(!showEditProfile) }}>
           Edit Profile</button>
@@ -446,9 +448,9 @@ export default function MyHome() {
         {
           showUploadForm && <UploadForm
             link={
-              window.location.origin.includes('localhost')?
-              `local/users/id${sessionUser.id}/profile`:
-              `users/id${sessionUser.id}/profile`
+              window.location.origin.includes('localhost') ?
+                `local/users/id${sessionUser.id}/profile` :
+                `users/id${sessionUser.id}/profile`
             }
             divClass="side-modal"
             redirectHome={false}
