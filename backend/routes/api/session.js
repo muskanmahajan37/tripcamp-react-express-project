@@ -5,7 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, UserProfile } = require('../../db/models');
+const { User, UserProfile, Medium } = require('../../db/models');
 
 const router = express.Router();
 
@@ -66,8 +66,17 @@ router.get(
       })
       const safeUserObject = user.toSafeObject();
       console.log('\n\n\n\nuserProfile', userProfile);
-      if(userProfile)
-        safeUserObject.userProfile = userProfile;
+      if(userProfile){
+        if(userProfile.dataValues.mediaUrlIds){
+          const urls = [];
+          for(let i = 0; i < userProfile.dataValues.mediaUrlIds.length; i++) {
+            const medium = await Medium.findByPk(userProfile.dataValues.mediaUrlIds[i]);
+            urls.push(medium.url);
+          }
+          userProfile.dataValues.urls = urls;
+        }        
+        safeUserObject.userProfile = userProfile;        
+      }
       return res.json({
         user: safeUserObject
       });

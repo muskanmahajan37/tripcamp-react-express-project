@@ -138,7 +138,15 @@ export default function MyHome() {
     }
     dispatch(relationshipActions.modifyOneRelationship(relationship))
       .then(res => {
-
+        dispatch(relationshipActions.getAllRelationships(sessionUser.id))
+        .then(res => setRelationships({
+          myRequests: res.data.myRequests,
+          theirRequests: res.data.theirRequests,
+          myFriends: res.data.myFriends,
+          myFollowers: res.data.myFollowers,
+          myFollowings: res.data.myFollowings,
+        }))
+        .catch(e => { });
       })
       .catch(err => {
 
@@ -261,18 +269,18 @@ export default function MyHome() {
     const [zipCode, setZipCode] = useState('');
     const [country, setCountry] = useState('');
     const [showUploadForm, setShowUploadForm] = useState(false);
-    const [myUserProfile, setMyUserProfile] = useState(undefined);
+    const [myUserProfile, setMyUserProfile] = useState(sessionUser.userProfile);
     const [errors, setErrors] = useState([]);
 
-    useEffect(() => {
-      dispatch(profileActions.getUserProfile(sessionUser.id))
-        .then(res => {
-          setMyUserProfile(res.data.userProfile);
-        })
-        .catch(err => {
+    // useEffect(() => {
+    //   dispatch(profileActions.getUserProfile(sessionUser.id))
+    //     .then(res => {
+    //       setMyUserProfile(res.data.userProfile);
+    //     })
+    //     .catch(err => {
 
-        });
-    }, [dispatch, showEditProfile]);
+    //     });
+    // }, [showEditProfile]);
 
     useEffect(() => {
       if (myUserProfile) {
@@ -409,7 +417,7 @@ export default function MyHome() {
         </div>
       </form>
 
-    const MyProfile = () => 
+    const NameAddressPicture = () => 
       <div className="inputs-div">
         <div>
           <img
@@ -439,7 +447,7 @@ export default function MyHome() {
       <div className='myhome-profile-div'>
         <h3>My Profile</h3>
         {
-          myUserProfile && <MyProfile />
+          myUserProfile && <NameAddressPicture />
         }
         <button onClick={e => { e.preventDefault(); setShowEditProfile(!showEditProfile) }}>
           Edit Profile</button>
