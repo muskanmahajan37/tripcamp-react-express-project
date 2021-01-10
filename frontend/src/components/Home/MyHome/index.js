@@ -414,7 +414,7 @@ export default function MyHome() {
           <img
             src={myUserProfile.urls ? myUserProfile.urls[0] : null}
             alt="User Profile Img"
-            style={{ width: '180px', height: '150px', objectFit: 'cover' }}
+            className='userprofile-pic'
           />
         </div>
         <div className="input-div">

@@ -186,3 +186,11 @@
 .single-message-container .message-body p {
   margin: 0;
 }
+
+.userprofile-pic{
+  width: 180px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+  overflow: hidden;
+}
