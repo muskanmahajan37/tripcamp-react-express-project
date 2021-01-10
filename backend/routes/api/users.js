@@ -102,15 +102,13 @@ router.post('/:userId/userProfile',
       })
       if(!userProfile) userProfile = await UserProfile.create(userProfileDataObj);
       else userProfile.update(userProfileDataObj);
-      if(userProfile.mediaUrlIds.length){
+      if(userProfile.mediaUrlIds){
         const urls = [];
-        if(userProfile.mediaUrlIds){
-          for(let i = 0; i < userProfile.mediaUrlIds.length; i++) {
-            const medium = await Medium.findByPk(userProfile.mediaUrlIds[i]);
-            urls.push(medium.url);
-          }
+        for(let i = 0; i < userProfile.mediaUrlIds.length; i++) {
+          const medium = await Medium.findByPk(userProfile.mediaUrlIds[i]);
+          urls.push(medium.url);
         }
-        userProfile.dataValues.urls = urls;
+        userProfile.urls = urls;
       }
       res.json({ userProfile });
     } catch (error) {

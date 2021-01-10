@@ -30,13 +30,14 @@ export default function ProfileButton({ user }) {
 
   const userFullName = (user) => {
     let fullname = "";
-    if(user && user.userProfile){
+    if(user.userProfile){
       if(user.userProfile.firstName)
         fullname += user.userProfile.firstName;
       if(user.userProfile.lastName)
         fullname += " " + user.userProfile.lastName;
+    } else {
+      fullname = user.username;
     }
-
     return fullname;
   }
 
