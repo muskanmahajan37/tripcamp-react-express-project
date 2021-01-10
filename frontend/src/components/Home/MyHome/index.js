@@ -433,7 +433,7 @@ export default function MyHome() {
       : <></>
 
     return (
-      <div className='myhome-people-div'>
+      <div className='myhome-profile-div'>
         <h3>My Profile</h3>
         {
           myUserProfile && MyProfile
