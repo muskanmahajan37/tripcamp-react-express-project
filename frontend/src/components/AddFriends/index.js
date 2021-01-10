@@ -1,5 +1,6 @@
 // frontend/src/components/AddFriends/index.js
 
+import { nanoid } from 'nanoid';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -69,7 +70,7 @@ export function AddFriendsModal() {
         <h3>Request to Add a Friend</h3>
       
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">

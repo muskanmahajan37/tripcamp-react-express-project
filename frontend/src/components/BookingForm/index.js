@@ -8,6 +8,7 @@ import * as sessionActions from '../../store/session';
 import * as bookingActions from '../../store/booking';
 
 import '../Forms.css';
+import { nanoid } from 'nanoid';
 
 export default function BookingFormModal() {
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ export default function BookingFormModal() {
           }
         </div>
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">

@@ -45,13 +45,38 @@ router.post(
   }),
 );
 
+router.get('/:userId/userProfile',
+  requireAuth,
+  asyncHandler(async (req, res, next) => {
+    const userId = Number(req.params.userId);
+    if (req.user.id !== userId) {
+      const err = new Error('Profile Updating failed');
+      err.status = 401;
+      err.title = 'Profile Updating failed';
+      err.errors = ["Unauthorized user"];
+      return next(err);      
+    }
+    try{
+      let userProfile = await UserProfile.findOne({
+        where: {
+          userId
+        }
+      })
+      res.json({ userProfile });
+    } catch (error) {
+      const err = new Error('Error getting userProfile');
+      err.status = 401;
+      err.title = 'Error getting userProfile';
+      err.errors = ["Coudn't find userProfile"];
+      return next(err);         
+    }
+  })
+);
 router.post('/:userId/userProfile',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const userId = Number(req.params.userId);
     const userProfileDataObj = req.body.userProfile;
-    console.log('userProfileDataObj', userProfileDataObj);
-    console.log('req.user.id', req.user.id, 'userId', userId)
     if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
       const err = new Error('Profile Updating failed');
       err.status = 401;
@@ -59,7 +84,7 @@ router.post('/:userId/userProfile',
       err.errors = ["Unauthorized user"];
       return next(err);      
     }
-    userProfileDataObj.type = 3;
+    if(!userProfileDataObj.type) userProfileDataObj.type = 3;
     //TODO: implement backend userProfile validation before attempting to create a row in database
     try{
       let userProfile = await UserProfile.findOne({

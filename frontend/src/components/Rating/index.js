@@ -18,17 +18,16 @@ export default function Rating({ rated = 0, userChangeable = false, numberOfRevi
     return (
       <div>
         {
-          arrayOf5.map((el, i) => {
-            return <span
-              className={i < ratatedWholeNumber ?
-                "fa fa-star checked star-set-font-size"
-                : (ratedDecimal > 0 && i < ratatedWholeNumber + 1 ? "fas fa-star-half-alt star-set-font-size checked" : "far fa-star star-set-font-size")
-              }
-              key={nanoid()}
-              id={(i + 1) + "-" + nanoid()}
-              onClick={onStarClicked}
-            />
-          })
+          arrayOf5.map((el, i) => <span
+            className={i < ratatedWholeNumber ?
+              "fa fa-star checked star-set-font-size"
+              : (ratedDecimal > 0 && i < ratatedWholeNumber + 1 ? "fas fa-star-half-alt star-set-font-size checked" : "far fa-star star-set-font-size")
+            }
+            key={nanoid()}
+            id={(i + 1) + "-" + nanoid()}
+            onClick={onStarClicked}
+          />
+          )
         }
         <span className="star-set-font-size">
           {typeof (rated) === 'number' && rated > 0 ? rated.toFixed(1) : <></>}

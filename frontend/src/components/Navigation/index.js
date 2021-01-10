@@ -14,6 +14,7 @@ import BookingFormModal from '../BookingForm';
 import ReviewFormModal from '../ReviewForm';
 
 import './Navigation.css';
+import { nanoid } from 'nanoid';
 
 
 function Navigation() {
@@ -24,12 +25,12 @@ function Navigation() {
   const [showForms, setShowForms] = useState(new Array(6).fill(false));
 
   const Forms = [
-    <LoginFormModal />,
-    <SignupFormModal />,
-    <SpotFormModal />,
-    <AddFriendsModal />,
-    <BookingFormModal />,
-    <ReviewFormModal />
+    <LoginFormModal key={nanoid()}/>,
+    <SignupFormModal key={nanoid()}/>,
+    <SpotFormModal key={nanoid()}/>,
+    <AddFriendsModal key={nanoid()}/>,
+    <BookingFormModal key={nanoid()}/>,
+    <ReviewFormModal key={nanoid()}/>
   ];
 
   useEffect(() => {

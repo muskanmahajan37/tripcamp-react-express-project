@@ -257,17 +257,41 @@ export default function MyHome() {
     const [streetAddress, setStreetAddress] = useState('');
     const [city, setCity] = useState('');
     const [stateProvince, setStateProvince] = useState('');
+    const [zipCode, setZipCode] = useState('');
     const [country, setCountry] = useState('');
     const [showUploadForm, setShowUploadForm] = useState(false);
+    const [myUserProfile, setMyUserProfile] = useState(undefined);
     const [errors, setErrors] = useState([]);
 
+    useEffect(() => {
+      dispatch(profileActions.getUserProfile(sessionUser.id))
+        .then(res => {
+          setMyUserProfile(res.data.userProfile);
+          console.log('res.data.userProfile', res.data, res.data.userProfile);
+        })
+        .catch(err => {
+
+        });
+    }, [dispatch, showEditProfile]);
+
+    useEffect(() => {
+      if (myUserProfile) {
+        setFirstName(myUserProfile.firstName);
+        setLastName(myUserProfile.lastName);
+        setStreetAddress(myUserProfile.streetAddress);
+        setCity(myUserProfile.city);
+        setStateProvince(myUserProfile.stateProvince);
+        setZipCode(myUserProfile.zipCode);
+        setCountry(myUserProfile.country);
+      }
+    }, [myUserProfile]);
 
     const handleSubmit = e => {
       e.preventDefault();
       setErrors([]);
 
       console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
-      return dispatch(profileActions.updateProfile({
+      return dispatch(profileActions.updateUserProfile({
         userProfile: {
           userId: sessionUser.id,
           firstName,
@@ -276,6 +300,7 @@ export default function MyHome() {
           streetAddress,
           city,
           stateProvince,
+          zipCode,
           country,
         }
       }))
@@ -296,7 +321,7 @@ export default function MyHome() {
         onSubmit={handleSubmit}
       >
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">
@@ -305,13 +330,9 @@ export default function MyHome() {
               className="input"
               type='text'
               value={firstName}
-              onChange={e => {
-                setFirstName(e.target.value);
-                e.target.focus();
-                console.log(e.target)
-              }}
+              onChange={e => setFirstName(e.target.value)}
               required
-            // autoFocus={true}
+              autoFocus={true}
             />
           </div>
           <div className="input-div">
@@ -352,6 +373,15 @@ export default function MyHome() {
             />
           </div>
           <div className="input-div">
+            <label>Zip Code</label>
+            <input
+              className="input"
+              type='text'
+              value={zipCode}
+              onChange={e => setZipCode(e.target.value)}
+            />
+          </div>
+          <div className="input-div">
             <label>Country</label>
             <input
               className="input"
@@ -387,15 +417,35 @@ export default function MyHome() {
         </div>
       </form>
 
+    const MyProfile = myUserProfile ?
+      <div className="inputs-div">
+        <div className="input-div">
+          <label>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</label>
+        </div>
+        <div className="input-div">
+          <label>{`${myUserProfile.streetAddress}`}</label>
+        </div>
+        <div className="input-div">
+          <label>{`${myUserProfile.city} ${myUserProfile.stateProvince},`}</label>
+        </div>
+        <div className="input-div">
+          <label>{`${myUserProfile.zipCode ? myUserProfile.zipCode : ""}, ${myUserProfile.country}`}</label>
+        </div>
+      </div>
+      : <></>
 
     return (
       <div className='myhome-people-div'>
         <h3>My Profile</h3>
+        {
+          myUserProfile && MyProfile
+        }
         <button onClick={e => { e.preventDefault(); setShowEditProfile(!showEditProfile) }}>
           Edit Profile</button>
         {
           showEditProfile && EditMyProfile
         }
+
       </div>
     );
   }

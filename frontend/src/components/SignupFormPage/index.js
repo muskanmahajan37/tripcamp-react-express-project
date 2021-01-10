@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
+import { nanoid} from 'nanoid';
 
 import * as sessionActions from '../../store/session';
 
@@ -38,7 +39,7 @@ function SignupFormPage() {
       onSubmit={handleSubmit}
     >
       <ul className='error-messages'>
-        {errors.map((error, index) => <li key={index}>{error}</li>)}
+        {errors.map((error) => <li key={nanoid()}>{error}</li>)}
       </ul>
       <label>
         Username
@@ -137,7 +138,7 @@ export function SignupFormModal() {
       >
         <h3>Sign up as a new user</h3>
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">
@@ -192,11 +193,11 @@ export function SignupFormModal() {
             > Cancel </button>
           </div>
           <div className="login-signup-invite">
-          <span>Already have an account?</span>
-          <span>
-            <button className="button button-invite" onClick={handleLoginClick}>Click to Login</button>
-          </span>
-        </div>          
+            <span>Already have an account?</span>
+            <span>
+              <button className="button button-invite" onClick={handleLoginClick}>Click to Login</button>
+            </span>
+          </div>
         </div>
       </form>
     </div>

@@ -494,7 +494,7 @@ export function SpotFormModal() {
         <h3>Create Your Spot</h3>
 
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={nanoid()}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">

@@ -1,5 +1,6 @@
 // frontend/src/components/LoginFormPage/index.js
 
+import { nanoid } from 'nanoid';
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
@@ -34,7 +35,7 @@ function LoginFormPage() {
       onSubmit={handleSubmit}
     >
       <ul className='error-messages'>
-        {errors.map((error, index) => <li key={index}>{error}</li>)}
+        {errors.map((error) => <li key={nanoid()}>{error}</li>)}
       </ul>
       <label>
         Username or Email
@@ -75,7 +76,7 @@ export function LoginFormModal() {
   const submitButtonRef = useRef(null);
   const history = useHistory();
 
-  
+
   useEffect(() => {
     // submitButtonRef.current.focus();
   }, []);
@@ -126,9 +127,9 @@ export function LoginFormModal() {
         onSubmit={handleSubmit}
       >
         <h3>Login to your account</h3>
-      
+
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">
@@ -172,7 +173,7 @@ export function LoginFormModal() {
           <span>
             <button className="button button-invite" onClick={handleDemoClick}>Demo</button>
           </span>
-        </div>          
+        </div>
       </form>
     </div>
   );

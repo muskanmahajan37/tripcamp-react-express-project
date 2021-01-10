@@ -102,7 +102,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
           }
         </div>
         <ul className='error-messages'>
-          {errors.map((error, index) => <li key={index}>{error}</li>)}
+          {errors.map((error) => <li key={nanoid()}>{error}</li>)}
         </ul>
         <div className="inputs-div">
           <div className="input-div">

@@ -39,6 +39,10 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: true
       },
+      zipCode: {
+        type: Sequelize.STRING(10),
+        allowNull: true
+      },
       country: {
         type: Sequelize.STRING(100),
         allowNull: true
