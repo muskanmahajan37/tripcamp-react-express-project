@@ -133,7 +133,8 @@ export default function MyHome() {
     const relationship = {
       id: relationshipId,
       myUserId: sessionUser.id,
-      status: action
+      status: action,
+      lastActionUserId: sessionUser.id
     }
     dispatch(relationshipActions.modifyOneRelationship(relationship))
       .then(res => {

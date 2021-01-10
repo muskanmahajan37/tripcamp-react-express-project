@@ -29,8 +29,8 @@ router.patch('/',
       const relationshipId = Number(req.body.relationship.id);
       const status = Number(req.body.relationship.status)
       const relationship = await Relationship.findByPk(relationshipId);
-      await relationship.update({ status });
-      res.json(relationship);
+      await relationship.update({ status, lastActionUserId: myUserId });
+      res.json({ relationship });
     } catch (e) {
       res.status(401).json({ error: "Some error finding the relationships" });
     }
@@ -229,14 +229,18 @@ router.post('/',
       let message;
       if (relationship) {
         if (relationship.status === 4 || relationship.status === 2) { //cancelled by the requester
-          relationship.update({ status: 0, lastActionUserId: relationshipDataObj.myUserId})
+          relationship.update({ status: 0, lastActionUserId: relationshipDataObj.myUserId })
           const message = await Message.create({
             senderId: relationshipDataObj.myUserId,
             recipientId: user.id,
             body: relationshipDataObj.message
           });
         } else if (relationship.status === 3) {//I'm being blocked
-          return next(errorToSend(401, 'Add/Follow friend failed', ["Cannot add this user as friend"]));
+          if (relationship.lastActionUserId === relationshipDataObj.myUserId)
+            // If I was the one who blocked them the last time, NOT me who was blocked by them then I can overide my blocking
+            relationship.update({ status: 0, lastActionUserId: relationshipDataObj.myUserId })
+          else
+            return next(errorToSend(401, 'Add/Follow friend failed', ["Cannot add this user as friend"]));
         } else if (relationship.status === 1) {
           return next(errorToSend(401, 'Add/Follow friend failed', ["You are already friends"]));
         }
@@ -246,6 +250,7 @@ router.post('/',
           recipientId: user.id,
           body: relationshipDataObj.message
         });
+        relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
         delete relationshipDataObj.myUserId, relationshipDataObj.credential;
         relationship = await Relationship.create(relationshipDataObj);
       }
