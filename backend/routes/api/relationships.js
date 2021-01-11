@@ -168,8 +168,15 @@ router.get('/users/:userId',
           }
         ]
       });
-      const relationships = [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings];
-      res.json({ relationships, myRequests, theirRequests, myFriends, myFollowers, myFollowings });
+      const relationships = { 
+        all: [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings],
+        myRequests,
+        theirRequests,
+        myFriends,
+        myFollowers,
+        myFollowings
+      }
+      res.json({ relationships });
     } catch (e) {
       res.status(401).json({ error: "Some error finding the relationships" });
     }

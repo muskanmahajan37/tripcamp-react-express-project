@@ -64,17 +64,17 @@ export const modifyOneRelationship = (relationship) => async dispatch => {
   return res;
 }
 
-const initialState = [];
+const initialState = {};
 
 const relationshipReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SET_ONE_RELATION:
       newState = JSON.parse(JSON.stringify(state));
-      newState.push(JSON.parse(JSON.stringify(action.relationship)));
+      newState.all.push(JSON.parse(JSON.stringify(action.relationship)));
       return newState;
     case SET_ALL_RELATIONS:
-      newState = JSON.parse(JSON.stringify([...state, ...action.relationships]));
+      newState = JSON.parse(JSON.stringify({...state, ...action.relationships}));
       return newState;
     default:
       return state;

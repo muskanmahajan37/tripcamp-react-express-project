@@ -15,17 +15,18 @@ import './MyHome.css';
 export default function MyHome() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const relationships = useSelector(state => state.relationships);
   const spots = useSelector(state => state.spots.allSpots)
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
-  const [relationships, setRelationships] = useState({
-    myRequests: [],
-    theirRequests: [],
-    myFriends: [],
-    myFollowers: [],
-    myFollowings: []
-  });
+  // const [relationships, setRelationships] = useState({
+  //   myRequests: [],
+  //   theirRequests: [],
+  //   myFriends: [],
+  //   myFollowers: [],
+  //   myFollowings: []
+  // });
   // const [messages, setMessages] = useState([]);
 
   // useEffect(() => {
@@ -33,6 +34,15 @@ export default function MyHome() {
   //     .then(res => setMessages(res.data.messages))
   //     .catch(e => { });
   // }, [dispatch]);
+
+  useEffect(() => {
+    // if (!relationships && !relationships.all) {
+      dispatch(relationshipActions.getAllRelationships(sessionUser.id))
+        .then(res => { })
+        .catch(e => { });
+    // }
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(bookingActions.getAllBookings())
       .then(res => setBookings(res.data.bookings))
@@ -45,18 +55,6 @@ export default function MyHome() {
       setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
     }
   }, [bookings.length])
-
-  useEffect(() => {
-    dispatch(relationshipActions.getAllRelationships(sessionUser.id))
-      .then(res => setRelationships({
-        myRequests: res.data.myRequests,
-        theirRequests: res.data.theirRequests,
-        myFriends: res.data.myFriends,
-        myFollowers: res.data.myFollowers,
-        myFollowings: res.data.myFollowings,
-      }))
-      .catch(e => { });
-  }, [dispatch]);
 
   const acceptBooking = (e) => {
     e.preventDefault();
@@ -139,13 +137,7 @@ export default function MyHome() {
     dispatch(relationshipActions.modifyOneRelationship(relationship))
       .then(res => {
         dispatch(relationshipActions.getAllRelationships(sessionUser.id))
-        .then(res => setRelationships({
-          myRequests: res.data.myRequests,
-          theirRequests: res.data.theirRequests,
-          myFriends: res.data.myFriends,
-          myFollowers: res.data.myFollowers,
-          myFollowings: res.data.myFollowings,
-        }))
+        .then(res => { })
         .catch(e => { });
       })
       .catch(err => {
@@ -272,15 +264,17 @@ export default function MyHome() {
     const [myUserProfile, setMyUserProfile] = useState(sessionUser.userProfile);
     const [errors, setErrors] = useState([]);
 
-    // useEffect(() => {
-    //   dispatch(profileActions.getUserProfile(sessionUser.id))
-    //     .then(res => {
-    //       setMyUserProfile(res.data.userProfile);
-    //     })
-    //     .catch(err => {
+    useEffect(() => {
+      if (!myUserProfile) {
+        dispatch(profileActions.getUserProfile(sessionUser.id))
+          .then(res => {
+            setMyUserProfile(res.data.userProfile);
+          })
+          .catch(err => {
 
-    //     });
-    // }, [showEditProfile]);
+          });
+      }
+    }, [showEditProfile, sessionUser]);
 
     useEffect(() => {
       if (myUserProfile) {
@@ -417,7 +411,7 @@ export default function MyHome() {
         </div>
       </form>
 
-    const NameAddressPicture = () => 
+    const NameAddressPicture = () =>
       <div className="inputs-div">
         <div>
           <img
@@ -525,7 +519,7 @@ export default function MyHome() {
             <p>My friends</p>
             <ul>
               {
-                relationships.myFriends.map((rel, i) =>
+                relationships.myFriends && relationships.myFriends.map((rel, i) =>
                   <li key={nanoid()}>
                     <FriendNameAndMessage
                       name={rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
@@ -540,48 +534,50 @@ export default function MyHome() {
               <li>
                 <p>I requested</p>
                 <ul>
-                  {relationships.myRequests.map((rel, i) =>
-                    <li key={nanoid()}>
-                      <div>
-                        <span className='tooltip'>
-                          {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
-                          <p className='tooltiptext'>To Implement Mini UserProfile</p>
-                        </span>
-                        <span>
-                          <button onClick={e => actOnRequest(e, 'cancel')} id={`${i}-cancel`}>
-                            Cancel
+                  {
+                    relationships.myRequests && relationships.myRequests.map((rel, i) =>
+                      <li key={nanoid()}>
+                        <div>
+                          <span className='tooltip'>
+                            {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                            <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                          </span>
+                          <span>
+                            <button onClick={e => actOnRequest(e, 'cancel')} id={`${i}-cancel`}>
+                              Cancel
                           </button>
-                        </span>
-                      </div>
-                    </li>
-                  )
+                          </span>
+                        </div>
+                      </li>
+                    )
                   }
                 </ul>
               </li>
               <li>
                 <p>People requested me</p>
                 <ul>
-                  {relationships.theirRequests.map((rel, i) =>
-                    <li key={nanoid()}>
-                      <div>
-                        <span className='tooltip'>
-                          {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
-                          <p className='tooltiptext'>To Implement Mini UserProfile</p>
-                        </span>
-                        <span>
-                          <button onClick={e => actOnRequest(e, 'accept')} id={`${i}-accept`}>
-                            Accept
+                  {
+                    relationships.theirRequests && relationships.theirRequests.map((rel, i) =>
+                      <li key={nanoid()}>
+                        <div>
+                          <span className='tooltip'>
+                            {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                            <p className='tooltiptext'>To Implement Mini UserProfile</p>
+                          </span>
+                          <span>
+                            <button onClick={e => actOnRequest(e, 'accept')} id={`${i}-accept`}>
+                              Accept
                           </button>
-                          <button onClick={e => actOnRequest(e, 'ignore')} id={`${i}-ignore`}>
-                            Ignore
+                            <button onClick={e => actOnRequest(e, 'ignore')} id={`${i}-ignore`}>
+                              Ignore
                           </button>
-                          <button onClick={e => actOnRequest(e, 'block')} id={`${i}-block`}>
-                            Block
+                            <button onClick={e => actOnRequest(e, 'block')} id={`${i}-block`}>
+                              Block
                           </button>
-                        </span>
-                      </div>
-                    </li>
-                  )
+                          </span>
+                        </div>
+                      </li>
+                    )
                   }
                 </ul>
               </li>
@@ -591,7 +587,7 @@ export default function MyHome() {
             <p>My follower list</p>
             <ul>
               {
-                relationships.myFollowers.map(rel =>
+                relationships.myFollowers && relationships.myFollowers.map(rel =>
                   <li key={nanoid()}>
                     <div>
                       <span className='tooltip'>
@@ -607,7 +603,7 @@ export default function MyHome() {
             <p>My following list</p>
             <ul>
               {
-                relationships.myFollowings.map(rel =>
+                relationships.myFollowings && relationships.myFollowings.map(rel =>
                   <li key={nanoid()}>
                     <div>
                       <span>{rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}</span>
