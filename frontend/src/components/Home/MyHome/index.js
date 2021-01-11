@@ -16,6 +16,7 @@ export default function MyHome() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const relationships = useSelector(state => state.relationships);
+  // const bookings = useSelector(state => state.bookings);
   const spots = useSelector(state => state.spots.allSpots)
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
@@ -129,8 +130,8 @@ export default function MyHome() {
     dispatch(relationshipActions.modifyOneRelationship(relationship))
       .then(res => {
         dispatch(relationshipActions.getAllRelationships(sessionUser.id))
-        .then(res => { })
-        .catch(e => { });
+          .then(res => { })
+          .catch(e => { });
       })
       .catch(err => {
 
@@ -457,6 +458,22 @@ export default function MyHome() {
     );
   }
 
+  const usernameOrName = user => {
+    let name = "";
+    console.log('\n\n\n\n user', user.userProfile);
+    if (user.userProfile) {
+      if (user.userProfile.firstName) {
+        name = user.userProfile.firstName;
+      }
+      if (user.userProfile.lastName) {
+        name += " " + user.userProfile.lastName;
+      }
+    } else {
+      name = user.username;
+    }
+    return name;
+  }
+
   return (
     <div className="myhome-main-div">
       <AllSpots searchTerm={""} onlyMine={true}
@@ -515,7 +532,7 @@ export default function MyHome() {
                 relationships.myFriends && relationships.myFriends.map((rel, i) =>
                   <li key={nanoid()}>
                     <FriendNameAndMessage
-                      name={rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                      name={rel.user1.id !== sessionUser.id ? usernameOrName(rel.user1) : usernameOrName(rel.user2)}
                       friendId={rel.user1.id !== sessionUser.id ? rel.user1.id : rel.user2.id} />
                   </li>)
               }
@@ -532,7 +549,7 @@ export default function MyHome() {
                       <li key={nanoid()}>
                         <div>
                           <span className='tooltip'>
-                            {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                            {rel.user1.id !== sessionUser.id ? usernameOrName(rel.user1) : usernameOrName(rel.user2)}
                             <p className='tooltiptext'>To Implement Mini UserProfile</p>
                           </span>
                           <span>
@@ -554,7 +571,7 @@ export default function MyHome() {
                       <li key={nanoid()}>
                         <div>
                           <span className='tooltip'>
-                            {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                            {rel.user1.id !== sessionUser.id ? usernameOrName(rel.user1) : usernameOrName(rel.user2)}
                             <p className='tooltiptext'>To Implement Mini UserProfile</p>
                           </span>
                           <span>
@@ -584,7 +601,7 @@ export default function MyHome() {
                   <li key={nanoid()}>
                     <div>
                       <span className='tooltip'>
-                        {rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}
+                        {rel.user1.id !== sessionUser.id ? usernameOrName(rel.user1) : usernameOrName(rel.user2)}
                         <p className='tooltiptext'>To Implement Mini UserProfile</p>
                       </span>
                     </div>
@@ -599,7 +616,7 @@ export default function MyHome() {
                 relationships.myFollowings && relationships.myFollowings.map(rel =>
                   <li key={nanoid()}>
                     <div>
-                      <span>{rel.user1.id !== sessionUser.id ? rel.user1.username : rel.user2.username}</span>
+                      <span>{rel.user1.id !== sessionUser.id ? usernameOrName(rel.user1) : usernameOrName(rel.user2)}</span>
                     </div>
                   </li>)
               }

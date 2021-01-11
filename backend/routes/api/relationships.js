@@ -27,8 +27,22 @@ router.patch('/',
     try {
       const relationshipId = Number(req.body.relationship.id);
       const status = Number(req.body.relationship.status)
-      const relationship = await Relationship.findByPk(relationshipId);
+      let relationship = await Relationship.findByPk(relationshipId);
       await relationship.update({ status, lastActionUserId: myUserId });
+      relationship = await Relationship.findByPk(relationshipId, {
+        include: [
+          {
+            model: User,
+            as: 'user1',
+            include: UserProfile
+          },
+          {
+            model: User,
+            as: 'user2',
+            include: UserProfile
+          }
+        ]
+      });
       res.json({ relationship });
     } catch (e) {
       return next(errorToSend(401, 'Add/Follow friend failed', ["Some error finding the relationships"]));
@@ -166,7 +180,7 @@ router.get('/users/:userId',
           }
         ]
       });
-      const relationships = { 
+      const relationships = {
         all: [...myRequests, ...theirRequests, ...myFriends, ...myFollowers, ...myFollowings],
         myRequests,
         theirRequests,
@@ -258,6 +272,20 @@ router.post('/',
         relationshipDataObj.lastActionUserId = relationshipDataObj.myUserId;
         delete relationshipDataObj.myUserId, relationshipDataObj.credential;
         relationship = await Relationship.create(relationshipDataObj);
+        relationship = await Relationship.findByPk(relationship.id, {
+          include: [
+            {
+              model: User,
+              as: 'user1',
+              include: UserProfile
+            },
+            {
+              model: User,
+              as: 'user2',
+              include: UserProfile
+            }
+          ]
+        })
       }
       res.json({ relationship, message });
     } catch (error) {
