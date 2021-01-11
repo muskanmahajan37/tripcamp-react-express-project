@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { errorToSend } = require('../../utils/senderror');
 const { User, UserProfile, Medium } = require('../../db/models');
 
 const router = express.Router();
@@ -50,11 +51,7 @@ router.get('/:userId/userProfile',
   asyncHandler(async (req, res, next) => {
     const userId = Number(req.params.userId);
     if (req.user.id !== userId) {
-      const err = new Error('Profile Updating failed');
-      err.status = 401;
-      err.title = 'Profile Updating failed';
-      err.errors = ["Unauthorized user"];
-      return next(err);      
+      return next(errorToSend(401, 'Profile Updating failed', ["Unauthorized user"]));
     }
     try{
       let userProfile = await UserProfile.findOne({
@@ -72,11 +69,7 @@ router.get('/:userId/userProfile',
       userProfile.dataValues.urls = urls;
       res.json({ userProfile });
     } catch (error) {
-      const err = new Error('Error getting userProfile');
-      err.status = 401;
-      err.title = 'Error getting userProfile';
-      err.errors = ["Coudn't find userProfile"];
-      return next(err);         
+      return next(errorToSend(401, 'Profile Updating failed', ["Coudn't find userProfile", error]));
     }
   })
 );
@@ -86,11 +79,7 @@ router.post('/:userId/userProfile',
     const userId = Number(req.params.userId);
     const userProfileDataObj = req.body.userProfile;
     if (req.user.id !== userProfileDataObj.userId || req.user.id !== userId) {
-      const err = new Error('Profile Updating failed');
-      err.status = 401;
-      err.title = 'Profile Updating failed';
-      err.errors = ["Unauthorized user"];
-      return next(err);      
+      return next(errorToSend(401, 'Profile Updating failed', ["Unauthorized user"]));
     }
     if(!userProfileDataObj.type) userProfileDataObj.type = 3;
     //TODO: implement backend userProfile validation before attempting to create a row in database
@@ -102,21 +91,18 @@ router.post('/:userId/userProfile',
       })
       if(!userProfile) userProfile = await UserProfile.create(userProfileDataObj);
       else userProfile.update(userProfileDataObj);
-      if(userProfile.mediaUrlIds){
+
+      if(userProfile.dataValues.mediaUrlIds){
         const urls = [];
-        for(let i = 0; i < userProfile.mediaUrlIds.length; i++) {
-          const medium = await Medium.findByPk(userProfile.mediaUrlIds[i]);
+        for(let i = 0; i < userProfile.dataValues.mediaUrlIds.length; i++) {
+          const medium = await Medium.findByPk(userProfile.dataValues.mediaUrlIds[i]);
           urls.push(medium.url);
         }
-        userProfile.urls = urls;
+        userProfile.dataValues.urls = urls;
       }
       res.json({ userProfile });
-    } catch (error) {
-      const err = new Error('Profile Updating failed');
-      err.status = 401;
-      err.title = 'Profile Updating failed';
-      err.errors = ["Profile already exists"];
-      return next(err);         
+    } catch (error) {   
+      return next(errorToSend(401, 'Profile Updating failed', ["Error updating profile", error]));
     }
   })
 );

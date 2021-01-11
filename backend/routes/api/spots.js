@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { errorToSend } = require('../../utils/senderror');
 const { Spot, Medium, Review, Ownership, User, Category, CategorySpot } = require('../../db/models');
 
 const router = express.Router();
@@ -111,12 +112,8 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const spotDataObj = req.body.spot;
-    if (req.user.id !== spotDataObj.userId) {
-      const err = new Error('Ownership creating failed');
-      err.status = 401;
-      err.title = 'Ownership creating failed';
-      err.errors = ["Unauthorized user"];
-      return next(err);         
+    if (req.user.id !== spotDataObj.userId) {     
+      return next(errorToSend(401, 'Ownership creating failed', ["Unauthorized user"]));
     }
     delete spotDataObj.userId;
     // spotDataObj.status = 0;
@@ -127,23 +124,15 @@ router.post('/',
       let ownership;
       try {
         ownership = await Ownership.create({ userId: req.user.id, spotId: spot.id });
-      } catch (e) {
-        const err = new Error('Ownership creating failed');
-        err.status = 401;
-        err.title = 'Ownership creating failed';
-        err.errors = ["Could not create ownership"];
-        return next(err);          
+      } catch (e) {    
+        return next(errorToSend(401, 'Ownership creating failed', ["Could not create ownership"]));    
       }
       let returnJson = { spot };
       if (ownership) returnJson.ownership = ownership;
       if (err) returnJson.error = err;
       res.json(returnJson);
     } catch (error) {
-      const err = new Error('Ownership creating failed');
-      err.status = 401;
-      err.title = 'Ownership creating failed';
-      err.errors = ["Could not create ownership", error];
-      return next(err);       
+      return next(errorToSend(401, 'Ownership creating failed', ["Could not create ownership", error]));
     }
   })
 );

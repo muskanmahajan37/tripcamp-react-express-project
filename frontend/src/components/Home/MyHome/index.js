@@ -20,14 +20,6 @@ export default function MyHome() {
   const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
-  // const [relationships, setRelationships] = useState({
-  //   myRequests: [],
-  //   theirRequests: [],
-  //   myFriends: [],
-  //   myFollowers: [],
-  //   myFollowings: []
-  // });
-  // const [messages, setMessages] = useState([]);
 
   // useEffect(() => {
   //   dispatch(messageActions.getAllMessages())
@@ -36,11 +28,11 @@ export default function MyHome() {
   // }, [dispatch]);
 
   useEffect(() => {
-    // if (!relationships && !relationships.all) {
+    if (!relationships.all) {
       dispatch(relationshipActions.getAllRelationships(sessionUser.id))
         .then(res => { })
         .catch(e => { });
-    // }
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -307,6 +299,7 @@ export default function MyHome() {
         }
       }))
         .then(res => {
+          setMyUserProfile(res.data.userProfile);
           setShowEditProfile(false);
         })
         .catch(res => {

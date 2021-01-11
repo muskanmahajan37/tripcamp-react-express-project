@@ -18,12 +18,11 @@ router.get('/', asyncHandler(async (req, res) => {
 
 router.patch('/',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     console.log(req.body.relationship);
     const myUserId = Number(req.body.relationship.myUserId);
     if (req.user.id !== myUserId) {
-      console.log(req.user.id, myUserId, "Unauthorized user");
-      return res.status(401).json({ error: "Unauthorized user" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["Unauthorized user"]));
     }
     try {
       const relationshipId = Number(req.body.relationship.id);
@@ -32,18 +31,17 @@ router.patch('/',
       await relationship.update({ status, lastActionUserId: myUserId });
       res.json({ relationship });
     } catch (e) {
-      res.status(401).json({ error: "Some error finding the relationships" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["Some error finding the relationships"]));
     }
   })
 );
 
 router.get('/users/:userId',
   requireAuth,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const myUserId = Number(req.params.userId);
     if (req.user.id !== myUserId) {
-      console.log(req.user.id, myUserId, "Unauthorized user");
-      return res.status(401).json({ error: "Unauthorized user" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["Unauthorized user"]));
     }
     try {
       const myRequests = await Relationship.findAll({
@@ -178,7 +176,7 @@ router.get('/users/:userId',
       }
       res.json({ relationships });
     } catch (e) {
-      res.status(401).json({ error: "Some error finding the relationships" });
+      return next(errorToSend(401, 'Add/Follow friend failed', ["Some error finding the relationships"]));
     }
   })
 );
