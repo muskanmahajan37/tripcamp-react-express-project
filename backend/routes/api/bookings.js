@@ -24,11 +24,13 @@ router.get('/',
         where: {
           userId,
         },
+        order: [['id', 'ASC']]
       });
       const bookingsOfMyProps = await Booking.findAll({
         where: {
           spotId: spotIds
         },
+        order: [['id', 'ASC']],
         include: User
       });
       res.json({ bookings: [...myTripBookings, ...bookingsOfMyProps] });
@@ -66,9 +68,12 @@ router.patch('/',
     //TODO: implement backend booking validation before attempting to create a row in database
     try {
       // const booking = await Booking.update(bookingDataObj);
-      const bookingInDatabase = await Booking.findByPk(bookingDataObj.id);
+      let bookingInDatabase = await Booking.findByPk(bookingDataObj.id);
       bookingInDatabase.status = bookingDataObj.status;
       await bookingInDatabase.save();
+      bookingInDatabase = await Booking.findByPk(bookingDataObj.id, {
+        include: User
+      });
       res.json({ booking: bookingInDatabase });
     } catch (error) {
       return next(errorToSend(401, 'Booking failed', [error]));

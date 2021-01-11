@@ -16,9 +16,8 @@ export default function MyHome() {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const relationships = useSelector(state => state.relationships);
-  // const bookings = useSelector(state => state.bookings);
+  const bookings = useSelector(state => state.bookings);
   const spots = useSelector(state => state.spots.allSpots)
-  const [bookings, setBookings] = useState([]);
   const [myOwnBookings, setMyOwnBookings] = useState([]);
   const [bookingsForMyProps, setBookingsForMyProps] = useState([]);
 
@@ -34,12 +33,11 @@ export default function MyHome() {
         .then(res => { })
         .catch(e => { });
     }
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(bookingActions.getAllBookings())
-      .then(res => setBookings(res.data.bookings))
-      .catch(e => { });
+    if (!bookings.length) {
+      dispatch(bookingActions.getAllBookings())
+        .then(res => { })
+        .catch(e => { });
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -47,7 +45,7 @@ export default function MyHome() {
       setMyOwnBookings(bookings.filter(bk => bk.userId === sessionUser.id));
       setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
     }
-  }, [bookings.length])
+  }, [bookings])
 
   const acceptBooking = (e) => {
     e.preventDefault();
@@ -58,7 +56,7 @@ export default function MyHome() {
     console.log('booking', booking);
     return dispatch(bookingActions.modifyOneBooking(booking))
       .then(res => {
-        //TODO implete this
+        // setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
       })
       .catch(res => {
         //TODO implete this
@@ -73,7 +71,7 @@ export default function MyHome() {
 
     return dispatch(bookingActions.modifyOneBooking(booking))
       .then(res => {
-        //TODO implete this
+        // setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
       })
       .catch(res => {
         //TODO implete this
@@ -91,7 +89,7 @@ export default function MyHome() {
     const bookingId = Number(e.target.id.split('-')[0]);
     return dispatch(bookingActions.deleteOneBooking(bookingId))
       .then(res => {
-        //TODO implete this
+        // setMyOwnBookings(bookings.filter(bk => bk.userId === sessionUser.id));
       })
       .catch(res => {
         //TODO implete this

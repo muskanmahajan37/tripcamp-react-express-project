@@ -67,29 +67,40 @@ export const deleteOneBooking = ( bookingId ) => async dispatch => {
     method: 'DELETE',
   }); //This fetch is a modified fetch, which already returns data after res.json()
   if (res.ok) {
-    const fedback_bookingId = res.data.bookingId;
+    const fedback_bookingId = Number(res.data.bookingId);
     dispatch(removeBookingPOJO(fedback_bookingId));
   }
-  return res.data.bookingId;
+  return res;
 }
 
 const initialState = [];
+
+const compare = (bk1, bk2) => {
+  let comparison = 0;
+  if (bk1.id > bk2.id) {
+    comparison = 1;
+  } else if (bk1.id < bk2.id) {
+    comparison = -1;
+  }
+  return comparison;
+}
 
 const bookingReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case SET_ONE_BOOKING:
-      newState = JSON.parse(JSON.stringify(state));
-      newState.push(JSON.parse(JSON.stringify(action.booking)));
-      return newState;
+      newState = JSON.parse(JSON.stringify(state.filter(bk => bk.id !== action.booking.id)));
+      newState.push(JSON.parse(JSON.stringify(action.booking)));      
+      return newState.sort(compare);
     case SET_ALL_BOOKINGS:
-      newState = JSON.parse(JSON.stringify([...state, ...action.bookings]));
-      return newState;
+      // newState = JSON.parse(JSON.stringify([...state, ...action.bookings]));
+      newState = JSON.parse(JSON.stringify([...action.bookings]));
+      return newState.sort(compare);
     case REMOVE_ONE_BOOKING:
       newState = JSON.parse(JSON.stringify(state.filter(booking =>
         booking.id !== action.bookingId
       )));
-      return newState;
+      return newState.sort(compare);
     default:
       return state;
   }
