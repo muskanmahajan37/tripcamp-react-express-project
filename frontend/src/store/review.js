@@ -62,7 +62,8 @@ const reviewReducer = (state = initialState, action) => {
       newState.push(JSON.parse(JSON.stringify(action.review)));
       return newState;
     case SET_ALL_REVIEWS:
-      newState = JSON.parse(JSON.stringify([...state, ...action.reviews]));
+      // newState = JSON.parse(JSON.stringify([...state, ...action.reviews]));
+      newState = JSON.parse(JSON.stringify([...action.reviews]));
       return newState;
     default:
       return state;

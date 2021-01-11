@@ -75,7 +75,8 @@ const messageReducer = (state = initialState, action) => {
       newState.push(JSON.parse(JSON.stringify(action.message)));
       return newState;
     case SET_ALL_MESSAGES:
-      newState = JSON.parse(JSON.stringify([...state, ...action.messages]));
+      // newState = JSON.parse(JSON.stringify([...state, ...action.messages]));
+      newState = JSON.parse(JSON.stringify([...action.messages]));
       return newState;
     default:
       return state;

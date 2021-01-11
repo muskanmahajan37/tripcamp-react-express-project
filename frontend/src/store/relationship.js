@@ -74,7 +74,8 @@ const relationshipReducer = (state = initialState, action) => {
       newState.all.push(JSON.parse(JSON.stringify(action.relationship)));
       return newState;
     case SET_ALL_RELATIONS:
-      newState = JSON.parse(JSON.stringify({...state, ...action.relationships}));
+      // newState = JSON.parse(JSON.stringify({...state, ...action.relationships}));
+      newState = JSON.parse(JSON.stringify({...action.relationships}));
       return newState;
     default:
       return state;

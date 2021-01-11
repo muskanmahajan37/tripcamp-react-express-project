@@ -60,7 +60,8 @@ const mediumReducer = (state = initialState, action) => {
       newState.push(JSON.parse(JSON.stringify(action.medium)));
       return newState;
     case SET_ALL_MEDIA:
-      newState = JSON.parse(JSON.stringify([...state, ...action.media]));
+      // newState = JSON.parse(JSON.stringify([...state, ...action.media]));
+      newState = JSON.parse(JSON.stringify([...action.media]));
       return newState;
     default:
       return state;

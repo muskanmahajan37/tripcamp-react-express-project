@@ -81,7 +81,8 @@ const spotReducer = (state = initialState, action) => {
     case SET_ALL_SPOTS:
       newState = Object.assign({}, state);
       delete newState.currentSpot;
-      newState.allSpots = [...newState.allSpots, ...action.spots];
+      // newState.allSpots = [...newState.allSpots, ...action.spots];
+      newState.allSpots = [...action.spots];
       return newState;
     case SET_ALL_MY_SPOTS:
       newState = Object.assign({}, state);      
