@@ -42,7 +42,9 @@ function App() {
           <GlampHome />
         </Route>
         <Route >
-          <h4>404 not found. Sorry!</h4>
+          <div style={{height: '50%', marginTop: '10%'}}>
+            <h4>404: page not found. Sorry!</h4>
+          </div>
         </Route>
       </Switch>
       <Footer />

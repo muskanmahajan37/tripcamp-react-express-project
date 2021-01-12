@@ -223,7 +223,6 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
         spot.Categories.find(cat => cat.name === category)
       ));
     }
-    console.log('category', category);
   }, [onlyMine, originalReduxSpots, category]);
 
   useEffect(() => {

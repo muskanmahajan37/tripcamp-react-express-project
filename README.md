@@ -1,6 +1,6 @@
 # tripcamp-react-express-project
 
-Welcome to the tripcamp-react-express-project!
+Welcome to the tripcamp-react-express-project! (https://www.tripcamp.us)
 
 ## What is this project about
 To a normal non-technical everyday user, this is a website to host camping sites, accommodations (homestay) or any beautiful getaway locations anywhere. This work is originally intended as an App Academy personal student work. The source original websites to clone and get inspired from are: Hipcamp and AirBnB.
