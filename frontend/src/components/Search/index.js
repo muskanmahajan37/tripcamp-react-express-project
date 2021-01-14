@@ -6,9 +6,9 @@ import * as searchActions from '../../store/search';
 
 import './Search.css';
 
-export default function MainSearchBar({ 
-    className = 'search-over-banner-div'
-  }) {
+export default function MainSearchBar({
+  className = 'search-over-banner-div'
+}) {
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
 
@@ -40,11 +40,12 @@ export default function MainSearchBar({
         placeholder='Search spots to stay'
         value={searchValue}
         onChange={onInputChange}
+        autoFocus={window.location.pathname.includes('allspots') ? true : false}
       />
-      <i className="fas fa-times search-icon-class" 
-        style={{color: 'lightgray'}}
-        onClick={e=>{e.preventDefault(); setSearchValue("")}}
-        />
+      <i className="fas fa-times search-icon-class"
+        style={{ color: 'lightgray' }}
+        onClick={e => { e.preventDefault(); setSearchValue("") }}
+      />
     </form>
   );
 }

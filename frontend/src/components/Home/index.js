@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import { AllSpots } from '../Spot';
 import Banner from './Banner';
@@ -12,6 +12,7 @@ import './Home.css';
 
 export function Home() {
   const location = useLocation();
+  const history = useHistory();
   let reduxCurrentSpot = useSelector(state => state.spots.currentSpot);
   if (location.pathname === "/allspots") reduxCurrentSpot = null;
 
@@ -25,11 +26,11 @@ export function Home() {
 
 
 export function GlampHome() {
-
+  const history = useHistory();
   return (
     <div className="main-home-view-glampcamp">
       <HomeSlogan />
-      <div className='banner-and-search-div'>
+      <div className='banner-and-search-div' onClick={e => history.push('/allspots')}>
         <MainSearchBar className='search-over-banner-div search-box-home-fixed' />
         <Banner />
       </div>
