@@ -239,9 +239,8 @@ export default function MyHome() {
   }
 
   function MyProfile() {
-    const dispatch = useDispatch();
     const media = useSelector(state => state.media);
-
+    
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -253,6 +252,7 @@ export default function MyHome() {
     const [showUploadForm, setShowUploadForm] = useState(false);
     const [myUserProfile, setMyUserProfile] = useState(sessionUser.userProfile);
     const [errors, setErrors] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
       if (!myUserProfile) {

@@ -41,7 +41,7 @@ export default function ProfileButton({ user }) {
         </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <i class="fas fa-map-marked-alt"></i>
+          <i className="fas fa-map-marked-alt"></i>
           <Link to='/spots/create'>Create a Spot</Link>
         </div>
         <hr className="hr" />
@@ -54,6 +54,7 @@ export default function ProfileButton({ user }) {
           <i className="fas fa-sign-out-alt"></i>
           <Link
             onClick={logout}
+            to='/'
           >
             Logout
           </Link>

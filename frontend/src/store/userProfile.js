@@ -41,7 +41,8 @@ const userProfileReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case UPDATE_PROFILE:
-      newState = JSON.parse(JSON.stringify([...state, action.userProfile]));
+      // newState = JSON.parse(JSON.stringify([...state, action.userProfile]));
+      newState = JSON.parse(JSON.stringify([action.userProfile]));
       return newState;
     default:
       return state;

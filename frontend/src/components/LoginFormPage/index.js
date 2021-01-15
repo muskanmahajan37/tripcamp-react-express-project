@@ -71,18 +71,12 @@ export function LoginFormModal() {
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const loginModalRef = useRef(null);
   const submitButtonRef = useRef(null);
   const history = useHistory();
 
 
-  useEffect(() => {
-    // submitButtonRef.current.focus();
-  }, []);
-
-  // console.log("login", history);
-  if (sessionUser) {
+  if (sessionUser) { 
     return <Redirect to='/' />;
   }
 
@@ -94,7 +88,6 @@ export function LoginFormModal() {
       .then(res => {
         if (loginModalRef.current)
           loginModalRef.current.style.display = "none";
-        // history.go(2);
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
