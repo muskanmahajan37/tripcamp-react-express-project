@@ -16,24 +16,13 @@ export default function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
     history.push('/');
   };
-  // const createSpot = e => {
-  //   e.preventDefault();
-  //   // dropdownMenuRef.current.style = "visibility: hidden;";
-  //   history.push('/spots/create');
-  // }
-
-  const addAUser = e => {
-    e.preventDefault();
-    // dropdownMenuRef.current.style = "visibility: hidden;";
-    history.push('/users/addfriend');
-  }  
 
   const userFullName = (user) => {
     let fullname = "";
-    if(user.userProfile){
-      if(user.userProfile.firstName)
+    if (user.userProfile) {
+      if (user.userProfile.firstName)
         fullname += user.userProfile.firstName;
-      if(user.userProfile.lastName)
+      if (user.userProfile.lastName)
         fullname += " " + user.userProfile.lastName;
     } else {
       fullname = user.username;
@@ -47,35 +36,27 @@ export default function ProfileButton({ user }) {
         <div className="dropdown-menu-item"><b>{userFullName(user)}</b></div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
+          <i className="fas fa-home"></i>
           <Link to='/myhome' >My home </Link>
         </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          {/* <button
-            className="button button-Send"
-            onClick={createSpot}
-          >
-            Create Spot
-          </button> */}
+          <i class="fas fa-map-marked-alt"></i>
           <Link to='/spots/create'>Create a Spot</Link>
         </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <button
-            className="button button-Send"
-            onClick={addAUser}
-          >
-            Add A Friend
-          </button>
-        </div>        
+          <i className="fas fa-user-friends"></i>
+          <Link to='/users/addfriend'>Add a Friend</Link>
+        </div>
         <hr className="hr" />
         <div className="dropdown-menu-item">
-          <button
-            className="button button-Reset"
+          <i className="fas fa-sign-out-alt"></i>
+          <Link
             onClick={logout}
           >
             Logout
-          </button>
+          </Link>
         </div>
       </div>
     );

@@ -53,7 +53,6 @@ export default function MyHome() {
     const booking = bookingsForMyProps.find(bk => bk.id === bookingId);
     booking.status = 1;
     booking.myUserId = sessionUser.id;
-    console.log('booking', booking);
     return dispatch(bookingActions.modifyOneBooking(booking))
       .then(res => {
         // setBookingsForMyProps(bookings.filter(bk => bk.userId !== sessionUser.id));
@@ -283,7 +282,6 @@ export default function MyHome() {
       e.preventDefault();
       setErrors([]);
 
-      console.log("handleSubmit media", media, " id", media[media.length - 1] && media[media.length - 1].id);
       return dispatch(profileActions.updateUserProfile({
         userProfile: {
           userId: sessionUser.id,
@@ -406,11 +404,14 @@ export default function MyHome() {
     const NameAddressPicture = () =>
       <div className="inputs-div">
         <div>
-          <img
-            src={myUserProfile.urls ? myUserProfile.urls[0] : null}
-            alt="User Profile Img"
-            className='userprofile-pic'
-          />
+          {myUserProfile.urls ?
+            <img
+              src={myUserProfile.urls[0]}
+              alt="User Profile Img"
+              className='userprofile-pic'
+            /> :
+            <i className="fas fa-user-circle" style={{fontSize: '70px', color: "gray"}}></i>
+          }
         </div>
         <div className="input-div">
           <label><b>{`${myUserProfile.firstName} ${myUserProfile.lastName}`}</b></label>
@@ -431,7 +432,7 @@ export default function MyHome() {
 
     return (
       <div className='myhome-profile-div'>
-        <h3>My Profile</h3>
+        <h3><i className="fas fa-id-card" /> My Profile</h3>
         {
           myUserProfile && <NameAddressPicture />
         }
@@ -458,7 +459,6 @@ export default function MyHome() {
 
   const usernameOrName = user => {
     let name = "";
-    console.log('\n\n\n\n user', user.userProfile);
     if (user.userProfile) {
       if (user.userProfile.firstName) {
         name = user.userProfile.firstName;
@@ -524,7 +524,7 @@ export default function MyHome() {
         <div className='myhome-people-div'>
           <h3>People</h3>
           <div>
-            <p>My friends</p>
+            <p style={{ fontWeight: 'bold' }}><i className="fas fa-user-friends" /> Friends</p>
             <ul>
               {
                 relationships.myFriends && relationships.myFriends.map((rel, i) =>
@@ -537,7 +537,7 @@ export default function MyHome() {
             </ul>
           </div>
           <div>
-            <p>Pending friend requests</p>
+            <p style={{ fontWeight: 'bold' }}><i class="fas fa-hourglass-half"></i> Pending requests</p>
             <ul>
               <li>
                 <p>I requested</p>
@@ -592,7 +592,7 @@ export default function MyHome() {
             </ul>
           </div>
           <div>
-            <p>My follower list</p>
+            <p style={{ fontWeight: 'bold' }}><i className="fas fa-users" /> Followers</p>
             <ul>
               {
                 relationships.myFollowers && relationships.myFollowers.map(rel =>
@@ -608,7 +608,7 @@ export default function MyHome() {
             </ul>
           </div>
           <div>
-            <p>My following list</p>
+            <p style={{ fontWeight: 'bold' }}><i className="fa fa-users" />  Followings</p>
             <ul>
               {
                 relationships.myFollowings && relationships.myFollowings.map(rel =>

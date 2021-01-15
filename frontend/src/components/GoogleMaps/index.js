@@ -43,7 +43,7 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
   }, [])
 
   const onMarkerLoad = marker => {
-    console.log('marker: ', marker)
+    // console.log('marker: ', marker)
   }
 
   return (

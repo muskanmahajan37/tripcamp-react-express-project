@@ -34,7 +34,6 @@ export default function BookingFormModal() {
   if (!sessionUser) {
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
-    console.log('booking', history);
     return <Redirect to='/login' />;
   }
 

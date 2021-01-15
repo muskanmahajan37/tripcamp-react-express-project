@@ -65,7 +65,6 @@ router.get(
         where: {userId: user.id}
       })
       const safeUserObject = user.toSafeObject();
-      console.log('\n\n\n\nuserProfile', userProfile);
       if(userProfile){
         if(userProfile.dataValues.mediaUrlIds){
           const urls = [];

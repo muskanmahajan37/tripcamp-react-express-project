@@ -46,8 +46,6 @@ export default function Spot() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log('params', params);
-
   useEffect(() => {
     if (params && reduxSpots) {
       const selectedSpot = reduxSpots.find(spot => spot.id === Number(params.spotId));
@@ -64,7 +62,6 @@ export default function Spot() {
     const { rated, numberOfReviews } = calculateRatingFunction(spot);
     setCalculatedRating(rated);
     setNoOfReviews(numberOfReviews);
-    console.log('numberOfReviews', numberOfReviews);
   }, [spot]);
 
   // useEffect(() => {
@@ -249,7 +246,6 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
       }));
       // history.push('/');
     }
-    console.log('reduxSpots', reduxSpots);
   }, [searchText, reduxSpots]);
 
   useEffect(() => {
@@ -282,8 +278,6 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
     if (showMap) setStyle({ maxWidth: '90vw', width: '90vw' });
     else setStyle({ maxWidth: '940px', width: '90%' });
   }, [showMap, onlyMine]);
-
-  console.log('searchText', searchText);
 
   function handleBookNowClick(e) {
     history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
