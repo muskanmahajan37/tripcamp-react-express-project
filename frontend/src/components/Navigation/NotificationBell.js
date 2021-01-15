@@ -37,13 +37,14 @@ export default function NotificationBell() {
 
 
   useEffect(() => {
-    let numOfNotes = relationships.theirRequests.length + messages.length + bookings.length;
     if (relationships.theirRequests) setNumOfReqs(relationships.theirRequests.length);
     setNumOfMsgs(messages.filter(m => m.status === 0).length);
     setNumOfBks(bookings.length);
-    setNumberOfNotes(numOfNotes)
   }, [relationships.theirRequests, messages, bookings]);
 
+  useEffect(() => {
+    setNumberOfNotes(numOfBks + numOfMsgs + numOfReqs);
+  }, [numOfBks, numOfMsgs, numOfReqs])
 
   const dropdownMenuRef = useRef(null);
 
