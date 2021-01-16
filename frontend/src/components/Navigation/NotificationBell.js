@@ -20,7 +20,7 @@ export default function NotificationBell() {
 
   useEffect(() => {
     if (!sessionUser) return;
-    if (!relationships.all) {
+    if (!relationships.theirRequests) {
       dispatch(relationshipActions.getAllRelationships(sessionUser.id))
         .then(res => { })
         .catch(e => { });

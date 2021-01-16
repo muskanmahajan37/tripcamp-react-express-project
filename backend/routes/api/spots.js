@@ -50,7 +50,7 @@ router.get('/reviews',
     const id = req.params.id;
     const spots = await Spot.findAll({
       include: [
-        { model: Review, include: {model: User} },
+        { model: Review, include: { model: User } },
         { model: User, through: Ownership },
         { model: Category, through: CategorySpot }
       ],
@@ -91,7 +91,7 @@ router.get('/:id/reviews',
     const id = req.params.id;
     const spot = await Spot.findByPk(id, {
       include: [
-        { model: Review, include: {model: User} },
+        { model: Review, include: { model: User } },
         { model: User, through: Ownership },
         { model: Category, through: CategorySpot }
       ],
@@ -112,21 +112,29 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const spotDataObj = req.body.spot;
-    if (req.user.id !== spotDataObj.userId) {     
+    if (req.user.id !== spotDataObj.userId) {
       return next(errorToSend(401, 'Ownership creating failed', ["Unauthorized user"]));
     }
     delete spotDataObj.userId;
     // spotDataObj.status = 0;
     //TODO: implement backend spot validation before attempting to create a row in database
     try {
-      const spot = await Spot.create(spotDataObj);
+      let spot = await Spot.create(spotDataObj);
       let err;
       let ownership;
       try {
-        ownership = await Ownership.create({ userId: req.user.id, spotId: spot.id });
-      } catch (e) {    
-        return next(errorToSend(401, 'Ownership creating failed', ["Could not create ownership"]));    
+        ownership = await Ownership.build({ userId: req.user.id, spotId: spot.id });
+        await ownership.save();
+      } catch (e) {
+        return next(errorToSend(401, 'Ownership creating failed', ["Could not create ownership"]));
       }
+      spot = await Spot.findByPk(spot.id, {
+        include: [
+          { model: Review, include: { model: User } },
+          { model: User, through: Ownership },
+          { model: Category, through: CategorySpot }
+        ],
+      })
       let returnJson = { spot };
       if (ownership) returnJson.ownership = ownership;
       if (err) returnJson.error = err;

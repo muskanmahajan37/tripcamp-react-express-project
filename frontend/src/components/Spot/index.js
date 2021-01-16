@@ -211,7 +211,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
 
   useEffect(() => {
     if (onlyMine) setReduxSpots(originalReduxSpots.filter(spot =>
-      spot.Users[0] && spot.Users[0].id === sessionUser.id
+      spot.Users && spot.Users[0] && spot.Users[0].id === sessionUser.id
     ));
     else {
       if (category === "all" || category === 'allspots')
