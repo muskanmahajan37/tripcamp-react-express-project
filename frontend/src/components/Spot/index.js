@@ -74,6 +74,13 @@ export default function Spot() {
     if (image) image.style = "display: block;";
   }, [indexToDisplay, imageUrls])
 
+  function handleBookNowClick(e) {
+    history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
+  }
+  function handleReviewClick(e) {
+    history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
+  }
+
   return (
     <div className='single-spot-and-maps'>
       {spot &&
@@ -153,8 +160,8 @@ export default function Spot() {
             <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
             <div className="buttons-and-address">
               <div className="book-and-more-div">
-                <button id={spot.id + "-" + nanoid()}>Book Now</button>
-                <button id={spot.id + "-" + nanoid()}>Review</button>
+                <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
               </div>
               <div className='spot-address'>
                 <p style={{ maxWidth: '210px', fontSize: '16px' }}>
@@ -619,9 +626,9 @@ export function SpotFormModal() {
       {
         showUploadForm && <UploadForm
           link={
-            window.location.origin.includes('localhost')?
-            `local/official/spots`:
-            `official/spots`
+            window.location.origin.includes('localhost') ?
+              `local/official/spots` :
+              `official/spots`
           }
           divClass="side-modal"
           redirectHome={false}

@@ -537,7 +537,7 @@ export default function MyHome() {
             </ul>
           </div>
           <div>
-            <p style={{ fontWeight: 'bold' }}><i class="fas fa-hourglass-half"></i> Pending requests</p>
+            <p style={{ fontWeight: 'bold' }}><i className="fas fa-hourglass-half"></i> Pending requests</p>
             <ul>
               <li>
                 <p>I requested</p>

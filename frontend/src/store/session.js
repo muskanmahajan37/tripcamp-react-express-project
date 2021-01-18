@@ -10,7 +10,7 @@ const setUserPOJO = (user) => ({
   type: SET_USER,
   user
 });
-const removeUserPOJO = () =>({
+const removeUserPOJO = () => ({
   type: REMOVE_USER
 });
 
@@ -21,9 +21,9 @@ const removeUserPOJO = () =>({
 export const login = ({ credential, password }) => async dispatch => {
   const res = await fetch('/api/session', {
     method: 'POST',
-    body: JSON.stringify({ credential, password})
+    body: JSON.stringify({ credential, password })
   }); //This fetch is a modified fetch, which already returns data after res.json()
-  if(res.ok){
+  if (res.ok) {
     const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
     dispatch(setUserPOJO(fedback_user));
   }
@@ -31,18 +31,33 @@ export const login = ({ credential, password }) => async dispatch => {
 }
 
 export const logout = () => async dispatch => {
-  const res = await fetch('/api/session', {
-    method: 'DELETE',
-  }); //This fetch is a modified fetch, which already returns data after res.json()
-  if(res.ok){
-    dispatch(removeUserPOJO());
+  let res;
+  try {
+    res = await fetch('/api/session', {
+      method: 'DELETE',
+    }); //This fetch is a modified fetch, which already returns data after res.json()
+    if (res.ok) {
+      dispatch(removeUserPOJO());
+    }
+    return res;
+  } catch (e) {
+    try {
+      res = await fetch('/api/session/logout', {
+        // method: 'POST',
+      }); //This fetch is a modified fetch, which already returns data after res.json()
+      if (res.ok) {
+        dispatch(removeUserPOJO());
+      }
+      return res
+    } catch (e){
+      
+    }
   }
-  return res;
 }
 
 export const restoreUser = () => async dispatch => {
   const res = await fetch('/api/session'); //This fetch is a modified fetch, which already returns data after res.json()
-  if(res.ok){
+  if (res.ok) {
     const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
     dispatch(setUserPOJO(fedback_user));
   }
@@ -52,9 +67,9 @@ export const restoreUser = () => async dispatch => {
 export const signup = ({ username, email, password }) => async dispatch => {
   const res = await fetch('/api/users', {
     method: 'POST',
-    body: JSON.stringify({ username, email, password})
+    body: JSON.stringify({ username, email, password })
   }); //This fetch is a modified fetch, which already returns data after res.json()
-  if(res.ok){
+  if (res.ok) {
     const fedback_user = res.data.user; //we need this user back from backend, NOT the provided
     dispatch(setUserPOJO(fedback_user));
   }
