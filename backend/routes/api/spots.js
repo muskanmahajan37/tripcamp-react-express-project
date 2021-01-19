@@ -98,7 +98,7 @@ router.get('/:id/reviews',
     });
     const urls = [];
     for (let i = 0; i < spot.mediaUrlIds.length; i++) {
-      if (!spots.mediaUrlIds[i]) continue;
+      if (!spot.mediaUrlIds[i]) continue;
       const medium = await Medium.findByPk(spot.mediaUrlIds[i]);
       if (medium.url.startsWith('/resources')) medium.url = 'https://tripcamp.s3.amazonaws.com' + medium.url;
       urls.push(medium.url);

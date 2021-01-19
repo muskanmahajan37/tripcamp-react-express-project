@@ -48,17 +48,30 @@ export default function Spot() {
   // const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
   const bkModalRef = useRef(null);
   const rvModalRef = useRef(null);
 
 
   useEffect(() => {
-    if (params && reduxSpots) {
-      const selectedSpot = reduxSpots.find(spot => spot.id === Number(params.spotId));
-      setSpot(selectedSpot);
+    let id = Number(location.pathname.slice(location.pathname.lastIndexOf("/") + 1));
+    if (id && typeof (id) === 'number') {
+      let selectedSpot;
+      if (reduxSpots) {
+        selectedSpot = reduxSpots.find(spot => spot.id === id);
+      }
+      if (selectedSpot)
+        setSpot(selectedSpot);
+      else
+        dispatch(spotActions.getOneSpot(id, true))
+          .then(res => {
+            selectedSpot = res.data.spot;
+            setSpot(selectedSpot);
+          })
+          .catch(e => { });
     }
-  }, [params]);
+  }, [location]);
 
 
   useEffect(() => {
@@ -168,9 +181,8 @@ export default function Spot() {
                 />
               )} */}
             </div>
-            <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
             <div className="buttons-and-address">
-              <div className="book-and-more-div">
+              <div className="book-and-more-div" style={{ flexDirection: 'row' }}>
                 <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
                 <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
               </div>
@@ -182,22 +194,31 @@ export default function Spot() {
                   {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
                 </p>
               </div>
+              <Rating rated={calculatedRating} numberOfReviews={noOfReviews} />
             </div>
-            {spot.Reviews && <ul>
-              <h3>Reviews</h3>
-              {
-                spot.Reviews.map(review => <li key={nanoid()}>
-                  <p>{review.title}</p>
-                  <p>{review.body}</p>
-                  <p>{review.User && review.User.username}</p>
-                  <Rating rated={review.rating} userChangeable={false} fontSize='16px' />
-                </li>)
+            <div className='reviews-and-description-single-page'>
+              <p className='spot-description-single-page hide-scollbar'>
+                {spot.description}
+              </p>
+              {spot.Reviews &&
+                <div className='reviews-single-spot-page'>
+                  {
+                    spot.Reviews.map(review => <div className='individual-review' key={nanoid()}>
+                      <div style={{ padding: '5px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                          <Rating rated={review.rating} userChangeable={false} fontSize='14px' displayRated={false} />
+                          <div className='username-display' onClick={e => alert('Follow this user?')}>
+                            {review.User && review.User.username}
+                          </div>
+                        </div>
+                        <p><b>{review.title}</b></p>
+                        <p>{review.body}</p>
+                      </div>
+                    </div>)
+                  }
+                </div>
               }
-            </ul>
-            }
-            <p className='spot-description-single-page hide-scollbar'>
-              {spot.description}
-            </p>
+            </div>
           </div>
           <div className='home-side-map'>
             {

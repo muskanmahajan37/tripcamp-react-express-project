@@ -7,7 +7,9 @@ import { setRatingPOJO } from '../../store/rating';
 import './Rating.css';
 
 export default function Rating({ 
-  rated = 0, userChangeable = false, 
+  rated = 0,
+  displayRated = true,
+  userChangeable = false, 
   numberOfReviews = undefined,
   fontSize = '22px'
 }) {
@@ -35,7 +37,7 @@ export default function Rating({
           )
         }
         <span className="star-set-font-size" style={{fontSize: fontSize}}>
-          {typeof (rated) === 'number' && rated > 0 ? rated.toFixed(1) : <></>}
+          {displayRated && (typeof (rated) === 'number' && rated > 0 ? rated.toFixed(1) : <></>)}
           {(numberOfReviews !== undefined) && <span>
             {` - ${numberOfReviews}`}
             {numberOfReviews > 1 ? " Reviews" : " Review"}
