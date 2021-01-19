@@ -10,12 +10,16 @@ import * as bookingActions from '../../store/booking';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function BookingFormModal({ thisSpot = undefined, disp = undefined, dref=undefined }) {
+export default function BookingFormModal({ thisSpot = undefined, dref=undefined }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots.allSpots);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const date = new Date();
+  const today = new Date(date.toLocaleDateString()).toISOString().slice(0, 10);
+  date.setDate(date.getDate() + 1);
+  const tomorrow = new Date(date.toLocaleDateString()).toISOString().slice(0, 10);
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(tomorrow);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [specialRequest, setSpecialRequest] = useState("");
   const [errors, setErrors] = useState([]);

@@ -12,7 +12,11 @@ import Rating from '../Rating';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function ReviewFormModal({ divClass = "modal", formContentClass = 'form-container modal-content' }) {
+export default function ReviewFormModal({ 
+  divClass = "modal",
+  formContentClass = 'form-container modal-content',
+  thisSpot = undefined, dref=undefined
+}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots.allSpots);
@@ -28,12 +32,15 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
   const location = useLocation();
 
   useEffect(() => {
+    if (thisSpot) {
+      return setSpot(thisSpot);
+    }    
     if (location.pathname && spots) {
       const path = location.pathname;
       setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
       realtimeRating = undefined;
     }
-  }, [location.pathname]);
+  }, [location.pathname, thisSpot]);
 
   useEffect(() => {
     realtimeRating = ratings[ratings.length - 1];
@@ -69,6 +76,7 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     }))
       .then(res => {
         dispatch(spotActions.addReviewToSpot(res.data.review));
+        if(thisSpot) return;
         if (reviewModalRef.current)
           reviewModalRef.current.style.display = "none";
         history.push('/allspots');
@@ -82,11 +90,14 @@ export default function ReviewFormModal({ divClass = "modal", formContentClass =
     e.preventDefault();
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
-    history.push('/allspots');
+    if(dref && dref.current)
+      dref.current.style.display = "none";
+    if (!thisSpot)      
+      history.push('/allspots');
   }
 
   return (
-    <div className={divClass} ref={reviewModalRef}>
+    <div className={divClass} ref={dref?dref:reviewModalRef}>
       <form
         className={formContentClass}
         onSubmit={handleSubmit}

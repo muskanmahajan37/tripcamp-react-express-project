@@ -11,6 +11,7 @@ import Rating from '../Rating';
 // import BookingFormModal from '../BookingForm';
 import UploadForm from '../UploadForm';
 import BookingFormModal from '../BookingForm';
+import ReviewFormModal from '../ReviewForm';
 
 import * as spotActions from '../../store/spot';
 
@@ -43,11 +44,13 @@ export default function Spot() {
   const [calculatedRating, setCalculatedRating] = useState(undefined);
   const [noOfReviews, setNoOfReviews] = useState(undefined);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
   // const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const bkModalRef = useRef(null);
+  const rvModalRef = useRef(null);
 
 
   useEffect(() => {
@@ -69,11 +72,6 @@ export default function Spot() {
   }, [spot]);
 
   useEffect(() => {
-    if(bkModalRef.current && bkModalRef.current.style.display === 'none')
-      setShowBookingForm(false);
-  }, [bkModalRef])
-
-  useEffect(() => {
     [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none;");
     const image = document.getElementById(`image${indexToDisplay}`);
     if (image) image.style = "display: block;";
@@ -82,19 +80,22 @@ export default function Spot() {
   function handleBookNowClick(e) {
     // history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
     setShowBookingForm(true);
-    if(bkModalRef.current && bkModalRef.current.style.display == 'none')
+    if (bkModalRef.current && bkModalRef.current.style.display == 'none')
       bkModalRef.current.style.display = 'block';
   }
   function handleReviewClick(e) {
     // history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
-    setShowBookingForm(false);
+    setShowReviewForm(true);
+    if (rvModalRef.current && rvModalRef.current.style.display == 'none')
+      rvModalRef.current.style.display = 'block';
   }
 
   return (
     <div className='single-spot-and-maps'>
       {spot &&
         <>
-          {showBookingForm && <BookingFormModal thisSpot={spot} disp={showBookingForm} dref={bkModalRef} />}
+          {showBookingForm && <BookingFormModal thisSpot={spot} dref={bkModalRef} />}
+          {showReviewForm && <ReviewFormModal thisSpot={spot} dref={rvModalRef} />}
           <div key={spot.name} className="single-spot-main-view">
             <div className='single-spot-name-div'>
               <h3>{spot.name}</h3>
