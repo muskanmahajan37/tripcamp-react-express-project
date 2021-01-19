@@ -10,7 +10,7 @@ import * as bookingActions from '../../store/booking';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function BookingFormModal() {
+export default function BookingFormModal({ thisSpot = undefined, disp = undefined, dref=undefined }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots.allSpots);
@@ -25,11 +25,14 @@ export default function BookingFormModal() {
   const [spot, setSpot] = useState(null);
 
   useEffect(() => {
+    if (thisSpot) {
+      return setSpot(thisSpot);
+    }
     if (location.pathname && spots) {
       const path = location.pathname;
       setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
     }
-  }, [location.pathname]);
+  }, [location.pathname, thisSpot]);
 
   if (!sessionUser) {
     if (bookingModalRef.current)
@@ -52,6 +55,7 @@ export default function BookingFormModal() {
       }
     }))
       .then(res => {
+        if(thisSpot) return;
         if (bookingModalRef.current)
           bookingModalRef.current.style.display = "none";
         history.push('/allspots');
@@ -65,11 +69,15 @@ export default function BookingFormModal() {
     e.preventDefault();
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
-    history.push('/allspots');
+    if(dref && dref.current)  
+      dref.current.style.display = "none";
+    if (!thisSpot)
+      history.push('/allspots');
   }
 
   return (
-    <div className="modal" ref={bookingModalRef}>
+    // <div className="modal" ref={bookingModalRef}>
+    <div className="modal" ref={dref?dref:bookingModalRef}>
       <form
         className='form-container modal-content'
         onSubmit={handleSubmit}

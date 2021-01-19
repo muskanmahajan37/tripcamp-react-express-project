@@ -29,6 +29,7 @@ function App() {
     <div className='mainbody'>
       <Navigation />
       <Switch>
+        {/* <Route path='/spots/:spotId(\d+)' > */}
         <Route path='/spots/:spotId(\d+)' >
           <Spot />
         </Route>

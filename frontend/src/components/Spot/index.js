@@ -10,6 +10,7 @@ import { MapWithMarkerClusterer } from '../GoogleMaps';
 import Rating from '../Rating';
 // import BookingFormModal from '../BookingForm';
 import UploadForm from '../UploadForm';
+import BookingFormModal from '../BookingForm';
 
 import * as spotActions from '../../store/spot';
 
@@ -41,10 +42,13 @@ export default function Spot() {
   const [indexToDisplay, setIndexToDisplay] = useState(0);
   const [calculatedRating, setCalculatedRating] = useState(undefined);
   const [noOfReviews, setNoOfReviews] = useState(undefined);
+  const [showBookingForm, setShowBookingForm] = useState(false);
   // const [ratingUpdater, setRatingUpdater] = useState(calculatedRating);
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const bkModalRef = useRef(null);
+
 
   useEffect(() => {
     if (params && reduxSpots) {
@@ -64,9 +68,10 @@ export default function Spot() {
     setNoOfReviews(numberOfReviews);
   }, [spot]);
 
-  // useEffect(() => {
-  //   setRatingUpdater(calculatedRating);
-  // }, [calculatedRating])  
+  useEffect(() => {
+    if(bkModalRef.current && bkModalRef.current.style.display === 'none')
+      setShowBookingForm(false);
+  }, [bkModalRef])
 
   useEffect(() => {
     [...document.querySelectorAll('.spotSlides')].map(el => el.style = "display: none;");
@@ -75,16 +80,21 @@ export default function Spot() {
   }, [indexToDisplay, imageUrls])
 
   function handleBookNowClick(e) {
-    history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
+    // history.push(`/bookings/spots/${e.target.id.split('-')[0]}`);
+    setShowBookingForm(true);
+    if(bkModalRef.current && bkModalRef.current.style.display == 'none')
+      bkModalRef.current.style.display = 'block';
   }
   function handleReviewClick(e) {
-    history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
+    // history.push(`/reviews/spots/${e.target.id.split('-')[0]}`);
+    setShowBookingForm(false);
   }
 
   return (
     <div className='single-spot-and-maps'>
       {spot &&
         <>
+          {showBookingForm && <BookingFormModal thisSpot={spot} disp={showBookingForm} dref={bkModalRef} />}
           <div key={spot.name} className="single-spot-main-view">
             <div className='single-spot-name-div'>
               <h3>{spot.name}</h3>
