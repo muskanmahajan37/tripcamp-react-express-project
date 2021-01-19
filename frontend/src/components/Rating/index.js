@@ -6,7 +6,11 @@ import { setRatingPOJO } from '../../store/rating';
 
 import './Rating.css';
 
-export default function Rating({ rated = 0, userChangeable = false, numberOfReviews = undefined }) {
+export default function Rating({ 
+  rated = 0, userChangeable = false, 
+  numberOfReviews = undefined,
+  fontSize = '22px'
+}) {
   const [trialRating, setTrialRating] = useState(rated);
   const [rating, setRating] = useState(rated);
   let arrayOf5 = new Array(5).fill(1);
@@ -23,13 +27,14 @@ export default function Rating({ rated = 0, userChangeable = false, numberOfRevi
               "fa fa-star checked star-set-font-size"
               : (ratedDecimal > 0 && i < ratatedWholeNumber + 1 ? "fas fa-star-half-alt star-set-font-size checked" : "far fa-star star-set-font-size")
             }
+            style={{fontSize: fontSize}}
             key={nanoid()}
             id={(i + 1) + "-" + nanoid()}
             onClick={onStarClicked}
           />
           )
         }
-        <span className="star-set-font-size">
+        <span className="star-set-font-size" style={{fontSize: fontSize}}>
           {typeof (rated) === 'number' && rated > 0 ? rated.toFixed(1) : <></>}
           {(numberOfReviews !== undefined) && <span>
             {` - ${numberOfReviews}`}
@@ -57,15 +62,16 @@ export default function Rating({ rated = 0, userChangeable = false, numberOfRevi
 
   return (
     <div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <span id={0 + "-" + nanoid()} onClick={onStarClicked} className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)" }}> </span>
+      <span id={0 + "-" + nanoid()} onClick={onStarClicked} className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)", fontSize: fontSize }}> </span>
       { arrayOf5.map((el, i) => <span
         className={i < trialRating ? "fa fa-star checked star-set-font-size" : "far fa-star star-set-font-size"}
+        style={{fontSize: fontSize}}
         key={nanoid()}
         id={(i + 1) + "-" + nanoid()}
         onClick={onStarClicked}
       />
       )}
-      <span className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)" }}>{ }</span>
+      <span className="far fa-star star-set-font-size" style={{ color: "rgba(0,0,0,0)", fontSize: fontSize }}>{ }</span>
     </div>
   );
 }

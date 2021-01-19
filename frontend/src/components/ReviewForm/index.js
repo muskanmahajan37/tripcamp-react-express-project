@@ -12,10 +12,10 @@ import Rating from '../Rating';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function ReviewFormModal({ 
+export default function ReviewFormModal({
   divClass = "modal",
   formContentClass = 'form-container modal-content',
-  thisSpot = undefined, dref=undefined
+  thisSpot = undefined, dref = undefined
 }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
@@ -34,7 +34,7 @@ export default function ReviewFormModal({
   useEffect(() => {
     if (thisSpot) {
       return setSpot(thisSpot);
-    }    
+    }
     if (location.pathname && spots) {
       const path = location.pathname;
       setSpot(spots.find(spot => spot.id === Number(path.slice(path.lastIndexOf('/') + 1))));
@@ -76,10 +76,12 @@ export default function ReviewFormModal({
     }))
       .then(res => {
         dispatch(spotActions.addReviewToSpot(res.data.review));
-        if(thisSpot) return;
+        if (dref && dref.current)
+          dref.current.style.display = "none";
         if (reviewModalRef.current)
           reviewModalRef.current.style.display = "none";
-        history.push('/allspots');
+        if (!thisSpot)
+          history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -90,14 +92,14 @@ export default function ReviewFormModal({
     e.preventDefault();
     if (reviewModalRef.current)
       reviewModalRef.current.style.display = "none";
-    if(dref && dref.current)
+    if (dref && dref.current)
       dref.current.style.display = "none";
-    if (!thisSpot)      
+    if (!thisSpot)
       history.push('/allspots');
   }
 
   return (
-    <div className={divClass} ref={dref?dref:reviewModalRef}>
+    <div className={divClass} ref={dref ? dref : reviewModalRef}>
       <form
         className={formContentClass}
         onSubmit={handleSubmit}

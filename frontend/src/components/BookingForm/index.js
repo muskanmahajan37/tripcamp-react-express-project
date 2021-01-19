@@ -10,7 +10,7 @@ import * as bookingActions from '../../store/booking';
 import '../Forms.css';
 import { nanoid } from 'nanoid';
 
-export default function BookingFormModal({ thisSpot = undefined, dref=undefined }) {
+export default function BookingFormModal({ thisSpot = undefined, dref = undefined }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector(state => state.spots.allSpots);
@@ -59,10 +59,12 @@ export default function BookingFormModal({ thisSpot = undefined, dref=undefined 
       }
     }))
       .then(res => {
-        if(thisSpot) return;
+        if (dref && dref.current)
+          dref.current.style.display = "none";
         if (bookingModalRef.current)
           bookingModalRef.current.style.display = "none";
-        history.push('/allspots');
+        if (!thisSpot)
+          history.push('/allspots');
       })
       .catch(res => {
         if (res.data && res.data.errors) setErrors(res.data.errors);
@@ -73,7 +75,7 @@ export default function BookingFormModal({ thisSpot = undefined, dref=undefined 
     e.preventDefault();
     if (bookingModalRef.current)
       bookingModalRef.current.style.display = "none";
-    if(dref && dref.current)  
+    if (dref && dref.current)
       dref.current.style.display = "none";
     if (!thisSpot)
       history.push('/allspots');
@@ -81,7 +83,7 @@ export default function BookingFormModal({ thisSpot = undefined, dref=undefined 
 
   return (
     // <div className="modal" ref={bookingModalRef}>
-    <div className="modal" ref={dref?dref:bookingModalRef}>
+    <div className="modal" ref={dref ? dref : bookingModalRef}>
       <form
         className='form-container modal-content'
         onSubmit={handleSubmit}
