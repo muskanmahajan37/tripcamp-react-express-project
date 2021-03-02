@@ -75,8 +75,8 @@ This is my <a href='www.appacademy.io' target='_blank'>App Academy</a> solo proj
 <details open="open">
    <summary>Screenshots: Homepage </summary>
    <div style="display: flex">
-      <img src="/resources/images/screenshots/tripcamp.png" width="31%" height="30%" style="margin: 5px"/>
-      <img src="/resources/images/screenshots/home2.png" width="31%" height="30%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/tripcamp.png" width="45%" height="30%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/home2.png" width="45%" height="30%" style="margin: 5px"/>
    <div>
 </details>
 <details open="open">
