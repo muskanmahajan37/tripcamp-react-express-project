@@ -76,14 +76,14 @@ This is my <a href='www.appacademy.io' target='_blank'>App Academy</a> solo proj
    <summary>Screenshots: Homepage </summary>
    <div style="display: flex">
       <img src="/resources/images/screenshots/tripcamp.png" width="31%" height="30%" style="margin: 5px"/>
-      <img src="./resources/screenshots/home2.png" width="31%" height="30%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/home2.png" width="31%" height="30%" style="margin: 5px"/>
    <div>
 </details>
 <details open="open">
    <summary>Code snippets</summary>
    <div style="display: flex">
-      <img src="./resources/screenshots/codesnippet1.png" width="40%" height="24%" style="margin: 5px"/>
-      <img src="./resources/screenshots/codesnippet2.png" width="40%" height="24%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/codesnippet1.png" width="40%" height="24%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/codesnippet2.png" width="40%" height="24%" style="margin: 5px"/>
    <div>
 </details>
 
@@ -140,16 +140,16 @@ Install npm on your local computer
 <details open="open">
    <summary>Spots</summary>   
    <div style="display: flex">
-      <img src="./resources/screenshots/spots.png" width="40%" height="40%"  style="margin: 5px"/>
-      <img src="./resources/screenshots/singlespot.png" width="40%" height="40%"  style="margin: 5px"/>         
+      <img src="./resources/images/screenshots/spots.png" width="40%" height="40%"  style="margin: 5px"/>
+      <img src="./resources/images/screenshots/singlespot.png" width="40%" height="40%"  style="margin: 5px"/>         
    <div>
 </details>
 <details open="open">
    <summary>Booking</summary>   
    <div style="display: flex">
       <!-- <div style='display: flex; flex-direction: column; width="40%"'> -->
-         <img src="./resources/screenshots/booking.png" width="32%" height="30%" style="margin: 5px"/>
-         <img src="./resources/screenshots/profilepage.png" width="43%" height="30%" style="margin: 5px"/>
+         <img src="./resources/images/screenshots/booking.png" width="32%" height="30%" style="margin: 5px"/>
+         <img src="./resources/images/screenshots/profilepage.png" width="43%" height="30%" style="margin: 5px"/>
       <!-- </div> -->
    <div>
 </details>
