@@ -82,8 +82,8 @@ This is my <a href='www.appacademy.io' target='_blank'>App Academy</a> solo proj
 <details open="open">
    <summary>Code snippets</summary>
    <div style="display: flex">
-      <img src="/resources/images/screenshots/codesnippet1.png" width="40%" height="24%" style="margin: 5px"/>
-      <img src="/resources/images/screenshots/codesnippet2.png" width="40%" height="24%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/codesnippet1.png" width="45%" height="24%" style="margin: 5px"/>
+      <img src="/resources/images/screenshots/codesnippet2.png" width="45%" height="24%" style="margin: 5px"/>
    <div>
 </details>
 
@@ -141,14 +141,14 @@ Install npm on your local computer
    <summary>Spots</summary>   
    <div style="display: flex">
       <img src="./resources/images/screenshots/spots.png" width="40%" height="40%"  style="margin: 5px"/>
-      <img src="./resources/images/screenshots/singlespot.png" width="40%" height="40%"  style="margin: 5px"/>         
+      <img src="./resources/images/screenshots/singlespot.png" width="45%" height="40%"  style="margin: 5px"/>         
    <div>
 </details>
 <details open="open">
    <summary>Booking</summary>   
    <div style="display: flex">
       <!-- <div style='display: flex; flex-direction: column; width="40%"'> -->
-         <img src="./resources/images/screenshots/booking.png" width="32%" height="30%" style="margin: 5px"/>
+         <img src="./resources/images/screenshots/booking.png" width="43%" height="30%" style="margin: 5px"/>
          <img src="./resources/images/screenshots/profilepage.png" width="43%" height="30%" style="margin: 5px"/>
       <!-- </div> -->
    <div>
