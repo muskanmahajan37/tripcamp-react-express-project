@@ -49,7 +49,7 @@ router.post('/',
   // requireAuth,
   asyncHandler(async (req, res) => {
     const mediumDataObj = req.body.medium;
-    console.log('mediumDataObj', mediumDataObj);
+    // console.log('mediumDataObj', mediumDataObj);
     // if (req.user.id !== mediumDataObj.userId) {
     //   return res.status(401).json({ error: "Unauthorized user" });
     // }
@@ -58,7 +58,6 @@ router.post('/',
       const medium = await Medium.create(mediumDataObj);
       res.json({ medium });
     } catch (error) {
-      console.log('61 error', error);
       return res.status(401).json({ error });
     }
   })
