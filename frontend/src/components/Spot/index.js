@@ -277,7 +277,8 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
           || spot.description.toLowerCase().includes(searchText)
           || spot.streetAddress.toLowerCase().includes(searchText)
           || spot.city.toLowerCase().includes(searchText)
-          || spot.stateProvince.toLowerCase().includes(searchText);
+          || spot.stateProvince.toLowerCase().includes(searchText)
+          || spot.country.toLowerCase().includes(searchText);
       }));
       // history.push(`/search/${searchText}`);
     } else {
@@ -400,14 +401,13 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
                       {highlightSearchText(spot.streetAddress, searchText) || highlighting}
                     </p>
                     <p >
-                      {highlightSearchText(spot.city, searchText) || highlighting}
-                      {highlightSearchText(spot.stateProvince, searchText) || highlighting},
-                      {spot.zipCode} {spot.country}
+                      {highlightSearchText(spot.city, searchText) || highlighting} {highlightSearchText(spot.stateProvince, searchText) || highlighting},
+                      {spot.zipCode} {highlightSearchText(spot.country, searchText) || highlighting}
                     </p>
                   </div>
                 </div>
                 <p className='spot-description hide-scollbar'>
-                  {highlightSearchText(spot.description, searchText)}
+                  {highlightSearchText(spot.description, searchText) || highlighting}
                 </p>
               </div>
             </div>
