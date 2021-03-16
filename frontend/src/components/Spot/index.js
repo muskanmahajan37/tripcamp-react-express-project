@@ -274,7 +274,10 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
         const { rated } = calculateRatingFunction(spot);
         spot.rated = rated;
         return spot.name.toLowerCase().includes(searchText)
-          || spot.description.toLowerCase().includes(searchText);
+          || spot.description.toLowerCase().includes(searchText)
+          || spot.streetAddress.toLowerCase().includes(searchText)
+          || spot.city.toLowerCase().includes(searchText)
+          || spot.stateProvince.toLowerCase().includes(searchText);
       }));
       // history.push(`/search/${searchText}`);
     } else {
