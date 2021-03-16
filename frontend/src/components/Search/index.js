@@ -19,8 +19,13 @@ export default function MainSearchBar({
   const onInputChange = e => {
     e.preventDefault();
     setSearchValue(e.target.value);
-    // console.log("search box value:", e.target.value);
   }
+
+  const onKeyDown = e => {
+    if(e.key === 'Escape'){
+      setSearchValue("");
+    }
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -40,6 +45,7 @@ export default function MainSearchBar({
         placeholder='Search spots to stay'
         value={searchValue}
         onChange={onInputChange}
+        onKeyDown={onKeyDown}
         autoFocus={window.location.pathname.includes('allspots') ? true : false}
       />
       <i className="fas fa-times search-icon-class"
