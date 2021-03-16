@@ -397,10 +397,12 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
                   }
                   <div className='spot-address'>
                     <p style={{ maxWidth: '210px', fontSize: '16px' }}>
-                      {spot.streetAddress}
+                      {highlightSearchText(spot.streetAddress, searchText) || highlighting}
                     </p>
                     <p >
-                      {spot.city} {spot.stateProvince}, {spot.zipCode} {spot.country}
+                      {highlightSearchText(spot.city, searchText) || highlighting}
+                      {highlightSearchText(spot.stateProvince, searchText) || highlighting},
+                      {spot.zipCode} {spot.country}
                     </p>
                   </div>
                 </div>
