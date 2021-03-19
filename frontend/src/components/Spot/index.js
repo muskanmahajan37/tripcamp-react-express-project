@@ -274,11 +274,11 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
         const { rated } = calculateRatingFunction(spot);
         spot.rated = rated;
         return spot.name.toLowerCase().includes(searchText)
-          || spot.description.toLowerCase().includes(searchText)
-          || spot.streetAddress.toLowerCase().includes(searchText)
-          || spot.city.toLowerCase().includes(searchText)
-          || spot.stateProvince.toLowerCase().includes(searchText)
-          || spot.country.toLowerCase().includes(searchText);
+          || (spot.description && spot.description.toLowerCase().includes(searchText))
+          || (spot.streetAddress && spot.streetAddress.toLowerCase().includes(searchText))
+          || (spot.city && spot.city.toLowerCase().includes(searchText))
+          || (spot.stateProvince && spot.stateProvince.toLowerCase().includes(searchText))
+          || (spot.country && spot.country.toLowerCase().includes(searchText));
       }));
       // history.push(`/search/${searchText}`);
     } else {
