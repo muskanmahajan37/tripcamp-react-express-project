@@ -18,7 +18,7 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const reviewDataObj = req.body.review;
-    console.log('reviewDataObj', reviewDataObj);
+    // console.log('reviewDataObj', reviewDataObj);
     if (req.user.id !== reviewDataObj.userId) {     
       return next(errorToSend(401, 'Review creating failed', ["Unauthorized user"]));
     }

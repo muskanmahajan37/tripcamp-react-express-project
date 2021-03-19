@@ -29,7 +29,7 @@ router.get('/sign-s3', asyncHandler(async (req, res) => {
   
   s3.getSignedUrl('putObject', s3Params, (err, data) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
       return res.end();
     }
     const returnData = {

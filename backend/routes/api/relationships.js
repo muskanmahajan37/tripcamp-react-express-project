@@ -19,7 +19,7 @@ router.get('/', asyncHandler(async (req, res) => {
 router.patch('/',
   requireAuth,
   asyncHandler(async (req, res, next) => {
-    console.log(req.body.relationship);
+    // console.log(req.body.relationship);
     const myUserId = Number(req.body.relationship.myUserId);
     if (req.user.id !== myUserId) {
       return next(errorToSend(401, 'Add/Follow friend failed', ["Unauthorized user"]));
@@ -199,7 +199,7 @@ router.post('/',
   requireAuth,
   asyncHandler(async (req, res, next) => {
     const relationshipDataObj = req.body.relationship;
-    console.log('relationshipDataObj', relationshipDataObj);
+    // console.log('relationshipDataObj', relationshipDataObj);
     if (req.user.id !== relationshipDataObj.myUserId) {
       return next(errorToSend(401, 'Add/Follow friend failed', ["Unauthorized user"]));
     }
