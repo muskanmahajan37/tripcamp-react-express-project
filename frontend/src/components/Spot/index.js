@@ -330,7 +330,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   }
 
   function highlightSearchText(originalText, search) {
-    if(!originalText) return;
+    if (!originalText) return;
     if (!search || !originalText.toLowerCase().includes(search.toLowerCase())) return originalText;
     const index = originalText.toLowerCase().indexOf(search.toLowerCase());
     const firstPart = originalText.slice(0, index);
@@ -356,80 +356,78 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
       {
         !onlyMine && ShowMapButton
       }
-      {spots && <div className={mainGridClass}>
-        {
-          spots.map(spot =>
-            <div key={nanoid()} >
-              <h6>{highlightSearchText(spot.name, searchText) || highlighting}</h6>
-              <div className='spot-media-display'>
-                {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
-                  <img
-                    key={spot.urls[0]}
-                    src={spot.urls[0]}
-                    alt={spot.name}
-                    id={spot.id + "-" + nanoid()}
-                    className='spot-default-image'
-                    onClick={handleSpotSelection}
-                  />
-                  :
-                  <></>
-                }
-                {!(spot.urls && spot.urls[0]) &&
-                  <img
-                    key={nanoid()}
-                    src={'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/camp-badges-and-icons-vector.jpg'}
-                    alt={spot.name}
-                    id={spot.id + "-" + nanoid()}
-                    className='spot-default-image'
-                    style={{ opacity: '0.4' }}
-                    onClick={handleSpotSelection}
-                  />
-                }
-                <div className="start-rating-on-top-of-image">
-                  <Rating rated={spot.rated} />
-                </div>
-              </div>
-              <div className='buttons-address-description'>
-                <div className="buttons-and-address">
-                  {
-                    !onlyMine && <div className="book-and-more-div">
-                      <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
-                      <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
+      {
+        ((spots.length === 0) && searchText) ?
+          <div className='nothing-found-div'>
+            <img src='https://image.cnbcfm.com/api/v1/image/105737338-1550085597458ap_19043627548529.jpg?v=1550085650&w=678&h=381' alt='mars' />
+            <p>No spot found for search criteria: {searchText}</p>
+          </div>
+          :
+          (spots && <div className={mainGridClass}>
+            {
+              spots.map(spot =>
+                <div key={nanoid()} >
+                  <h6>{highlightSearchText(spot.name, searchText) || highlighting}</h6>
+                  <div className='spot-media-display'>
+                    {spot.urls && spot.urls[0] && !spot.urls[0].toLowerCase().includes("youtu") ?
+                      <img
+                        key={spot.urls[0]}
+                        src={spot.urls[0]}
+                        alt={spot.name}
+                        id={spot.id + "-" + nanoid()}
+                        className='spot-default-image'
+                        onClick={handleSpotSelection}
+                      />
+                      :
+                      <></>
+                    }
+                    {!(spot.urls && spot.urls[0]) &&
+                      <img
+                        key={nanoid()}
+                        src={'https://tripcamp.s3.amazonaws.com/resources/images/official/spots/camp-badges-and-icons-vector.jpg'}
+                        alt={spot.name}
+                        id={spot.id + "-" + nanoid()}
+                        className='spot-default-image'
+                        style={{ opacity: '0.4' }}
+                        onClick={handleSpotSelection}
+                      />
+                    }
+                    <div className="start-rating-on-top-of-image">
+                      <Rating rated={spot.rated} />
                     </div>
-                  }
-                  <div className='spot-address'>
-                    <p style={{ maxWidth: '210px', fontSize: '16px' }}>
-                      {highlightSearchText(spot.streetAddress, searchText) || highlighting}
-                    </p>
-                    <p >
-                      {highlightSearchText(spot.city, searchText) || highlighting} {highlightSearchText(spot.stateProvince, searchText) || highlighting},
+                  </div>
+                  <div className='buttons-address-description'>
+                    <div className="buttons-and-address">
+                      {
+                        !onlyMine && <div className="book-and-more-div">
+                          <button onClick={handleBookNowClick} id={spot.id + "-" + nanoid()}>Book Now</button>
+                          <button onClick={handleReviewClick} id={spot.id + "-" + nanoid()}>Review</button>
+                        </div>
+                      }
+                      <div className='spot-address'>
+                        <p style={{ maxWidth: '210px', fontSize: '16px' }}>
+                          {highlightSearchText(spot.streetAddress, searchText) || highlighting}
+                        </p>
+                        <p >
+                          {highlightSearchText(spot.city, searchText) || highlighting} {highlightSearchText(spot.stateProvince, searchText) || highlighting},
                       {spot.zipCode} {highlightSearchText(spot.country, searchText) || highlighting}
+                        </p>
+                      </div>
+                    </div>
+                    <p className='spot-description hide-scollbar'>
+                      {highlightSearchText(spot.description, searchText) || highlighting}
                     </p>
                   </div>
                 </div>
-                <p className='spot-description hide-scollbar'>
-                  {highlightSearchText(spot.description, searchText) || highlighting}
-                </p>
-              </div>
-            </div>
-          )}
-      </div>
+              )}
+          </div>)
       }
       {
-        !spots.length && searchText &&
-        <div className='nothing-found-div'>
-          <img src='https://image.cnbcfm.com/api/v1/image/105737338-1550085597458ap_19043627548529.jpg?v=1550085650&w=678&h=381' alt='mars' />
-          <p>No spot found for search criteria: {searchText}</p>
-        </div>
-      }
-      {
-        !onlyMine && showMap && <div className='home-side-map-all-spots'>
-          {
-            spots && spots.length && <MapWithMarkerClusterer
-              center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
-              zoom={5}
-              spots={spots} />
-          }
+        !onlyMine && showMap && spots && spots.length > 0 && <div className='home-side-map-all-spots'>
+          <MapWithMarkerClusterer
+            center={{ lat: spots[0].gpsLocation[0], lng: spots[0].gpsLocation[1] }}
+            zoom={5}
+            spots={spots} />
         </div>
       }
     </div>

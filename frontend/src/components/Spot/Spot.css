@@ -444,7 +444,7 @@ img {
 
 .nothing-found-div {
   position: relative;
-  margin-right: 22vw;
+  /* margin-right: 22vw; */
   width: fit-content;
   display: flex;
   flex-direction: column;
