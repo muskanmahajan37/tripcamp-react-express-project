@@ -76,7 +76,7 @@ export function LoginFormModal() {
   const history = useHistory();
 
 
-  if (sessionUser) { 
+  if (sessionUser) {
     return <Redirect to='/' />;
   }
 
@@ -149,23 +149,24 @@ export function LoginFormModal() {
         </div>
         <div className="buttons-div">
           <button
+            className='button button-Reset'
+            onClick={handleCancelClick}
+          > Cancel </button>
+          <button className="button button-Next" onClick={handleDemoClick}>Demo User</button>
+          <button
             className='button'
             type='submit'
             ref={submitButtonRef}
           >Log in</button>
-          <button
-            className='button button-Reset'
-            onClick={handleCancelClick}
-          > Cancel </button>
         </div>
         <div className="login-signup-invite">
           <span>Don't have an account?</span>
           <span>
             <button className="button button-invite" onClick={handleSignupClick}>Sign up</button>
           </span>
-          <span>
+          {/* <span>
             <button className="button button-invite" onClick={handleDemoClick}>Demo</button>
-          </span>
+          </span> */}
         </div>
       </form>
     </div>
