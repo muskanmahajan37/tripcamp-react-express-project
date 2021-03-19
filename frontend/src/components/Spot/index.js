@@ -330,6 +330,7 @@ export function AllSpots({ onlyMine = false, mainGridClass = 'spots-home-display
   }
 
   function highlightSearchText(originalText, search) {
+    if(!originalText) return;
     if (!search || !originalText.toLowerCase().includes(search.toLowerCase())) return originalText;
     const index = originalText.toLowerCase().indexOf(search.toLowerCase());
     const firstPart = originalText.slice(0, index);
