@@ -19,7 +19,7 @@ export default function MainSearchBar({
 
   useEffect(() => {
     if (searchTerms[searchTerms.length - 1] && searchTerms[searchTerms.length - 1].text === "") {
-      setSearchValue("");
+      if(searchValue) setSearchValue("");
     }
   }, [searchTerms]);
 
