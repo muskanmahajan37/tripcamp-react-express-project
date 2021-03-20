@@ -6,7 +6,7 @@ import { useHistory, Redirect, useParams, useLocation } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 // import ReactPlayer from 'react-player/youtube'
 
-import { MapWithMarkerClusterer } from '../GoogleMaps';
+import MapWithMarkerClusterer from '../GoogleMaps';
 import Rating from '../Rating';
 // import BookingFormModal from '../BookingForm';
 import UploadForm from '../UploadForm';

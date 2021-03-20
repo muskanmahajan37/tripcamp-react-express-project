@@ -67,7 +67,7 @@ function MapComponent({ center = defaultCenter, zoom = 10 }) {
     </LoadScript>
   )
 }
-export const MapWithMarkerClusterer = ({
+const MapWithMarkerClusterer = ({
   center = defaultCenter,
   zoom = 7,
   spots = []
@@ -82,7 +82,7 @@ export const MapWithMarkerClusterer = ({
         height: `${window.innerHeight.toFixed(0)}px`
       };
       setContStyle(containerStyle);
-    }  
+    }
   }, [window.innerWidth, window.innerHeight]);
 
   const onSelect = spot => {
@@ -92,19 +92,17 @@ export const MapWithMarkerClusterer = ({
     <LoadScript
       googleMapsApiKey="AIzaSyAkH92G4PO4QrcdQ1GjsX5ThHe7tWNyQog"
     >
-      <GoogleMap id='marker-example' mapContainerStyle={contStyle} zoom={zoom} center={center}>
-        <MarkerClusterer options={options}>
-          {(clusterer) =>
-            spots.map((spot, i) => (
-              <Marker
-                key={nanoid()}
-                position={{ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] }}
-                clusterer={clusterer}
-                label={labels[i % labels.length]}
-                onClick={() => onSelect(spot)}
-              />
-            ))
-          }
+      <GoogleMap mapContainerStyle={contStyle} zoom={zoom} center={center}>
+        <MarkerClusterer options={options} averageCenter={true}>
+          {(clusterer) => spots.map((spot, i) =>
+            <Marker
+              key={nanoid()}
+              position={{ lat: spot.gpsLocation[0], lng: spot.gpsLocation[1] }}
+              clusterer={clusterer}
+              label={labels[i % labels.length]}
+              onClick={() => onSelect(spot)}
+            />
+          )}
         </MarkerClusterer>
         {
           selected.spot &&
@@ -132,4 +130,6 @@ export const MapWithMarkerClusterer = ({
   )
 }
 
-export default MapComponent;
+export default React.memo(MapWithMarkerClusterer);
+
+// export default MapComponent;
