@@ -29,8 +29,8 @@ export default function MainSearchBar({
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(searchActions.setSearchPOJO({ text: searchValue }));
-    setSearchValue("");
+    // dispatch(searchActions.setSearchPOJO({ text: searchValue }));
+    // setSearchValue("");
   }
   return (
     <form
