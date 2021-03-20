@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as searchActions from '../../store/search';
 
@@ -9,6 +9,7 @@ import './Search.css';
 export default function MainSearchBar({
   className = 'search-over-banner-div'
 }) {
+  const searchTerms = useSelector(state => state.searchs);
   const [searchValue, setSearchValue] = useState("");
   const dispatch = useDispatch();
 
@@ -16,13 +17,19 @@ export default function MainSearchBar({
     dispatch(searchActions.setSearchPOJO({ text: searchValue }));
   }, [searchValue]);
 
+  useEffect(() => {
+    if (searchTerms[searchTerms.length - 1] && searchTerms[searchTerms.length - 1].text === "") {
+      setSearchValue("");
+    }
+  }, [searchTerms]);
+
   const onInputChange = e => {
     e.preventDefault();
     setSearchValue(e.target.value);
   }
 
   const onKeyDown = e => {
-    if(e.key === 'Escape'){
+    if (e.key === 'Escape') {
       setSearchValue("");
     }
   };

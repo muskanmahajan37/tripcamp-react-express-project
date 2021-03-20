@@ -12,9 +12,11 @@ import { SpotFormModal } from '../Spot';
 import { AddFriendsModal } from '../AddFriends';
 import BookingFormModal from '../BookingForm';
 import ReviewFormModal from '../ReviewForm';
+import * as searchActions from '../../store/search';
 
 import './Navigation.css';
 import { nanoid } from 'nanoid';
+
 
 
 function Navigation() {
@@ -86,6 +88,7 @@ function Navigation() {
           <NavLink to={'/allspots'} onClick={e => {
             e.preventDefault();
             dispatch(removeCurrentSpot());
+            dispatch(searchActions.setSearchPOJO({ text: "" }));
             history.push('/allspots');
           }}>
             Spots
