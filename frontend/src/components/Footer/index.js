@@ -13,8 +13,8 @@ export default function Footer(props) {
               /> Student Project
             </a>
           </span>
-          <span><a href='https://github.com/suasllc' target='_blank' style={{ textDecoration: 'none' }}> Github profile</a></span>
-          <span><a target="_blank" href='https://github.com/suasllc/tripcamp-react-express-project' style={{ textDecoration: 'none' }}>Github Repo</a></span>
+          <span><a href='https://github.com/tonyngophd' target='_blank' style={{ textDecoration: 'none' }}> Github profile</a></span>
+          <span><a target="_blank" href='https://github.com/tonyngophd/tripcamp-react-express-project' style={{ textDecoration: 'none' }}>Github Repo</a></span>
           <span><a target="_blank" href='https://www.linkedin.com/in/tony-ngo-suas/' style={{ textDecoration: 'none' }}>LinkedIn</a></span>
           <span><a target="_blank" href='https://www.youtube.com/sUAScom' style={{ textDecoration: 'none' }}>YouTube</a></span>
         </div>

@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suasllc/tripcamp-react-express-project.git"
+    "url": "git+https://github.com/tonyngophd/tripcamp-react-express-project.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/suasllc/tripcamp-react-express-project/issues"
+    "url": "https://github.com/tonyngophd/tripcamp-react-express-project/issues"
   },
-  "homepage": "https://github.com/suasllc/tripcamp-react-express-project#readme"
+  "homepage": "https://github.com/tonyngophd/tripcamp-react-express-project#readme"
 }

@@ -7,7 +7,7 @@
 <!--ReactSkipperStart -->
 <br />
 <p align="center"  style='margin-top: -40px; margin-bottom: -10px;'>
-  <a href="https://github.com/suasllc/tripcamp-react-express-project">
+  <a href="https://github.com/tonyngophd/tripcamp-react-express-project">
     <img src="/frontend/src/images/tripcamp6-200x60.png" alt="Logo" width="160" height="60" style="object-fit: contain">
   </a>
 
@@ -15,14 +15,14 @@
     <b>TripCamp</b> <a href="https://www.tripcamp.us/" target="_blank">https://www.tripcamp.us</a> - A Full-Stack Web Application for camping and glamping site bookings.
     <br />
     <br />
-    <a href="https://github.com/suasllc/tripcamp-react-express-project/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/tonyngophd/tripcamp-react-express-project/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.tripcamp.us/" target="_blank">View Demo/Live</a>
     ·
-    <a href="https://github.com/suasllc/tripcamp-react-express-project/issues">Report Bug</a>
+    <a href="https://github.com/tonyngophd/tripcamp-react-express-project/issues">Report Bug</a>
     ·
-    <a href="https://github.com/suasllc/tripcamp-react-express-project/issues">Request Feature</a>
+    <a href="https://github.com/tonyngophd/tripcamp-react-express-project/issues">Request Feature</a>
   </p>
 </p>
 
@@ -122,7 +122,7 @@ Install npm on your local computer
 1. Clone this repository (only this branch)
 
    ```bash
-   git clone https://github.com/suasllc/tripcamp-react-express-project.git
+   git clone https://github.com/tonyngophd/tripcamp-react-express-project.git
    ```
 
 2. Install dependencies
@@ -131,7 +131,7 @@ Install npm on your local computer
       npm install
       ```
 
-3. [Further steps here](https://github.com/suasllc/tripcamp-react-express-project/wiki)
+3. [Further steps here](https://github.com/tonyngophd/tripcamp-react-express-project/wiki)
 
 ## Usage
 <!--ReactSkipperStart -->
@@ -156,13 +156,13 @@ Install npm on your local computer
 
 <!--ReactSkipperEnd -->
 
-_For more examples, please refer to the [Documentation](https://github.com/suasllc/tripcamp-react-express-project/wiki)_
+_For more examples, please refer to the [Documentation](https://github.com/tonyngophd/tripcamp-react-express-project/wiki)_
 
 
 
 ## Roadmap
 
-See the [open issues](https://github.com/suasllc/tripcamp-react-express-project/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/tonyngophd/tripcamp-react-express-project/issues) for a list of proposed features (and known issues).
 
 
 
@@ -188,7 +188,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Tony Ngo [@suas_com](https://twitter.com/suas_com) - website: https://tonyngo.me
 
-Project Link: [https://github.com/suasllc/tripcamp-react-express-project](https://github.com/suasllc/tripcamp-react-express-project)
+Project Link: [https://github.com/tonyngophd/tripcamp-react-express-project](https://github.com/tonyngophd/tripcamp-react-express-project)
 
 
 
@@ -199,16 +199,16 @@ Project Link: [https://github.com/suasllc/tripcamp-react-express-project](https:
 
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/suasllc/tripcamp-react-express-project.svg?style=for-the-badge
-[contributors-url]: https://github.com/suasllc/tripcamp-react-express-project/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/suasllc/tripcamp-react-express-project.svg?style=for-the-badge
-[forks-url]: https://github.com/suasllc/tripcamp-react-express-project/network/members
-[stars-shield]: https://img.shields.io/github/stars/suasllc/tripcamp-react-express-project.svg?style=for-the-badge
-[stars-url]: https://github.com/suasllc/tripcamp-react-express-project/stargazers
-[issues-shield]: https://img.shields.io/github/issues/suasllc/tripcamp-react-express-project.svg?style=for-the-badge
-[issues-url]: https://github.com/suasllc/tripcamp-react-express-project/issues
-[license-shield]: https://img.shields.io/github/license/suasllc/tripcamp-react-express-project.svg?style=for-the-badge
-[license-url]: https://github.com/suasllc/tripcamp-react-express-project/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/tonyngophd/tripcamp-react-express-project.svg?style=for-the-badge
+[contributors-url]: https://github.com/tonyngophd/tripcamp-react-express-project/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/tonyngophd/tripcamp-react-express-project.svg?style=for-the-badge
+[forks-url]: https://github.com/tonyngophd/tripcamp-react-express-project/network/members
+[stars-shield]: https://img.shields.io/github/stars/tonyngophd/tripcamp-react-express-project.svg?style=for-the-badge
+[stars-url]: https://github.com/tonyngophd/tripcamp-react-express-project/stargazers
+[issues-shield]: https://img.shields.io/github/issues/tonyngophd/tripcamp-react-express-project.svg?style=for-the-badge
+[issues-url]: https://github.com/tonyngophd/tripcamp-react-express-project/issues
+[license-shield]: https://img.shields.io/github/license/tonyngophd/tripcamp-react-express-project.svg?style=for-the-badge
+[license-url]: https://github.com/tonyngophd/tripcamp-react-express-project/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/tony-ngo-suas/
 
